@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Base.Theme.Mobile"
+        tools:targetApi="31">
+        <activity
+            android:name=".activitys.NftSendResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.NftDetailViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.NftSendRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.NftImportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TokenTransactHistoryDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TokenTransactHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TransactFailureActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TokenSendResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TokenSendRequestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.SendTransactPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TokenSendSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.WalletMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TermAdvertiesePolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TermLocationPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TermPrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.TermServiceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.SocialTermAgreeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activitys.SocialLoginActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

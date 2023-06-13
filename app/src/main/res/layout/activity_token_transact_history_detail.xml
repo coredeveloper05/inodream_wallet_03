@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.TokenTransactHistoryDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <ImageButton
+                android:id="@+id/backBu"
+                android:layout_width="57dp"
+                android:layout_height="57dp"
+                android:src="@drawable/multiply"
+                android:scaleType="fitCenter"
+                android:background="?attr/selectableItemBackground"
+                android:padding="15dp"
+                tools:ignore="SpeakableTextPresentCheck"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textStyle="normal"
+                android:textSize="10sp"
+                android:textColor="#616060"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="10sp"
+                android:text="Eth | 이더리움"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:textColor="#000000"
+                android:letterSpacing="-0.01"
+                android:lineSpacingExtra="13sp"
+                android:text="12.00000 ETH"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:padding="20dp"
+                android:background="@drawable/wallet_add_gray_round"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#020202"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="상태"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="sans-serif"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="교환 완료"
+                        android:textColor="#8a8a8a"
+                        android:textSize="12sp"
+                        android:textStyle="normal" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#020202"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="보낸코인"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textAlignment="textEnd"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#8a8a8a"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="Eth | 이더리움\n 0.025"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#020202"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="받은코인"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textAlignment="textEnd"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#8a8a8a"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="USD | 이더리움 \n 12.00000" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#020202"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="교환시간"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#8a8a8a"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="202303.31 14:20:31" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textSize="12sp"
+                        android:textColor="#020202"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="네트워크수수료"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="normal"
+                        android:textSize="12sp"
+                        android:textColor="#8a8a8a"
+                        android:letterSpacing="-0.01"
+                        android:lineSpacingExtra="8sp"
+                        android:text="0.00021 ETH" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="112dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/backgroud_gray"
+                android:gravity="center"
+                android:clickable="true"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-smallcaps"
+                    android:textStyle="bold"
+                    android:textSize="12sp"
+                    android:textColor="#ffffff"
+                    android:letterSpacing="-0.01"
+                    android:lineSpacingExtra="3sp"
+                    android:text="트랜젝션 확인"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

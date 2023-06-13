@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.BalanceFragment">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <include layout="@layout/account_top_toolbar" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/balance_scrollview_wrapper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/balance_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@string/app_name"
+                android:background="@color/white"
+                app:tabTextAppearance="@style/TabLayoutStyle"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabIndicatorGravity="bottom"
+                app:tabIndicatorFullWidth="true"
+                app:tabSelectedTextColor="#000000"
+                app:tabTextColor="#b6b6b6"
+                />
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/balance_view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:layout_marginTop="22dp"
+                    />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>

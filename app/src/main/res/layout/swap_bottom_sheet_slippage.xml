@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottomSheetDashBoardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:behavior_hideable="true"
+    app:behavior_draggable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:paddingVertical="28dp"
+    android:background="@drawable/swap_bottom_sheet_background">
+
+    <TextView
+        android:id="@+id/receiveTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="최대 슬리피지 설정"
+        android:textColor="#000000"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginBottom="11dp"/>
+
+    <SeekBar
+        android:id="@+id/slipapgeSb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:min="1"
+        android:max="4"
+        android:layout_marginHorizontal="16dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="6dp"
+        android:layout_marginHorizontal="18dp"
+        android:paddingHorizontal="0dp">
+
+        <TextView
+            android:id="@+id/slippageLa1"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:text="1%"
+            android:paddingHorizontal="10dp"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/slippageLa2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:text="2%"
+            android:background="@drawable/slippage_label"
+            android:paddingHorizontal="10dp"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/slippageLa3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:text="3%"
+            android:paddingHorizontal="10dp"
+            android:gravity="center"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/slippageLa4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#000000"
+            android:text="4%"
+            android:paddingHorizontal="10dp"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="11sp"
+        android:textColor="#7e7e7e"
+        android:letterSpacing="-0.01"
+        android:lineSpacingExtra="4sp"
+        android:layout_marginTop="30dp"
+        android:text="슬리피지는 주문시점의 예상 수량 갯수와 주문체결된 시점의 수량 갯수의 차이를 말합니다. 시장의 변동성이 클수록 심하게 나타날 수 있습니다. 슬리피지가 최대 슬리피지 설정를 초과할 경우 스와프는 자동으로 취소됩니다."
+        android:layout_marginHorizontal="28dp"/>
+
+</LinearLayout>

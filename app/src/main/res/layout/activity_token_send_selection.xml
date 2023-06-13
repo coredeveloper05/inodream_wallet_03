@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.TokenSendSelectionActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/top_toolbar"
+            layout="@layout/normal_top_toolbar"
+            />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="@string/token_send_caution_01"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:layout_marginTop="15.5dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="18sp"
+                        android:text="@string/token_send_caution_02"
+                        android:textColor="#9c88ff"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:layout_marginTop="15.5dp"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:text="@string/token_send_caution_03"
+                        android:textColor="#9c88ff"
+                        android:fontFamily="@font/inter_semi_bold"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:textSize="18sp"
+                        android:text="@string/token_send_caution_04"
+                        android:textColor="#000000"
+                        android:fontFamily="@font/inter_semi_bold"
+                        />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12dp"
+                    android:text="토큰의 네트워크를 꼭 확인 하시기 바랍니다.\n받으실 토큰을 선택하세요."
+                    android:textColor="#6a6a6a"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="50dp"/>
+
+                <LinearLayout
+                    android:id="@+id/selection_token_01"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:paddingVertical="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/receive_token_round_border_ripple"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_token_01"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="ETH"/>
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:background="#d9d9d9"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="7dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="이더리움"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_token_send_box" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/selection_token_02"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:paddingVertical="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/receive_token_round_border_ripple"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_token_03"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="테더"/>
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:background="#d9d9d9"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="7dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="이더리움"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_token_send_box"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/selection_token_03"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:paddingVertical="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/receive_token_round_border_ripple"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_token_03"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="테더"/>
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:background="#d9d9d9"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="7dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="TRON"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_token_send_box"
+                        />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/selection_token_04"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="6dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:paddingVertical="12dp"
+                    android:gravity="center"
+                    android:background="@drawable/receive_token_round_border_ripple"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="22dp"
+                        android:src="@drawable/ic_token_02"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:fontFamily="@font/inter_semi_bold"
+                        android:text="FON"/>
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="10dp"
+                        android:background="#d9d9d9"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="7dp"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:text="이더리움"/>
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="10dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginRight="7dp"/>
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_token_send_box"
+                        />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

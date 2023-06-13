@@ -1,0 +1,85 @@
+<resources>
+    <string name="app_name">inodream_wallet_03</string>
+
+    <string name="google_name">Google</string>
+    <string name="login">LOGIN</string>
+
+    <string name="login_description_01">Implement Life to suit NFT’s items purchased from NFTs and provide points.</string>
+    <string name="login_description_02">The more you practice voluntary carbon reduction in your daily life, the more points you provide, the more NFTs you can purchase with points pints can be swapped to tokens at any time, and the swapped tokens are sold on the exchange to eam retum on investment</string>
+
+    <string name="logo">LOGO</string>
+
+    <string name="sign_up">회원가입</string>
+    <string name="sign_up_caution">회원가입 전, XXX의 약관들을 확인해주세요.</string>
+
+    <string name="term_mandatory">필수</string>
+    <string name="term_optional">선택</string>
+
+    <string name="term_agreement_all">약관 전체동의</string>
+    <string name="term_service">서비스 이용약관</string>
+    <string name="term_privacy_policy">개인정보 수집 및 이용동의</string>
+    <string name="term_location_policy">위치정보서비스 이용약관</string>
+    <string name="term_advertise_alarm_policy">E-mail 및 SMS 광고성 정보 수신동의</string>
+    <string name="term_advertise_description">프로모션 및 이벤트 소식을 제공합니다.</string>
+
+    <string name="confirm">확인</string>
+
+    <string name="title_term_service">서비스 이용약관</string>
+    <string name="title_term_privacy_policy">개인정보 수집 및 이용동의</string>
+    <string name="title_term_location_policy">위치정보서비스 이용약관</string>
+    <string name="title_term_advertise_alarm_policy">광고성 정보 수신동의</string>
+    <string name="title_token_receive">토큰 받기</string>
+    <string name="title_token_send">토큰 보내기</string>
+    <string name="title_token_transact_history">토큰 거래 이력</string>
+    <string name="title_nft_import">NFT 불러오기</string>
+    <string name="title_nft_detail">NFT 상세보기</string>
+    <string name="title_nft_send">NFT 보내기</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="token">토큰</string>
+    <string name="nft">NFT</string>
+
+    <string name="token_add">토큰 추가</string>
+    <string name="token_receive">토큰 받기</string>
+    <string name="nft_add">NFT 불러오기</string>
+    <string name="add_symbol">+</string>
+    <string name="token_transact_history">토큰 거래 이력</string>
+    <string name="nft_receive">NFT 받기</string>
+
+    <string name="balance_my_assets">나의 자산</string>
+
+    <string name="receive">받기</string>
+    <string name="send">보내기</string>
+    <string name="swap">스왑</string>
+    <string name="setting">설정</string>
+    <string name="transaction_history">거래이력</string>
+
+    <string name="my_address">내 주소</string>
+    <string name="token_receive_caution_01">-입금 진행 시 동일한 메인넷만 지원합니다.</string>
+    <string name="token_receive_caution_02">-ETH(이더리움), TRON(트론) 네트워크크만 입출금이 가능합니다.</string>
+    <string name="token_receive_caution_03">-사용자가 입력을 잘못한 경우 서비스 제공자는 책임을 지지 않습니다.</string>
+
+    <string name="close">닫기</string>
+
+    <string name="token_send_caution_01">○○○지갑에서는</string>
+    <string name="token_send_caution_02">이더리움,</string>
+    <string name="token_send_caution_03">TRON 네트워크만을 지원</string>
+    <string name="token_send_caution_04">합니다.</string>
+
+    <string name="transact_password">출금 비밀번호</string>
+    <string name="transact_password_confirm">출금 비밀번호 확인</string>
+    <string name="transact_password_register">출금 비밀번호 등록</string>
+
+    <string name="transact_password_caution_01">-비밀번호는 총 6자리 숫자, 특수문자조합 입력하세요.</string>
+    <string name="transact_password_caution_02">-비밀번호 확인란에 동일한 비밀번호를 입력하세요.</string>
+
+    <string name="address_eng">Address</string>
+    <string name="quantity">수량</string>
+    <string name="send_request">출금 신청</string>
+    <string name="input_max"><u>최대입력</u></string>
+    <string name="swap_comment">현재의 토큰은 <font fgcolor='#7056f0'>유니스왑</font>에서 인증을 확인하실 수 있습니다.</string>
+
+    <string name="there_is_no_menu">메뉴가 존재하지 않습니다.</string>
+</resources>
