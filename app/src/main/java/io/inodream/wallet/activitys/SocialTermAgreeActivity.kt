@@ -40,7 +40,6 @@ class SocialTermAgreeActivity : AppCompatActivity() {
             binding.checkTermAgreementAll.performClick()
         }
         binding.checkTermAgreementAll.setOnClickListener {
-            println((it as CheckBox).isChecked)
             if((it as CheckBox).isChecked) {
                 binding.checkTermService.isChecked = true
                 binding.checkTermPrivacyPolicy.isChecked = true
