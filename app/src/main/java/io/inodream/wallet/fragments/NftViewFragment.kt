@@ -36,9 +36,11 @@ class NftViewFragment : Fragment(), NftRecycleAdapter.OnItemClickEventListener {
         _binding = FragmentNftViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
-    override fun onItemClick(a_view: View?, a_position: Int) {
-    }
+    override fun onItemClick(
+        nft_view: View?,
+        nft_position: Int,
+        nft_event_type: NftRecycleAdapter.EventType
+    ) {}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,9 +55,18 @@ class NftViewFragment : Fragment(), NftRecycleAdapter.OnItemClickEventListener {
         val nftItemAdapter = NftRecycleAdapter(nftItemList)
         nftItemAdapter.notifyDataSetChanged()
 
+        //Key
         nftItemAdapter.setItemClickListener(object: NftRecycleAdapter.OnItemClickEventListener {
-            override fun onItemClick(a_view: View?, a_position: Int) {
-                startActivity(Intent(requireContext(), NftDetailViewActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            override fun onItemClick(nft_view: View?, nft_position: Int, nft_event_type: NftRecycleAdapter.EventType) {
+                println("===================================================${nft_event_type}")
+                startActivity(Intent(requireContext(), when(nft_event_type) {
+                    NftRecycleAdapter.EventType.VIEW -> {
+                        NftDetailViewActivity::class.java
+                    }
+                    NftRecycleAdapter.EventType.SEND -> {
+                        NftSendRequestActivity::class.java
+                    }
+                }).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
             }
         })
 

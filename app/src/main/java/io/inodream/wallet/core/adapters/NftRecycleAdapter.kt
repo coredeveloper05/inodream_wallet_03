@@ -14,8 +14,13 @@ class NftRecycleAdapter(val itemList: ArrayList<NftItemData>) : RecyclerView.Ada
 
     private lateinit var itemClickListener: OnItemClickEventListener
 
+    enum class EventType {
+        VIEW,
+        SEND
+    }
+
     interface OnItemClickEventListener {
-        fun onItemClick(a_view: View?, a_position: Int)
+        fun onItemClick(nft_view: View?, nft_position: Int, nft_event_type: EventType)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NftItemViewHolder {
@@ -43,14 +48,16 @@ class NftRecycleAdapter(val itemList: ArrayList<NftItemData>) : RecyclerView.Ada
     inner class NftItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val nft_name: TextView = itemView.findViewById<TextView>(R.id.nft_name)
         val item_divider: View = itemView.findViewById<View>(R.id.item_divider)
-        val nft_send_button = itemView.findViewById<ImageView>(R.id.nft_send_button)
-        val nft_symbol = itemView.findViewById<ImageView>(R.id.nft_symbol)
 
         fun bind() {
             val pos = adapterPosition
             if(pos!= RecyclerView.NO_POSITION) {
-                itemView.setOnClickListener {
-                    itemClickListener?.onItemClick(itemView, pos)
+                itemView.findViewById<ImageView>(R.id.nft_symbol).setOnClickListener {
+                    itemClickListener?.onItemClick(itemView, pos, EventType.VIEW)
+                }
+
+                itemView.findViewById<ImageView>(R.id.nft_send_button).setOnClickListener {
+                    itemClickListener?.onItemClick(itemView, pos, EventType.SEND)
                 }
             }
         }
