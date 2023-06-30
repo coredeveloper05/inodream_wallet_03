@@ -58,7 +58,6 @@ class NftViewFragment : Fragment(), NftRecycleAdapter.OnItemClickEventListener {
         //Key
         nftItemAdapter.setItemClickListener(object: NftRecycleAdapter.OnItemClickEventListener {
             override fun onItemClick(nft_view: View?, nft_position: Int, nft_event_type: NftRecycleAdapter.EventType) {
-                println("===================================================${nft_event_type}")
                 startActivity(Intent(requireContext(), when(nft_event_type) {
                     NftRecycleAdapter.EventType.VIEW -> {
                         NftDetailViewActivity::class.java
