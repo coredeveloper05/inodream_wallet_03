@@ -24,6 +24,7 @@ class TopToolBarAdapter {
                 //context.findNavController().navigate(R.id.accountMngFragment)
             }
         }
+        // 2023-07-08 collraborator grant test !
 
         view.findViewById<ImageButton>(R.id.qrCameraViewButton)?.let {
             it.setOnClickListener {
