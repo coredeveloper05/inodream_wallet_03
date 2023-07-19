@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "437260015304",
+    "project_id": "wise-program-392714",
+    "storage_bucket": "wise-program-392714.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437260015304:android:f780bfb66a8f45d946f7fd",
+        "android_client_info": {
+          "package_name": "io.inodream.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "437260015304-igcitb1agcrc67kpf3ordjrodevog930.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.inodream.wallet",
+            "certificate_hash": "3ee424811df7839d1cbcd60618bd1bc17c000865"
+          }
+        },
+        {
+          "client_id": "437260015304-84hn9l3d3eks89knrvjamtk0tn69h7v6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXCq4MwQxlATRo9ieY3whlldhGwqEEOS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "437260015304-84hn9l3d3eks89knrvjamtk0tn69h7v6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

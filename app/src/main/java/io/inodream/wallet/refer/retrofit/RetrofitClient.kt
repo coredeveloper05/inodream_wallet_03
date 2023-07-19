@@ -9,8 +9,45 @@ object RetrofitClient {
     // api 주소
     private const val BASE_URL = "https://dev-zqbackend.eco-esgtest.io/"
 
+    const val AUTH = "http://3.26.205.235:8008/api/getToken/"
+
+    /**
+     * auth
+     */
+    // auth_google
+    const val AUTH_GOOGLE = "auth/google"
+    const val AUTH_REFRESH = "auth/refresh"
+
+    /**
+     * api
+     */
     // api 기능 단위 주소
     const val GET_TOKEN_INFOS = "api/tokenInfos"
+    const val GET_TOKEN_INFO = "api/tokenInfo"
+
+    /**
+     * user
+     */
+    // 회원 정보를 확인합니다.
+    const val GET_USER_INFO = "api/user/info"
+    // 회원 지갑정보를 확인합니다.
+    const val GET_USER_WALLET = "api/user/wallet"
+    // 회원이 출금을 할때 필요한 출금암호를 등록합니다.
+    const val SET_USER_WITH_DRAW_PW = "api/user/withdrawPw"
+    // 회원 정보 업데이트
+    const val GET_USER_PROFILE = "api/user/profile"
+
+    /**
+     * token
+     */
+    const val GET_BALANCE_ALL = "api/token/balanceAll"
+    const val GET_BALANCE = "api/token/balance"
+
+
+
+
+
+
 
     // retrofit 클라이언트 빌드
     private val retrofitCliecnt: Retrofit by lazy {

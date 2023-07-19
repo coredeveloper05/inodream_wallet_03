@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.google.gson.JsonElement
-import io.inodream.wallet.MainActivity
 import io.inodream.wallet.R
 import io.inodream.wallet.activitys.WalletMainActivity
 import io.inodream.wallet.databinding.ActivityRetrofitSimpleBinding
@@ -15,7 +13,6 @@ import io.inodream.wallet.refer.retrofit.data.RemoteSimpleData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
 
 class RetrofitSimpleActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -47,7 +44,7 @@ class RetrofitSimpleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun callRemoteSimpleData() {
-        RetrofitClient
+        /*RetrofitClient
             .remoteSimpleService
             .getTokenInfos("TestSimpleParam_01")
             .enqueue(object: Callback<RemoteSimpleData> {
@@ -62,7 +59,7 @@ class RetrofitSimpleActivity : AppCompatActivity(), View.OnClickListener {
                         resultValueBuilder.setLength(0)
                         resultValueTokenBuilder.setLength(0)
 
-                        resultValueBuilder.append("status: ${it.status} \n")
+                        resultValueBuilder.append("status: ${it.state} \n")
                         resultValueBuilder.append("currency: ${it.data.currency} \n")
                         resultValueBuilder.append("message: ${it.message} \n")
                         resultValueBuilder.append("tokenInfos:")
@@ -85,7 +82,7 @@ class RetrofitSimpleActivity : AppCompatActivity(), View.OnClickListener {
                 override fun onFailure(call : Call<RemoteSimpleData> , t : Throwable) {
                     Log.d(TAG , "onFailure:::::::::::")
                 }
-            })
+            })*/
     }
 
     override fun onBackPressed() {

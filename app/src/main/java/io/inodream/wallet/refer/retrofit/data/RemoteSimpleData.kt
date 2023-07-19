@@ -11,8 +11,8 @@ data class RemoteSimpleData(
      * 실제 json 네이밍과 동일하게 하면 자동 바인딩
      * 변수명과 동일하게 해도 되지만 직렬화 이슈로 annotation 권장
      */
-    @SerializedName("status")
-    val status : String,
+    @SerializedName("state")
+    val state : String,
 
     @SerializedName("data")
     val data: RemoteSimpleTokenData,
