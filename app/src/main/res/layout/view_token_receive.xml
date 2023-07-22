@@ -1,65 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/receive_round_gray"
-    >
+    android:background="@drawable/receive_round_gray">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="#000000"
+                android:layout_marginTop="30dp"
                 android:letterSpacing="-0.01"
                 android:lineSpacingExtra="7sp"
-                android:textStyle="bold"
-                android:text="@string/my_address"
-                android:layout_marginTop="30dp"
                 android:paddingHorizontal="20dp"
+                android:text="@string/my_address"
                 android:textAlignment="center"
-                />
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
             <ImageView
+                android:id="@+id/iv_wallet_address"
                 android:layout_width="166dp"
                 android:layout_height="166dp"
-                android:src="@drawable/qr_img"
-                android:layout_marginTop="20dp"/>
+                android:layout_marginTop="20dp"
+                tools:src="@drawable/qr_img" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="39dp"
                 android:layout_marginHorizontal="20dp"
-                android:paddingHorizontal="15dp"
+                android:layout_marginTop="39dp"
                 android:background="@drawable/receive2_ripple_round"
-                android:clickable="true">
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingHorizontal="15dp">
 
                 <TextView
+                    android:id="@+id/tv_wallet_address"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
-                    android:textColor="#7c7c7c"
-                    android:gravity="center_horizontal"
-                    android:text="0x21ceFHwehlkhe5789bsjdbgsbjkknsdg86986gsdguojdgjasd898698knKJGKJG8"
+                    android:layout_marginRight="14dp"
                     android:layout_weight="1"
-                    android:layout_marginRight="14dp"/>
+                    android:gravity="center_horizontal"
+                    android:textColor="#7c7c7c"
+                    android:textSize="12sp"
+                    tools:text="0x21ceFHwehlkhe5789bsjdbgsbjkknsdg86986gsdguojdgjasd898698knKJGKJG8" />
 
                 <ImageView
                     android:layout_width="26dp"
                     android:layout_height="26dp"
-                    android:src="@drawable/copy"/>
+                    android:src="@drawable/copy" />
 
             </LinearLayout>
 
@@ -68,56 +71,54 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="14dp"
-                android:orientation="vertical"
-                >
+                android:orientation="vertical">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_light"
                     android:text="@string/token_receive_caution_01"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/inter_light"
-                    />
+                    android:textSize="10sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_light"
                     android:text="@string/token_receive_caution_02"
-                    android:textSize="10sp"
-                    android:fontFamily="@font/inter_light"
-                    />
+                    android:textSize="10sp" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_receive_caution_03"
-                    android:textSize="10sp"
                     android:fontFamily="@font/inter_light"
-                    />
+                    android:text="@string/token_receive_caution_03"
+                    android:textSize="10sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="21dp">
+                android:layout_marginTop="21dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/close_button"
                     android:layout_width="152dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/receive_round_bu2_ripple"
-                    android:text="@string/close"
-                    android:textStyle="bold"
+                    android:clickable="true"
                     android:gravity="center"
+                    android:text="@string/close"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    />
+                    android:textStyle="bold" />
 
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                />
+                android:layout_height="40dp" />
         </LinearLayout>
 
     </LinearLayout>

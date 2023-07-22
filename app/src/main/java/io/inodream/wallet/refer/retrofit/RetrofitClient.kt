@@ -7,9 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RetrofitClient {
 
     // api 주소
-    private const val BASE_URL = "https://dev-zqbackend.eco-esgtest.io/"
-
-    const val AUTH = "http://3.26.205.235:8008/api/getToken/"
+    private const val BASE_URL = "https://dev-fonback.eco-esgtest.io/"
 
     /**
      * auth

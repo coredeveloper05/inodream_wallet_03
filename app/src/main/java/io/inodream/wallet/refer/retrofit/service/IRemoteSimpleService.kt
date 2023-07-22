@@ -3,18 +3,16 @@ package io.inodream.wallet.refer.retrofit.service
 import com.google.gson.JsonObject
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BalanceData
+import io.inodream.wallet.refer.retrofit.data.BalancesData
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
-import io.inodream.wallet.refer.retrofit.data.RemoteSimpleData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 /**
@@ -35,7 +33,7 @@ interface IRemoteSimpleService {
     fun getUserWallet(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData.WalletData>>
 
     @GET(RetrofitClient.GET_BALANCE_ALL)
-    fun getBalanceAll(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<BalanceData>>
+    fun getBalanceAll(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<BalancesData>>
 
     @GET(RetrofitClient.GET_BALANCE)
     fun getBalance(@HeaderMap headerMap: MutableMap<String, String>, @QueryMap map: MutableMap<String, String>): Call<BaseResponse<BalanceData>>

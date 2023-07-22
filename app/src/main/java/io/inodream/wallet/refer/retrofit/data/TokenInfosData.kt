@@ -9,9 +9,9 @@ package io.inodream.wallet.refer.retrofit.data
  * </pre>
  */
 data class TokenInfosData(
-    val currency: String,
-    val tokenInfos: List<TokenInfo>,
-    val scanner: List<Scanner>
+    val currency: String?,
+    val tokenInfos: List<TokenInfo>?,
+    val scanner: List<Scanner>?
 ) {
     data class TokenInfo(
         val idx: String,

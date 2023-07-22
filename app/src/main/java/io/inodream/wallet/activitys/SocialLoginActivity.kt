@@ -4,10 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.blankj.utilcode.util.SPUtils
-import com.blankj.utilcode.util.TimeUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -21,15 +18,11 @@ import io.inodream.wallet.databinding.ActivitySocialLoginBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
-import io.inodream.wallet.refer.retrofit.data.RemoteSimpleData
-import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
-import io.inodream.wallet.util.encrypt.Rsa
-import org.json.JSONObject
+import io.inodream.wallet.util.encrypt.RequestUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.util.Date
 
 
 class SocialLoginActivity : AppCompatActivity() {
@@ -153,12 +146,9 @@ class SocialLoginActivity : AppCompatActivity() {
     }
 
     private fun authRefresh() {
-        val map: MutableMap<String, String> = HashMap()
-        map["refreshToken"] = UserManager.getInstance().refreshToken
-        map["accessToken"] = UserManager.getInstance().accToken
         RetrofitClient
             .remoteSimpleService
-            .authRefresh(map)
+            .authRefresh(RequestUtil().getRefreshHeader())
             .enqueue(object : Callback<BaseResponse<GoogleAuthData>> {
                 override fun onResponse(
                     call: Call<BaseResponse<GoogleAuthData>>,

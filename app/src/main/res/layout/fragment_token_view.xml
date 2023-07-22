@@ -315,11 +315,11 @@
                                 />
 
                             <TextView
-                                android:id="@+id/toekn_value"
+                                android:id="@+id/token_value"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
-                                android:text="12,00000ETH"
+                                tools:text="BALANCE-ETH"
                                 android:textSize="12sp"
                                 android:fontFamily="sans-serif-medium"
                                 android:textColor="@color/gray_800"
@@ -333,7 +333,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="￦18,231,125"
+                                tools:text="￦18,231,125"
                                 android:textColor="@color/gray_800"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
@@ -373,7 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="테더"
+                                android:text="USDT"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
                                 app:layout_constraintBottom_toBottomOf="parent"
@@ -401,7 +401,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="TRON"
+                                android:text="이더리움"
                                 android:textSize="12sp"
                                 android:fontFamily="sans-serif-medium"
                                 android:textStyle="bold"
@@ -413,11 +413,11 @@
                                 />
 
                             <TextView
-                                android:id="@+id/toekn_value02"
+                                android:id="@+id/token_value02"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
-                                android:text="1,00000USDT"
+                                tools:text="1,00000USDT"
                                 android:textSize="12sp"
                                 android:fontFamily="sans-serif-medium"
                                 android:textColor="@color/gray_800"
@@ -431,7 +431,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="￦18,231,125"
+                                tools:text="￦18,231,125"
                                 android:textColor="@color/gray_800"
                                 android:textSize="12sp"
                                 android:textStyle="bold"
@@ -511,11 +511,11 @@
                                 />
 
                             <TextView
-                                android:id="@+id/toekn_value03"
+                                android:id="@+id/token_value03"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="20dp"
-                                android:text="12,00000ETH"
+                                tools:text="12,00000ETH"
                                 android:textSize="12sp"
                                 android:fontFamily="sans-serif-medium"
                                 android:textColor="@color/gray_800"
@@ -529,7 +529,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-medium"
-                                android:text="￦18,231,125"
+                                tools:text="￦18,231,125"
                                 android:textColor="@color/gray_800"
                                 android:textSize="12sp"
                                 android:textStyle="bold"

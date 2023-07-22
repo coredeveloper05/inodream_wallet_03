@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class BaseResponse<T>(
     val state: String,
     val message: String,
+    val errorCode: String,
     val data: T?
 ) {
     val isSuccess: Boolean = "1" == state

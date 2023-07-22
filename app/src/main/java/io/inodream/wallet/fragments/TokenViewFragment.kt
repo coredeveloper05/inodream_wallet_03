@@ -6,27 +6,33 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.navigation.fragment.findNavController
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.gson.Gson
+import com.king.zxing.util.CodeUtils
 import io.inodream.wallet.R
-import io.inodream.wallet.activitys.SocialTermAgreeActivity
 import io.inodream.wallet.activitys.TokenSendSelectionActivity
 import io.inodream.wallet.activitys.TokenTransactHistoryActivity
 import io.inodream.wallet.databinding.FragmentTokenViewBinding
+import io.inodream.wallet.event.RefreshEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BalanceData
+import io.inodream.wallet.refer.retrofit.data.BalancesData
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
 import io.inodream.wallet.util.UserManager
+import io.inodream.wallet.util.encrypt.RequestUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -35,8 +41,10 @@ class TokenViewFragment : Fragment() {
 
     private var _binding: FragmentTokenViewBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var toteknArea: LinearLayoutCompat
+    private var qrViewDialog: AlertDialog? = null
+    private var mTokenInfos: TokenInfosData? = null
+    private var mBalancesData: BalancesData? = null
+    private var mTotalPrice: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,33 +53,57 @@ class TokenViewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTokenViewBinding.inflate(layoutInflater, container, false)
+        EventBus.getDefault().register(this)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initDialog()
 
-        val layoutInflater = LayoutInflater.from(context)
-        val qrView = layoutInflater.inflate(R.layout.view_token_receive, null)
-        val qrViewDialog = AlertDialog.Builder(context)
+        getUserWallet()
+        getData()
+
+        setListener()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
+    }
+
+    private fun initDialog() {
+        val qrView = LayoutInflater.from(context).inflate(R.layout.view_token_receive, null)
+        qrView.findViewById<TextView>(R.id.tv_wallet_address).text =
+            UserManager.getInstance().address
+        // 生成二维码
+        qrView.findViewById<ImageView>(R.id.iv_wallet_address)
+            .setImageBitmap(CodeUtils.createQRCode(UserManager.getInstance().address, 600, null))
+        qrViewDialog = AlertDialog.Builder(context)
             .setView(qrView)
             .create()
 
-        qrViewDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        qrViewDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         qrView.findViewById<TextView>(R.id.close_button)?.setOnClickListener {
-            qrViewDialog.dismiss()
+            qrViewDialog?.dismiss()
         }
+    }
 
+    private fun setListener() {
         binding.mainButton01.setOnClickListener {
-            qrViewDialog.show()
+            qrViewDialog?.show()
         }
 
         binding.mainButton02.setOnClickListener {
-            startActivity(Intent(requireContext(), TokenSendSelectionActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            startActivity(
+                Intent(requireContext(), TokenSendSelectionActivity::class.java).addFlags(
+                    Intent.FLAG_ACTIVITY_NO_ANIMATION
+                )
+            )
         }
 
         binding.mainButton03.setOnClickListener {
@@ -79,112 +111,98 @@ class TokenViewFragment : Fragment() {
         }
 
         binding.mainButton04.setOnClickListener {
-            startActivity(Intent(requireContext(), TokenTransactHistoryActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            startActivity(
+                Intent(
+                    requireContext(),
+                    TokenTransactHistoryActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            )
         }
 
         /*
         토큰 거래이력
          */
         binding.transactHistoryButton.setOnClickListener {
-            startActivity(Intent(requireContext(), TokenTransactHistoryActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION))
+            startActivity(
+                Intent(
+                    requireContext(),
+                    TokenTransactHistoryActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            )
         }
 
-        getUserWallet()
+    }
+
+    private fun getUserWallet() {
+        RetrofitClient
+            .remoteSimpleService
+            .getUserWallet(RequestUtil().getRequestHeader())
+            .enqueue(object : Callback<BaseResponse<GoogleAuthData.WalletData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<GoogleAuthData.WalletData>>,
+                    response: Response<BaseResponse<GoogleAuthData.WalletData>>
+                ) {
+                    if (!RequestUtil().checkResponse(response.code())) return
+                    response.body()?.data?.let {
+                        Log.e("auth", Gson().toJson(it))
+                        UserManager.getInstance().setWallet(it)
+                    }
+                }
+
+                override fun onFailure(
+                    call: Call<BaseResponse<GoogleAuthData.WalletData>>,
+                    t: Throwable
+                ) {
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    private fun getData() {
+        showDefaultView()
         getBalanceAll()
         getBalance()
         getTokenInfos()
         getTokenInfo()
     }
 
-    private fun getUserWallet() {
-        val map: MutableMap<String, String> = HashMap()
-        map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
-        RetrofitClient
-            .remoteSimpleService
-            .getUserWallet(map)
-            .enqueue(object : Callback<BaseResponse<GoogleAuthData.WalletData>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<GoogleAuthData.WalletData>>,
-                    response: Response<BaseResponse<GoogleAuthData.WalletData>>
-                ) {
-                    response.body()?.let { baseResponse ->
-                        baseResponse.data?.let {
-                            Log.e("auth", Gson().toJson(it))
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<BaseResponse<GoogleAuthData.WalletData>>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
-    }
-
     private fun getBalanceAll() {
-        val map: MutableMap<String, String> = HashMap()
-        map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
         RetrofitClient
             .remoteSimpleService
-            .getBalanceAll(map)
-            .enqueue(object : Callback<BaseResponse<BalanceData>> {
+            .getBalanceAll(RequestUtil().getRequestHeader())
+            .enqueue(object : Callback<BaseResponse<BalancesData>> {
                 override fun onResponse(
-                    call: Call<BaseResponse<BalanceData>>,
-                    response: Response<BaseResponse<BalanceData>>
+                    call: Call<BaseResponse<BalancesData>>,
+                    response: Response<BaseResponse<BalancesData>>
                 ) {
-                    response.body()?.let { baseResponse ->
-                        baseResponse.data?.let {
-                            Log.e("auth", Gson().toJson(it))
-                        }
+                    if (!RequestUtil().checkResponse(response.code())) return
+                    response.body()?.data?.let {
+                        Log.e("auth", Gson().toJson(it))
+                        mBalancesData = it
+                        updateDataView()
                     }
                 }
 
-                override fun onFailure(call: Call<BaseResponse<BalanceData>>, t: Throwable) {
-                    t.printStackTrace()
-                }
-            })
-    }
-
-    private fun getBalance() {
-        val map: MutableMap<String, String> = HashMap()
-        map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
-        val body: MutableMap<String, String> = HashMap()
-        body["symbol"] = "ETH"
-        RetrofitClient
-            .remoteSimpleService
-            .getBalance(map, body)
-            .enqueue(object : Callback<BaseResponse<BalanceData>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<BalanceData>>,
-                    response: Response<BaseResponse<BalanceData>>
-                ) {
-                    response.body()?.let { baseResponse ->
-                        baseResponse.data?.let {
-                            Log.e("auth", Gson().toJson(it))
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<BaseResponse<BalanceData>>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<BalancesData>>, t: Throwable) {
                     t.printStackTrace()
                 }
             })
     }
 
     private fun getTokenInfos() {
-        val map: MutableMap<String, String> = HashMap()
-        map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
         RetrofitClient
             .remoteSimpleService
-            .getTokenInfos(map)
+            .getTokenInfos(RequestUtil().getRequestHeader())
             .enqueue(object : Callback<BaseResponse<TokenInfosData>> {
                 override fun onResponse(
                     call: Call<BaseResponse<TokenInfosData>>,
                     response: Response<BaseResponse<TokenInfosData>>
                 ) {
-                    response.body()?.let { baseResponse ->
-                        baseResponse.data?.let {
-                            Log.e("auth", Gson().toJson(it))
-                        }
+                    if (!RequestUtil().checkResponse(response.code())) return
+                    response.body()?.data?.let {
+                        Log.e("auth", Gson().toJson(it))
+                        mTokenInfos = it
+                        updateDataView()
                     }
                 }
 
@@ -194,19 +212,99 @@ class TokenViewFragment : Fragment() {
             })
     }
 
+    private fun showDefaultView() {
+        mTokenInfos = null
+        mBalancesData = null
+        mTotalPrice = 0.0
+        binding.tokenValueKo.text = String.format(getString(R.string.W_value), "0.0")
+        binding.tokenValueKo02.text = String.format(getString(R.string.W_value), "0.0")
+        binding.tokenValueKo03.text = String.format(getString(R.string.W_value), "0.0")
+        binding.tokenValue.text = "0.0ETH"
+        binding.tokenValue02.text = "0.0USDT"
+        binding.tokenValue03.text = "0.0FON"
+    }
+
+    private fun updateDataView() {
+        mBalancesData?.balances?.forEach {
+            when (it.symbol) {
+                "ETH" -> {
+                    binding.tokenValue.text = it.balance + "ETH"
+                    analysisData("ETH", it.balance, binding.tokenSymbol, binding.tokenValueKo)
+                }
+
+                "USDT" -> {
+                    binding.tokenValue02.text = it.balance + "USDT"
+                    analysisData("USDT", it.balance,  binding.tokenSymbol02, binding.tokenValueKo02)
+                }
+
+                "FON" -> {
+                    binding.tokenValue03.text = it.balance + "FON"
+                    analysisData("FON", it.balance,  binding.tokenSymbol03, binding.tokenValueKo03)
+                }
+            }
+        }
+    }
+
+    private fun analysisData(symbol: String, balance: String, tokenSymbol: ImageView, tokenValueKo: TextView) {
+        mTokenInfos?.tokenInfos?.forEach { token ->
+            when (token.symbol) {
+                symbol -> {
+                    Glide.with(this).load(token.icon).into(tokenSymbol)
+                    var price = 0.0
+                    var bal = 0.0
+                    try {
+                        price = token.price.toDouble()
+                        bal = balance.toDouble()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                    val totalPrice = price * bal
+                    mTotalPrice += totalPrice
+                    tokenValueKo.text = String.format(getString(R.string.W_value), totalPrice)
+                    binding.myAssetsValue.text =
+                        String.format(getString(R.string.W_value), mTotalPrice)
+                }
+            }
+        }
+    }
+
+    private fun getBalance() {
+        val body: MutableMap<String, String> = HashMap()
+        body["symbol"] = "FON"
+        RetrofitClient
+            .remoteSimpleService
+            .getBalance(RequestUtil().getRequestHeader(), body)
+            .enqueue(object : Callback<BaseResponse<BalanceData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<BalanceData>>,
+                    response: Response<BaseResponse<BalanceData>>
+                ) {
+                    if (!RequestUtil().checkResponse(response.code())) return
+                    response.body()?.let { baseResponse ->
+                        baseResponse.data?.let {
+                            Log.e("auth", Gson().toJson(it))
+                        }
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<BalanceData>>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+    }
+
     private fun getTokenInfo() {
-        val map: MutableMap<String, String> = HashMap()
-        map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
         val body: MutableMap<String, String> = HashMap()
         body["symbol"] = "ETH"
         RetrofitClient
             .remoteSimpleService
-            .getTokenInfo(map, body)
+            .getTokenInfo(RequestUtil().getRequestHeader(), body)
             .enqueue(object : Callback<BaseResponse<TokenInfoData>> {
                 override fun onResponse(
                     call: Call<BaseResponse<TokenInfoData>>,
                     response: Response<BaseResponse<TokenInfoData>>
                 ) {
+                    if (!RequestUtil().checkResponse(response.code())) return
                     response.body()?.let { baseResponse ->
                         baseResponse.data?.let {
                             Log.e("auth", Gson().toJson(it))
@@ -219,4 +317,10 @@ class TokenViewFragment : Fragment() {
                 }
             })
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshToken(event: RefreshEvent?) {
+        getData()
+    }
+
 }

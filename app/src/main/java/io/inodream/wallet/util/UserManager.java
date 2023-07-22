@@ -83,4 +83,20 @@ public class UserManager {
         }
         return "";
     }
+
+    public String getAddress() {
+        try {
+            return getData().getWallet().getAddress();
+        } catch (Exception ignore) {
+        }
+        return "";
+    }
+
+    public void setWallet(GoogleAuthData.WalletData data) {
+        try {
+            getData().setWallet(data);
+            setUser(getData());
+        } catch (Exception ignore) {
+        }
+    }
 }

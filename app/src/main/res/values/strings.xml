@@ -84,4 +84,6 @@
     <string name="there_is_no_menu">메뉴가 존재하지 않습니다.</string>
 
     <string name="service_being_prepared">서비스 준비 중 입니다.</string>
+
+    <string name="W_value">￦%1$s</string>
 </resources>
