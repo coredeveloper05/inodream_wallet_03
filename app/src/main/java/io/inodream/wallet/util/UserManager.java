@@ -92,6 +92,14 @@ public class UserManager {
         return "";
     }
 
+    public GoogleAuthData.WalletData getWalletData() {
+        try {
+            return getData().getWallet();
+        } catch (Exception ignore) {
+        }
+        return null;
+    }
+
     public void setWallet(GoogleAuthData.WalletData data) {
         try {
             getData().setWallet(data);

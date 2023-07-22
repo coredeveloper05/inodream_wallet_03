@@ -85,5 +85,9 @@
 
     <string name="service_being_prepared">서비스 준비 중 입니다.</string>
 
+    <string name="check_error_empty_address">수신지 주소를 입력해 주세요.</string>
+    <string name="check_error_empty_quantity">수량을 입력해 주세요.</string>
+    <string name="check_error_empty_pwd">비밀번호를 입력해 주세요.</string>
+
     <string name="W_value">￦%1$s</string>
 </resources>

@@ -40,6 +40,7 @@ object RetrofitClient {
      */
     const val GET_BALANCE_ALL = "api/token/balanceAll"
     const val GET_BALANCE = "api/token/balance"
+    const val sendCoin = "api/token/sendCoin"
 
 
 

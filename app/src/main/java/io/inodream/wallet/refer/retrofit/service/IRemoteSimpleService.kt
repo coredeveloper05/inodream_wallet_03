@@ -20,8 +20,11 @@ import retrofit2.http.QueryMap
  */
 interface IRemoteSimpleService {
 
-    @GET("http://3.26.205.235:8008/api/getToken2")
+    @GET("http://3.26.205.235:8008/api/getToken")
     fun auth(@QueryMap map: MutableMap<String, String>): Call<JsonObject>
+
+    @POST("http://3.26.205.235:8008/api/decodeSeed")
+    fun decodeSeed(@Body map: MutableMap<String, String>): Call<JsonObject>
 
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
@@ -36,13 +39,25 @@ interface IRemoteSimpleService {
     fun getBalanceAll(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<BalancesData>>
 
     @GET(RetrofitClient.GET_BALANCE)
-    fun getBalance(@HeaderMap headerMap: MutableMap<String, String>, @QueryMap map: MutableMap<String, String>): Call<BaseResponse<BalanceData>>
+    fun getBalance(
+        @HeaderMap headerMap: MutableMap<String, String>,
+        @QueryMap map: MutableMap<String, String>
+    ): Call<BaseResponse<BalanceData>>
 
     @GET(RetrofitClient.GET_TOKEN_INFOS)
     fun getTokenInfos(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<TokenInfosData>>
 
     @GET(RetrofitClient.GET_TOKEN_INFO)
-    fun getTokenInfo(@HeaderMap headerMap: MutableMap<String, String>, @QueryMap map: MutableMap<String, String>): Call<BaseResponse<TokenInfoData>>
+    fun getTokenInfo(
+        @HeaderMap headerMap: MutableMap<String, String>,
+        @QueryMap map: MutableMap<String, String>
+    ): Call<BaseResponse<TokenInfoData>>
+
+    @POST(RetrofitClient.sendCoin)
+    fun sendCoin(
+        @HeaderMap map: MutableMap<String, String>,
+        @Body body: MutableMap<String, String>
+    ): Call<BaseResponse<Any>>
 
 
 }

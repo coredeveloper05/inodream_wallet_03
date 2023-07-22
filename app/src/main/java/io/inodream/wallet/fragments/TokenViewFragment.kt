@@ -46,10 +46,6 @@ class TokenViewFragment : Fragment() {
     private var mBalancesData: BalancesData? = null
     private var mTotalPrice: Double = 0.0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -99,11 +95,12 @@ class TokenViewFragment : Fragment() {
         }
 
         binding.mainButton02.setOnClickListener {
-            startActivity(
+            val intent =
                 Intent(requireContext(), TokenSendSelectionActivity::class.java).addFlags(
                     Intent.FLAG_ACTIVITY_NO_ANIMATION
                 )
-            )
+            intent.putExtra("key", mTokenInfos?.tokenInfos)
+            startActivity(intent)
         }
 
         binding.mainButton03.setOnClickListener {
@@ -234,18 +231,23 @@ class TokenViewFragment : Fragment() {
 
                 "USDT" -> {
                     binding.tokenValue02.text = it.balance + "USDT"
-                    analysisData("USDT", it.balance,  binding.tokenSymbol02, binding.tokenValueKo02)
+                    analysisData("USDT", it.balance, binding.tokenSymbol02, binding.tokenValueKo02)
                 }
 
                 "FON" -> {
                     binding.tokenValue03.text = it.balance + "FON"
-                    analysisData("FON", it.balance,  binding.tokenSymbol03, binding.tokenValueKo03)
+                    analysisData("FON", it.balance, binding.tokenSymbol03, binding.tokenValueKo03)
                 }
             }
         }
     }
 
-    private fun analysisData(symbol: String, balance: String, tokenSymbol: ImageView, tokenValueKo: TextView) {
+    private fun analysisData(
+        symbol: String,
+        balance: String,
+        tokenSymbol: ImageView,
+        tokenValueKo: TextView
+    ) {
         mTokenInfos?.tokenInfos?.forEach { token ->
             when (token.symbol) {
                 symbol -> {
