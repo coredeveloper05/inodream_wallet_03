@@ -90,4 +90,5 @@
     <string name="check_error_empty_pwd">비밀번호를 입력해 주세요.</string>
 
     <string name="W_value">￦%1$s</string>
+    <string name="W_swap_value">￦ : %1$s</string>
 </resources>

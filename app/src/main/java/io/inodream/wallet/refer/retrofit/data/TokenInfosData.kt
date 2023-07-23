@@ -27,7 +27,9 @@ data class TokenInfosData(
         val icon: String,
         val contractAddress: String,
         val price: String
-    ) : Serializable
+    ) : Serializable {
+        var balance: String? = null
+    }
 
     data class Scanner(
         val idx: String,

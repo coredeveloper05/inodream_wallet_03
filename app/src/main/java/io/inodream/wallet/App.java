@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.blankj.utilcode.util.Utils;
 
+import io.inodream.wallet.refer.retrofit.data.TokenInfosData;
+
 /**
  * <pre>
  *     author : zhen
@@ -15,9 +17,25 @@ import com.blankj.utilcode.util.Utils;
 
 public class App extends Application {
 
+   private static App mApp;
+   private TokenInfosData mTokenInfosData;
+
    @Override
    public void onCreate() {
       super.onCreate();
       Utils.init(this);
+      mApp = this;
+   }
+
+   public static App getInstance() {
+      return mApp;
+   }
+
+   public TokenInfosData getTokenInfosData() {
+      return mTokenInfosData;
+   }
+
+   public void setTokenInfosData(TokenInfosData tokenInfosData) {
+      mTokenInfosData = tokenInfosData;
    }
 }

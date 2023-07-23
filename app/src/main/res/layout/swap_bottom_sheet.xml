@@ -4,165 +4,185 @@
     android:id="@+id/bottomSheetDashBoardLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/swap_bottom_sheet_background"
     android:orientation="vertical"
-    app:behavior_hideable="true"
-    app:behavior_draggable="true"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     android:padding="28dp"
-    android:background="@drawable/swap_bottom_sheet_background">
+    app:behavior_draggable="true"
+    app:behavior_hideable="true"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
         android:id="@+id/receiveTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:layout_marginBottom="11dp"
         android:text="토큰"
         android:textColor="#000000"
-        android:layout_marginBottom="11dp"/>
+        android:textSize="18dp" />
 
     <LinearLayout
+        android:id="@+id/ll_swap_sheet_01"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/gray_border_round_ripple"
+        android:clickable="true"
+        android:gravity="center"
         android:orientation="horizontal"
         android:paddingHorizontal="20dp"
-        android:paddingVertical="17dp"
-        android:gravity="center"
-        android:background="@drawable/gray_border_round_ripple"
-        android:clickable="true">
+        android:paddingVertical="17dp">
 
         <ImageView
+            android:id="@+id/iv_swap_01"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:src="@drawable/ic_token_01"
-            android:layout_marginRight="18dp"/>
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_token_01" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="ETH"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="ETH"/>
+            android:textSize="14sp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="10dp"
-            android:background="#d9d9d9"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#d9d9d9" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="이더리움"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="이더리움"/>
+            android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <TextView
+            android:id="@+id/tv_swap_value_01"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="12sp"
+            android:text="12,0000ETH"
             android:textColor="#000000"
-            android:text="12,0000ETH"/>
+            android:textSize="12sp"
+            android:textStyle="normal" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_swap_sheet_02"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="17dp"
-        android:gravity="center"
         android:background="@drawable/gray_border_round_ripple"
-        android:clickable="true">
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="17dp">
 
         <ImageView
+            android:id="@+id/iv_swap_02"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:src="@drawable/ic_token_03"
-            android:layout_marginRight="18dp"/>
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_token_03" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="USDT"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="테더"/>
+            android:textSize="14sp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="10dp"
-            android:background="#d9d9d9"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#d9d9d9" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="이더리움"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="이더리움"/>
+            android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <TextView
+            android:id="@+id/tv_swap_value_02"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="12sp"
+            android:text="12,0000USDT"
             android:textColor="#000000"
-            android:text="12,0000USDT"/>
+            android:textSize="12sp"
+            android:textStyle="normal" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_swap_sheet_03"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="10dp"
-        android:paddingHorizontal="20dp"
-        android:paddingVertical="17dp"
-        android:gravity="center"
         android:background="@drawable/gray_border_round_ripple"
-        android:clickable="true">
+        android:clickable="true"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="17dp">
 
         <ImageView
+            android:id="@+id/iv_swap_03"
             android:layout_width="wrap_content"
             android:layout_height="22dp"
-            android:src="@drawable/ic_token_02"
-            android:layout_marginRight="18dp"/>
+            android:layout_marginRight="18dp"
+            android:src="@drawable/ic_token_02" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="FON"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="FON"/>
+            android:textSize="14sp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="10dp"
-            android:background="#d9d9d9"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="#d9d9d9" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="이더리움"
             android:textColor="@color/black"
-            android:textSize="14sp"
-            android:text="이더리움"/>
+            android:textSize="14sp" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
+
         <TextView
+            android:id="@+id/tv_swap_value_03"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="normal"
-            android:textSize="12sp"
+            android:text="12,0000FON"
             android:textColor="#000000"
-            android:text="12,0000FON"/>
+            android:textSize="12sp"
+            android:textStyle="normal" />
     </LinearLayout>
-
 
 
 </LinearLayout>

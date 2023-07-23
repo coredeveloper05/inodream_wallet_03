@@ -1,6 +1,8 @@
 package io.inodream.wallet.util.encrypt
 
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
@@ -51,27 +53,31 @@ class RequestUtil {
                         call: Call<BaseResponse<GoogleAuthData>>,
                         response: Response<BaseResponse<GoogleAuthData>>
                     ) {
-                        isRequestRefresh = false
                         response.body()?.let { baseResponse ->
                             baseResponse.data?.let {
                                 Log.e("auth", Gson().toJson(it))
                                 UserManager.getInstance().accToken = it.accessToken
                                 EventBus.getDefault().post(RefreshEvent())
-                                return
+                                isRequestRefresh = false
                             }
                         }
-
-                        Utils.getApp().startActivity(
-                            Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        if (isRequestRefresh) {
+                            isRequestRefresh = false
+                            Utils.getApp().startActivity(
+                                Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        }
                     }
 
                     override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
                         isRequestRefresh = false
                         t.printStackTrace()
-                        Utils.getApp().startActivity(
-                            Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        UserManager.getInstance().clearData()
+                        Handler(Looper.getMainLooper()).post {
+                            Utils.getApp().startActivity(
+                                Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                        }
                     }
                 })
             return false

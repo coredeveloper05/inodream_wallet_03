@@ -16,11 +16,13 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.king.zxing.util.CodeUtils
+import io.inodream.wallet.App
 import io.inodream.wallet.R
 import io.inodream.wallet.activitys.TokenSendSelectionActivity
 import io.inodream.wallet.activitys.TokenTransactHistoryActivity
 import io.inodream.wallet.databinding.FragmentTokenViewBinding
 import io.inodream.wallet.event.RefreshEvent
+import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BalanceData
 import io.inodream.wallet.refer.retrofit.data.BalancesData
@@ -158,9 +160,9 @@ class TokenViewFragment : Fragment() {
     private fun getData() {
         showDefaultView()
         getBalanceAll()
-        getBalance()
+//        getBalance()
         getTokenInfos()
-        getTokenInfo()
+//        getTokenInfo()
     }
 
     private fun getBalanceAll() {
@@ -199,6 +201,8 @@ class TokenViewFragment : Fragment() {
                     response.body()?.data?.let {
                         Log.e("auth", Gson().toJson(it))
                         mTokenInfos = it
+                        App.getInstance().tokenInfosData = it
+                        EventBus.getDefault().post(UpdateTokenEvent())
                         updateDataView()
                     }
                 }
@@ -251,6 +255,7 @@ class TokenViewFragment : Fragment() {
         mTokenInfos?.tokenInfos?.forEach { token ->
             when (token.symbol) {
                 symbol -> {
+                    token.balance = balance
                     Glide.with(this).load(token.icon).into(tokenSymbol)
                     var price = 0.0
                     var bal = 0.0
