@@ -8,6 +8,7 @@ import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
+import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -25,6 +26,9 @@ interface IRemoteSimpleService {
 
     @POST("http://3.26.205.235:8008/api/decodeSeed")
     fun decodeSeed(@Body map: MutableMap<String, String>): Call<JsonObject>
+
+    @GET("http://3.26.205.235:8008/api/quote")
+    fun quoteToken(@QueryMap map: MutableMap<String, String>): Call<TokenQuoteData>
 
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>

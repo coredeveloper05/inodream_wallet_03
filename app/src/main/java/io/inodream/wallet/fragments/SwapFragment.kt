@@ -11,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.inodream.wallet.App
@@ -18,9 +19,14 @@ import io.inodream.wallet.R
 import io.inodream.wallet.core.adapters.TopToolBarAdapter
 import io.inodream.wallet.databinding.FragmentSwapBinding
 import io.inodream.wallet.event.UpdateTokenEvent
+import io.inodream.wallet.refer.retrofit.RetrofitClient
+import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SwapFragment : Fragment() {
 
@@ -38,21 +44,17 @@ class SwapFragment : Fragment() {
     private lateinit var swapBottomSheetView: View
 
     //
-    private lateinit var inSymbol: String
-    private lateinit var outSymbol: String
+    private var inSymbol: String = ""
+    private var outSymbol: String = ""
     private var sheetType = 1
     private var tokenMap: MutableMap<String, String> = HashMap()
 
     private var selectedSlippage = 1
     private var scopeSlippageLaArray: Array<TextView>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentSwapBinding.inflate(layoutInflater, container, false)
         return binding.root
@@ -75,9 +77,9 @@ class SwapFragment : Fragment() {
     }
 
     private fun initView() {
-        swapSendToken = binding.swapSendToken as LinearLayout
-        swapReceiveToken = binding.swapReceiveToken as LinearLayout
-        swapSlippage = binding.swapSlippage as LinearLayout
+        swapSendToken = binding.swapSendToken
+        swapReceiveToken = binding.swapReceiveToken
+        swapSlippage = binding.swapSlippage
     }
 
     private fun initDialog() {
@@ -107,22 +109,27 @@ class SwapFragment : Fragment() {
                     swapBottomSheetView.findViewById<ImageView>(R.id.iv_swap_01)?.let { iv ->
                         Glide.with(this).load(it.icon).into(iv)
                     }
-                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_01)?.text = it.balance + "ETH"
-                    tokenMap["ETH"] = it.balance?:""
+                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_01)?.text =
+                        it.balance + "ETH"
+                    tokenMap["ETH"] = it.balance ?: ""
                 }
+
                 "USDT" -> {
                     swapBottomSheetView.findViewById<ImageView>(R.id.iv_swap_02)?.let { iv ->
                         Glide.with(this).load(it.icon).into(iv)
                     }
-                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_02)?.text = it.balance + "USDT"
-                    tokenMap["USDT"] = it.balance?:""
+                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_02)?.text =
+                        it.balance + "USDT"
+                    tokenMap["USDT"] = it.balance ?: ""
                 }
+
                 "FON" -> {
                     swapBottomSheetView.findViewById<ImageView>(R.id.iv_swap_03)?.let { iv ->
                         Glide.with(this).load(it.icon).into(iv)
                     }
-                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_03)?.text = it.balance + "FON"
-                    tokenMap["FON"] = it.balance?:""
+                    swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_03)?.text =
+                        it.balance + "FON"
+                    tokenMap["FON"] = it.balance ?: ""
                 }
             }
         }
@@ -130,7 +137,11 @@ class SwapFragment : Fragment() {
 
     private fun setListener() {
         binding.swaptxt01.setOnClickListener {
-            //findNavController().navigate(R.id.action_swapFragment_to_swapResultSuccessFragment)
+            if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
+                ToastUtils.showLong(R.string.check_error_empty_symbol)
+                return@setOnClickListener
+            }
+            quoteToken()
         }
         binding.ivChange.setOnClickListener {
             if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
@@ -145,7 +156,7 @@ class SwapFragment : Fragment() {
             binding.tvSwap.text = temp
         }
         binding.tvMax.setOnClickListener {
-            binding.etSwap01.setText(tokenMap[inSymbol])
+            tokenMap[inSymbol]?.let { binding.etSwap01.setText(tokenMap[inSymbol]) }
         }
 
         swapBottomSheetView.findViewById<View>(R.id.ll_swap_sheet_01)
@@ -187,7 +198,7 @@ class SwapFragment : Fragment() {
 
     fun setSlippageLabel(select: Int) {
         if (selectedSlippage == select) {
-            return;
+            return
         }
         scopeSlippageLaArray?.let {
             for ((index, item) in scopeSlippageLaArray!!.withIndex()) {
@@ -204,6 +215,31 @@ class SwapFragment : Fragment() {
         }
 
         selectedSlippage = select
+    }
+
+    fun quoteToken() {
+        val map: MutableMap<String, String> = HashMap()
+        map["tokenInSymbol"] = inSymbol
+        map["tokenOutSymbol"] = outSymbol
+        map["tokenInAmount"] = binding.etSwap01.text.toString()
+        map["quoteType"] = "forward"
+        RetrofitClient
+            .remoteSimpleService
+            .quoteToken(map)
+            .enqueue(object : Callback<TokenQuoteData> {
+                override fun onResponse(
+                    call: Call<TokenQuoteData>,
+                    response: Response<TokenQuoteData>
+                ) {
+                    response.body()?.let {
+                        binding.tvSwap.text = it.tokenOutAmount
+                    }
+                }
+
+                override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
