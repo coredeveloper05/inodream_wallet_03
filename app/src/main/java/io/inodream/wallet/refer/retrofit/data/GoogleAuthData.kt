@@ -18,6 +18,7 @@ data class GoogleAuthData(
     val accessExpiresIn: String,
     val refreshToken: String,
     val refreshExpiresIn: String,
+    var withdrawPw: Boolean,
     var wallet: WalletData
 ) {
     data class WalletData(

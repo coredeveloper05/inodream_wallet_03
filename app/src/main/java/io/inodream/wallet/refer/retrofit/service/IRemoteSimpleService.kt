@@ -9,6 +9,7 @@ import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
+import io.inodream.wallet.refer.retrofit.data.TxData
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -29,6 +30,9 @@ interface IRemoteSimpleService {
 
     @GET("http://3.26.205.235:8008/api/quote")
     fun quoteToken(@QueryMap map: MutableMap<String, String>): Call<TokenQuoteData>
+
+    @POST("http://3.26.205.235:8008/api/encodeText")
+    fun encodeText(@Body map: MutableMap<String, String>): Call<JsonObject>
 
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
@@ -57,11 +61,23 @@ interface IRemoteSimpleService {
         @QueryMap map: MutableMap<String, String>
     ): Call<BaseResponse<TokenInfoData>>
 
-    @POST(RetrofitClient.sendCoin)
+    @POST(RetrofitClient.SEND_COIN)
     fun sendCoin(
         @HeaderMap map: MutableMap<String, String>,
         @Body body: MutableMap<String, String>
     ): Call<BaseResponse<Any>>
+
+    @POST(RetrofitClient.SET_USER_WITH_DRAW_PW)
+    fun withDrawPwd(
+        @HeaderMap map: MutableMap<String, String>,
+        @Body body: MutableMap<String, String>
+    ): Call<BaseResponse<JsonObject>>
+
+    @GET(RetrofitClient.TX_LIST)
+    fun listTX(
+        @HeaderMap map: MutableMap<String, String>,
+        @QueryMap body: MutableMap<String, String>
+    ): Call<BaseResponse<TxData>>
 
 
 }

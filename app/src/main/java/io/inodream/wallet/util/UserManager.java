@@ -107,4 +107,20 @@ public class UserManager {
         } catch (Exception ignore) {
         }
     }
+
+    public boolean isSetPwd() {
+        try {
+            return getData().getWithdrawPw();
+        } catch (Exception ignore) {
+        }
+        return true;
+    }
+
+    public void setPwd(boolean withdrawPw) {
+        try {
+            getData().setWithdrawPw(withdrawPw);
+            setUser(getData());
+        } catch (Exception ignore) {
+        }
+    }
 }

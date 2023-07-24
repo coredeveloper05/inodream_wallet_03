@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivityTokenSendSelectionBinding
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
+import io.inodream.wallet.util.UserManager
 
 class TokenSendSelectionActivity : AppCompatActivity() {
 
@@ -59,11 +60,21 @@ class TokenSendSelectionActivity : AppCompatActivity() {
     }
 
     private fun startPage(symbol: String) {
+        if (!UserManager.getInstance().isSetPwd) {
+            startActivity(
+                Intent(
+                    this,
+                    SendTransactPasswordActivity::class.java
+                ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            )
+            return
+        }
         val intent = Intent(
             this,
             TokenSendRequestActivity::class.java
         ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         intent.putExtra("key", symbol)
         startActivity(intent)
+        finish()
     }
 }

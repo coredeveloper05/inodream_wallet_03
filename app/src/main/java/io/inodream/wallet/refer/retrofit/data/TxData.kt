@@ -1,5 +1,7 @@
 package io.inodream.wallet.refer.retrofit.data
 
+import java.io.Serializable
+
 /**
  * <pre>
  *     author : zhen
@@ -35,6 +37,8 @@ data class TxData(
         // 전송갯수
         val value: String,
         // 네트워크 수수료
-        val gasPrice: String
-    )
+        val gasPrice: String,
+        // 날짜
+        val updatedAt: String
+    ) : Serializable
 }

@@ -60,6 +60,7 @@
                     tools:text="0x21ceFHwehlkhe5789bsjdbgsbjkknsdg86986gsdguojdgjasd898698knKJGKJG8" />
 
                 <ImageView
+                    android:id="@+id/copy"
                     android:layout_width="26dp"
                     android:layout_height="26dp"
                     android:src="@drawable/copy" />

@@ -85,10 +85,21 @@
 
     <string name="service_being_prepared">서비스 준비 중 입니다.</string>
 
+    <string name="tx_receive">받기</string>
+    <string name="tx_send">보내기</string>
+    <string name="tx_complete"> 완료</string>
+    <string name="tx_progress"> 진행중</string>
+    <string name="tx_create"> 창조하다</string>
+    <string name="tx_confirm"> 확인하다</string>
+
+
     <string name="check_error_empty_address">수신지 주소를 입력해 주세요.</string>
     <string name="check_error_empty_quantity">수량을 입력해 주세요.</string>
     <string name="check_error_empty_pwd">비밀번호를 입력해 주세요.</string>
     <string name="check_error_empty_symbol">토큰 선택하세요.</string>
+    <string name="check_pwd_length_error">암호가 충족되지 않음.</string>
+    <string name="check_pwd_inconsistency_error">비밀번호가 두 번 일치하지 않습니다.</string>
+    <string name="success_set_pwd">암호 설정 성공.</string>
 
     <string name="W_value">￦%1$s</string>
     <string name="W_swap_value">￦ : %1$s</string>

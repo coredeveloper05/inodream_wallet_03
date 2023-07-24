@@ -30,8 +30,10 @@ object RetrofitClient {
     const val GET_USER_INFO = "api/user/info"
     // 회원 지갑정보를 확인합니다.
     const val GET_USER_WALLET = "api/user/wallet"
+
     // 회원이 출금을 할때 필요한 출금암호를 등록합니다.
     const val SET_USER_WITH_DRAW_PW = "api/user/withdrawPw"
+
     // 회원 정보 업데이트
     const val GET_USER_PROFILE = "api/user/profile"
 
@@ -40,12 +42,8 @@ object RetrofitClient {
      */
     const val GET_BALANCE_ALL = "api/token/balanceAll"
     const val GET_BALANCE = "api/token/balance"
-    const val sendCoin = "api/token/sendCoin"
-
-
-
-
-
+    const val SEND_COIN = "api/token/sendCoin"
+    const val TX_LIST = "api/token/txList"
 
 
     // retrofit 클라이언트 빌드

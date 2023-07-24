@@ -28,7 +28,7 @@ import retrofit2.Response
 class RequestUtil {
     private var isRequestRefresh: Boolean = false
 
-    public fun getRequestHeader(): MutableMap<String, String> {
+    fun getRequestHeader(): MutableMap<String, String> {
         val map: MutableMap<String, String> = HashMap()
         map["Authorization"] = "Bearer " + UserManager.getInstance().accToken
         return map
@@ -63,9 +63,12 @@ class RequestUtil {
                         }
                         if (isRequestRefresh) {
                             isRequestRefresh = false
+                            UserManager.getInstance().clearData()
                             Utils.getApp().startActivity(
                                 Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
                         }
                     }
 

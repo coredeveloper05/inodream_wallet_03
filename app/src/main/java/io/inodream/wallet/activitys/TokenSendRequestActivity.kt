@@ -47,7 +47,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
-                    privateKey = response.body()?.get("privateKey")?.asString ?: ""
+                    privateKey = response.body()?.get("privateKeyEncode")?.asString ?: ""
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
@@ -62,7 +62,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
         }
         binding.sendRequestButton.setOnClickListener {
             if (checkForm()) {
-                sendCoin()
+                encodeText()
             }
         }
         binding.llScan.setOnClickListener {
@@ -96,14 +96,37 @@ class TokenSendRequestActivity : AppCompatActivity() {
         return true
     }
 
-    private fun sendCoin() {
+    private fun encodeText() {
+        val map: MutableMap<String, String> = HashMap()
+        map["text"] = binding.etPwd.text.toString()
+        RetrofitClient
+            .remoteSimpleService
+            .encodeText(map)
+            .enqueue(object : Callback<JsonObject> {
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    val text = response.body()?.get("encode")?.asString
+                    if (!TextUtils.isEmpty(text)) {
+                        sendCoin(text!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
+    }
+
+    private fun sendCoin(pwd: String) {
         val map: MutableMap<String, String> = HashMap()
         map["symbol"] = symbol
         map["to"] = binding.sampleEditText.text.toString()
         map["value"] = binding.etBalance.text.toString()
         map["address"] = UserManager.getInstance().address
         map["privateKey"] = privateKey
-        map["password"] = binding.etPwd.text.toString()
+        map["password"] = pwd
         RetrofitClient
             .remoteSimpleService
             .sendCoin(RequestUtil().getRequestHeader(), map)
@@ -113,7 +136,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     response: Response<BaseResponse<Any>>
                 ) {
                     if (!RequestUtil().checkResponse(response.code())) return
-                    if (response.body()?.isSuccess == true) {
+                    if (response.body()?.status == "1") {
                         startActivity(
                             Intent(
                                 this@TokenSendRequestActivity,

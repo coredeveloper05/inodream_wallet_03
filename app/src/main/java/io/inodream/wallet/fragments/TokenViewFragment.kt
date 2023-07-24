@@ -13,6 +13,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.blankj.utilcode.util.ClipboardUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.king.zxing.util.CodeUtils
@@ -88,6 +90,10 @@ class TokenViewFragment : Fragment() {
 
         qrView.findViewById<TextView>(R.id.close_button)?.setOnClickListener {
             qrViewDialog?.dismiss()
+        }
+        qrView.findViewById<View>(R.id.copy)?.setOnClickListener {
+            ClipboardUtils.copyText(UserManager.getInstance().address)
+            ToastUtils.showLong("클립보드에 복사됨.")
         }
     }
 

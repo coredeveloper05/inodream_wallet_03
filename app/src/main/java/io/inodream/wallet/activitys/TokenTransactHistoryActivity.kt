@@ -1,15 +1,25 @@
 package io.inodream.wallet.activitys
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.fragment.findNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.inodream.wallet.R
+import io.inodream.wallet.core.adapters.TxAdapter
 import io.inodream.wallet.databinding.ActivityTokenTransactHistoryBinding
+import io.inodream.wallet.refer.retrofit.RetrofitClient
+import io.inodream.wallet.refer.retrofit.data.BaseResponse
+import io.inodream.wallet.refer.retrofit.data.TxData
+import io.inodream.wallet.util.UserManager
+import io.inodream.wallet.util.encrypt.RequestUtil
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class TokenTransactHistoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTokenTransactHistoryBinding
+    private lateinit var adapter: TxAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,20 +33,40 @@ class TokenTransactHistoryActivity : AppCompatActivity() {
             super.onBackPressed()
         }
 
-        /**
-         * 거래이력 상세 이력 유형
-         * 1. 받기 : fragment_token_receive
-         * 2. 보내기 : fragment_token_send
-         * 3. 스왑 : fragment_token_swap
-         */
-        binding.traLinerLayout01.setOnClickListener {
-            startActivity(Intent(this, TokenTransactHistoryDetailActivity::class.java))
+        initView()
+        getTxList()
+    }
+
+    private fun initView() {
+        adapter = TxAdapter()
+        binding.recycleview.layoutManager = LinearLayoutManager(this)
+        binding.recycleview.adapter = adapter
+        adapter.setOnItemClickListener { adapter, view, position ->
+            val intent = Intent(this, TokenTransactHistoryDetailActivity::class.java)
+            intent.putExtra("key", adapter.getItem(position))
+            startActivity(intent)
         }
-        binding.traLinerLayout02.setOnClickListener {
-            startActivity(Intent(this, TokenTransactHistoryDetailActivity::class.java))
-        }
-        binding.traLinerLayout05.setOnClickListener {
-            startActivity(Intent(this, TokenTransactHistoryDetailActivity::class.java))
-        }
+    }
+
+    private fun getTxList() {
+        val map: MutableMap<String, String> = HashMap()
+        map["symbol"] = "FON"
+        map["address"] = UserManager.getInstance().address
+        RetrofitClient
+            .remoteSimpleService
+            .listTX(RequestUtil().getRequestHeader(), map)
+            .enqueue(object : Callback<BaseResponse<TxData>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<TxData>>,
+                    response: Response<BaseResponse<TxData>>
+                ) {
+                    if (!RequestUtil().checkResponse(response.code())) return
+                    adapter.submitList(response.body()?.data?.data)
+                }
+
+                override fun onFailure(call: Call<BaseResponse<TxData>>, t: Throwable) {
+                    t.printStackTrace()
+                }
+            })
     }
 }
