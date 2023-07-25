@@ -70,6 +70,7 @@ class SendTransactPasswordActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     val text = response.body()?.get("encode")?.asString
                     if (!TextUtils.isEmpty(text)) {
                         setPwd(text!!)
@@ -78,6 +79,7 @@ class SendTransactPasswordActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -93,7 +95,7 @@ class SendTransactPasswordActivity : AppCompatActivity() {
                     call: Call<BaseResponse<JsonObject>>,
                     response: Response<BaseResponse<JsonObject>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     if (response.body()?.data?.get("result")?.asString == "true") {
                         ToastUtils.showLong(R.string.success_set_pwd)
                         UserManager.getInstance().setPwd(true)
@@ -103,6 +105,7 @@ class SendTransactPasswordActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }

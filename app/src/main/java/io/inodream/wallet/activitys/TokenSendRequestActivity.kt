@@ -47,11 +47,13 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     privateKey = response.body()?.get("privateKeyEncode")?.asString ?: ""
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -107,6 +109,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     val text = response.body()?.get("encode")?.asString
                     if (!TextUtils.isEmpty(text)) {
                         sendCoin(text!!)
@@ -115,6 +118,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -135,7 +139,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<BaseResponse<Any>>,
                     response: Response<BaseResponse<Any>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     if (response.body()?.status == "1") {
                         startActivity(
                             Intent(
@@ -149,6 +153,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import com.blankj.utilcode.util.ToastUtils
 import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
 import io.inodream.wallet.activitys.SocialLoginActivity
@@ -41,8 +42,8 @@ class RequestUtil {
         return map
     }
 
-    fun checkResponse(code: Int): Boolean {
-        if (code == 401) {
+    fun checkResponse(response: Response<*>): Boolean {
+        if (response.code() == 401) {
             if (isRequestRefresh) return false
             isRequestRefresh = true
             RetrofitClient
@@ -53,6 +54,7 @@ class RequestUtil {
                         call: Call<BaseResponse<GoogleAuthData>>,
                         response: Response<BaseResponse<GoogleAuthData>>
                     ) {
+                        if (!RequestUtil().checkResponse(response)) return
                         response.body()?.let { baseResponse ->
                             baseResponse.data?.let {
                                 Log.e("auth", Gson().toJson(it))
@@ -75,14 +77,22 @@ class RequestUtil {
                     override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
                         isRequestRefresh = false
                         t.printStackTrace()
+                        ToastUtils.showLong(t.message)
                         UserManager.getInstance().clearData()
                         Handler(Looper.getMainLooper()).post {
                             Utils.getApp().startActivity(
                                 Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
                         }
                     }
                 })
+            return false
+        } else if (response.code() != 200) {
+            ToastUtils.showLong(
+                response.raw().request().url().uri().path + "=" + response.raw().message()
+            )
             return false
         }
         return true

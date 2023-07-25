@@ -147,7 +147,7 @@ class TokenViewFragment : Fragment() {
                     call: Call<BaseResponse<GoogleAuthData.WalletData>>,
                     response: Response<BaseResponse<GoogleAuthData.WalletData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.data?.let {
                         Log.e("auth", Gson().toJson(it))
                         UserManager.getInstance().setWallet(it)
@@ -159,6 +159,7 @@ class TokenViewFragment : Fragment() {
                     t: Throwable
                 ) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -180,7 +181,7 @@ class TokenViewFragment : Fragment() {
                     call: Call<BaseResponse<BalancesData>>,
                     response: Response<BaseResponse<BalancesData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.data?.let {
                         Log.e("auth", Gson().toJson(it))
                         mBalancesData = it
@@ -190,6 +191,7 @@ class TokenViewFragment : Fragment() {
 
                 override fun onFailure(call: Call<BaseResponse<BalancesData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -203,7 +205,7 @@ class TokenViewFragment : Fragment() {
                     call: Call<BaseResponse<TokenInfosData>>,
                     response: Response<BaseResponse<TokenInfosData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.data?.let {
                         Log.e("auth", Gson().toJson(it))
                         mTokenInfos = it
@@ -215,6 +217,7 @@ class TokenViewFragment : Fragment() {
 
                 override fun onFailure(call: Call<BaseResponse<TokenInfosData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -223,12 +226,12 @@ class TokenViewFragment : Fragment() {
         mTokenInfos = null
         mBalancesData = null
         mTotalPrice = 0.0
-        binding.tokenValueKo.text = String.format(getString(R.string.W_value), "0.0")
-        binding.tokenValueKo02.text = String.format(getString(R.string.W_value), "0.0")
-        binding.tokenValueKo03.text = String.format(getString(R.string.W_value), "0.0")
-        binding.tokenValue.text = "0.0ETH"
-        binding.tokenValue02.text = "0.0USDT"
-        binding.tokenValue03.text = "0.0FON"
+//        binding.tokenValueKo.text = String.format(getString(R.string.W_value), "0.0")
+//        binding.tokenValueKo02.text = String.format(getString(R.string.W_value), "0.0")
+//        binding.tokenValueKo03.text = String.format(getString(R.string.W_value), "0.0")
+//        binding.tokenValue.text = "0.0ETH"
+//        binding.tokenValue02.text = "0.0USDT"
+//        binding.tokenValue03.text = "0.0FON"
     }
 
     private fun updateDataView() {
@@ -292,7 +295,7 @@ class TokenViewFragment : Fragment() {
                     call: Call<BaseResponse<BalanceData>>,
                     response: Response<BaseResponse<BalanceData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let { baseResponse ->
                         baseResponse.data?.let {
                             Log.e("auth", Gson().toJson(it))
@@ -302,6 +305,7 @@ class TokenViewFragment : Fragment() {
 
                 override fun onFailure(call: Call<BaseResponse<BalanceData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -317,7 +321,7 @@ class TokenViewFragment : Fragment() {
                     call: Call<BaseResponse<TokenInfoData>>,
                     response: Response<BaseResponse<TokenInfoData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let { baseResponse ->
                         baseResponse.data?.let {
                             Log.e("auth", Gson().toJson(it))
@@ -327,6 +331,7 @@ class TokenViewFragment : Fragment() {
 
                 override fun onFailure(call: Call<BaseResponse<TokenInfoData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }

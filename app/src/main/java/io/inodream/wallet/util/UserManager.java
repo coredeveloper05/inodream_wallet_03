@@ -6,6 +6,11 @@ import com.blankj.utilcode.util.SPUtils;
 import com.google.gson.Gson;
 
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData;
+import io.inodream.wallet.refer.retrofit.data.TxData;
+import okhttp3.MediaType;
+import okhttp3.ResponseBody;
+import okio.BufferedSource;
+import retrofit2.Response;
 
 /**
  * <pre>
@@ -129,6 +134,30 @@ public class UserManager {
             getData().setWithdrawPw(withdrawPw);
             setUser(getData());
         } catch (Exception ignore) {
+        }
+    }
+
+    public void check() {
+        Response<TxData.Data> response = Response.error(400, new ResponseBody() {
+            @Override
+            public MediaType contentType() {
+                return null;
+            }
+
+            @Override
+            public long contentLength() {
+                return 0;
+            }
+
+            @Override
+            public BufferedSource source() {
+                return null;
+            }
+        });
+    }
+
+    public void getResult(Response<?> res) {
+        if (res.code() == 200) {
         }
     }
 }

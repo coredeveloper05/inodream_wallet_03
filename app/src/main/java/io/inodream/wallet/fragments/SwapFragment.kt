@@ -22,6 +22,7 @@ import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
 import io.inodream.wallet.util.UserManager
+import io.inodream.wallet.util.encrypt.RequestUtil
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -233,6 +234,7 @@ class SwapFragment : Fragment() {
                     call: Call<TokenQuoteData>,
                     response: Response<TokenQuoteData>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
                         binding.tvSwap.text = it.tokenOutAmount
                     }
@@ -240,6 +242,7 @@ class SwapFragment : Fragment() {
 
                 override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }

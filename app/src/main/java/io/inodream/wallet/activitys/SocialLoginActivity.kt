@@ -62,7 +62,7 @@ class SocialLoginActivity : AppCompatActivity() {
         val account: GoogleSignInAccount? = GoogleSignIn.getLastSignedInAccount(this)
         //如果未授权则可以调用登录，mGoogleSignInClient为初始化好的Google登录实例，RC_SIGN_IN为随意唯一返回标识码，int即可。
         //如果未授权则可以调用登录，mGoogleSignInClient为初始化好的Google登录实例，RC_SIGN_IN为随意唯一返回标识码，int即可。
-        val signInIntent: Intent = mGoogleSignInClient.getSignInIntent()
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
@@ -99,6 +99,7 @@ class SocialLoginActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
                         authGoogle(it.get("encode")?.asString?:"")
                     }
@@ -106,6 +107,7 @@ class SocialLoginActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -125,6 +127,7 @@ class SocialLoginActivity : AppCompatActivity() {
                     call: Call<BaseResponse<GoogleAuthData>>,
                     response: Response<BaseResponse<GoogleAuthData>>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let { baseResponse ->
                         baseResponse.data?.let {
                             UserManager.getInstance().setUser(it)
@@ -141,6 +144,7 @@ class SocialLoginActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
@@ -154,6 +158,7 @@ class SocialLoginActivity : AppCompatActivity() {
                     call: Call<BaseResponse<GoogleAuthData>>,
                     response: Response<BaseResponse<GoogleAuthData>>
                 ) {
+                    if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let { baseResponse ->
                         baseResponse.data?.let {
                             Log.e("auth", Gson().toJson(it))
@@ -165,6 +170,7 @@ class SocialLoginActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }

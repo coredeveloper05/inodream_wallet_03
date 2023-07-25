@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ToastUtils
 import io.inodream.wallet.R
 import io.inodream.wallet.core.adapters.TxAdapter
 import io.inodream.wallet.databinding.ActivityTokenTransactHistoryBinding
@@ -60,12 +61,13 @@ class TokenTransactHistoryActivity : AppCompatActivity() {
                     call: Call<BaseResponse<TxData>>,
                     response: Response<BaseResponse<TxData>>
                 ) {
-                    if (!RequestUtil().checkResponse(response.code())) return
+                    if (!RequestUtil().checkResponse(response)) return
                     adapter.submitList(response.body()?.data?.data)
                 }
 
                 override fun onFailure(call: Call<BaseResponse<TxData>>, t: Throwable) {
                     t.printStackTrace()
+                    ToastUtils.showLong(t.message)
                 }
             })
     }
