@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,28 +18,26 @@ import io.inodream.wallet.core.adapters.NftRecycleAdapter
 import io.inodream.wallet.core.data.NftItemData
 import io.inodream.wallet.databinding.FragmentNftViewBinding
 
-class NftViewFragment : Fragment(), NftRecycleAdapter.OnItemClickEventListener {
+class NftViewFragment : BaseFragment(), NftRecycleAdapter.OnItemClickEventListener {
 
     private var _binding: FragmentNftViewBinding? = null
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         _binding = FragmentNftViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+
     override fun onItemClick(
         nft_view: View?,
         nft_position: Int,
         nft_event_type: NftRecycleAdapter.EventType
-    ) {}
+    ) {
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

@@ -11,7 +11,7 @@ import io.inodream.wallet.core.adapters.BalanceViewPagerAdapter
 import io.inodream.wallet.databinding.FragmentBalanceBinding
 import io.inodream.wallet.util.UserManager
 
-class BalanceFragment : Fragment() {
+class BalanceFragment : BaseFragment() {
 
     private var _binding: FragmentBalanceBinding? = null
     private val binding get() = _binding!!

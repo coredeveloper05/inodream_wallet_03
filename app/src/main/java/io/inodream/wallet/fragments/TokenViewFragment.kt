@@ -12,7 +12,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
@@ -42,7 +41,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class TokenViewFragment : Fragment() {
+class TokenViewFragment : BaseFragment() {
 
     private var _binding: FragmentTokenViewBinding? = null
     private val binding get() = _binding!!

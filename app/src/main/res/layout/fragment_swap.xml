@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -185,8 +186,8 @@
                             android:layout_width="120dp"
                             android:layout_height="50dp"
                             android:gravity="end"
-                            android:text="0"
                             android:inputType="number|numberDecimal"
+                            android:text="0"
                             android:textColor="#000000"
                             android:textSize="16sp"
                             android:textStyle="bold"
@@ -198,9 +199,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="end"
-                        tools:text="@string/W_swap_value"
                         android:textColor="#000000"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="@string/W_swap_value" />
 
                     <TextView
                         android:id="@+id/tv_max"
@@ -310,9 +311,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="26dp"
                         android:gravity="end"
-                        tools:text="@string/W_swap_value"
                         android:textColor="#000000"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="@string/W_swap_value" />
                 </LinearLayout>
 
                 <TextView
@@ -406,20 +407,26 @@
                         android:textStyle="normal" />
                 </LinearLayout>
 
-                <TextView
+                <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                     android:id="@+id/swaptxt01"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginHorizontal="20dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginBottom="31dp"
-                    android:background="@drawable/receive_round_bu2_ripple"
+                    android:background="@drawable/receive_round_bu2"
                     android:clickable="true"
                     android:gravity="center"
                     android:text="스왑"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    app:finalCornerAngle="50dp"
+                    app:initialCornerAngle="10dp"
+                    app:spinning_bar_color="#f7f7fd"
+                    app:spinning_bar_padding="8dp"
+                    app:spinning_bar_width="3dp" />
 
             </LinearLayout>
 

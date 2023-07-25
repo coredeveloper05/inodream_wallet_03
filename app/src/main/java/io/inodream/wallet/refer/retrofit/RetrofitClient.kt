@@ -1,8 +1,11 @@
 package io.inodream.wallet.refer.retrofit
 
 import io.inodream.wallet.refer.retrofit.service.IRemoteSimpleService
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+
 
 object RetrofitClient {
 
@@ -48,10 +51,16 @@ object RetrofitClient {
 
     // retrofit 클라이언트 빌드
     private val retrofitCliecnt: Retrofit by lazy {
+        val okHttpBuilder = OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
+            .writeTimeout(60, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
         Retrofit
             .Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
+            .client(okHttpBuilder.build())
             .build()
     }
 

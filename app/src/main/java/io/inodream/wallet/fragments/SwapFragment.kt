@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -33,7 +32,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SwapFragment : Fragment() {
+class SwapFragment : BaseFragment() {
 
     private var _binding: FragmentSwapBinding? = null
     private val binding get() = _binding!!
@@ -160,7 +159,7 @@ class SwapFragment : Fragment() {
                 ToastUtils.showLong(R.string.check_error_empty_amount)
                 return@setOnClickListener
             }
-            if (inSymbol == "ETH" && binding.etSwap01.text.toString().toDouble() < 0.005) {
+            if (inSymbol == "ETH" && (tokenMap[inSymbol]?.toDoubleOrNull() ?: 0.0) < 0.005) {
                 ToastUtils.showLong(R.string.check_error_amount_few)
                 return@setOnClickListener
             }
@@ -256,7 +255,6 @@ class SwapFragment : Fragment() {
                 return@addTextChangedListener
             } else if (!TextUtils.isEmpty(binding.etSwap01.text.toString())
                 && binding.etSwap01.text.toString() != "."
-                && System.currentTimeMillis() - lastRequestTime > 1000
             ) {
                 lastRequestTime = System.currentTimeMillis()
                 quoteToken()
@@ -302,6 +300,8 @@ class SwapFragment : Fragment() {
         map["tokenOutSymbol"] = outSymbol
         map["tokenInAmount"] = binding.etSwap01.text.toString()
         map["quoteType"] = "forward"
+//        showLoadingDialog()
+        binding.swaptxt01.startAnimation()
         RetrofitClient
             .remoteSimpleService
             .quoteToken(map)
@@ -310,6 +310,8 @@ class SwapFragment : Fragment() {
                     call: Call<TokenQuoteData>,
                     response: Response<TokenQuoteData>
                 ) {
+                    binding.swaptxt01.revertAnimation()
+//                    dismissLoadingDialog()
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
                         binding.tvSwap.text = it.tokenOutAmount
@@ -317,6 +319,7 @@ class SwapFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
+//                    dismissLoadingDialog()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
@@ -331,6 +334,7 @@ class SwapFragment : Fragment() {
         map["tokenInAmount"] = binding.etSwap01.text.toString()
         map["tokenOutAmount"] = binding.tvSwap.text.toString()
         map["slippage"] = binding.currentSlippage.text.toString().replace("%", "")
+        binding.swaptxt01.startAnimation()
         RetrofitClient
             .remoteSimpleService
             .swapChange(map)
@@ -339,12 +343,17 @@ class SwapFragment : Fragment() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
+                    binding.swaptxt01.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
-
-
+                    if (response.body()?.get("status").toString() == "1") {
+                        ToastUtils.showLong("swap성공하다")
+                    } else {
+                        ToastUtils.showLong("swap실패하다")
+                    }
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    binding.swaptxt01.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
