@@ -300,7 +300,6 @@ class SwapFragment : BaseFragment() {
         map["tokenOutSymbol"] = outSymbol
         map["tokenInAmount"] = binding.etSwap01.text.toString()
         map["quoteType"] = "forward"
-//        showLoadingDialog()
         binding.swaptxt01.startAnimation()
         RetrofitClient
             .remoteSimpleService
@@ -311,7 +310,6 @@ class SwapFragment : BaseFragment() {
                     response: Response<TokenQuoteData>
                 ) {
                     binding.swaptxt01.revertAnimation()
-//                    dismissLoadingDialog()
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
                         binding.tvSwap.text = it.tokenOutAmount
@@ -319,7 +317,7 @@ class SwapFragment : BaseFragment() {
                 }
 
                 override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
-//                    dismissLoadingDialog()
+                    binding.swaptxt01.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
