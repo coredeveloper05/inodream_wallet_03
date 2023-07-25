@@ -5,6 +5,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +51,7 @@ class TokenViewFragment : BaseFragment() {
     private var mTokenInfos: TokenInfosData? = null
     private var mBalancesData: BalancesData? = null
     private var mTotalPrice: Double = 0.0
+    private val handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -186,6 +189,10 @@ class TokenViewFragment : BaseFragment() {
                         Log.e("auth", Gson().toJson(it))
                         mBalancesData = it
                         updateDataView()
+                        handler.removeCallbacksAndMessages(null)
+                        handler.postDelayed({
+                            getData()
+                        }, 30 * 1000)
                     }
                 }
 
