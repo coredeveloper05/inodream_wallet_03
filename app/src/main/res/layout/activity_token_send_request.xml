@@ -54,27 +54,31 @@
                     android:textSize="12sp" />
 
                 <LinearLayout
-                    android:id="@+id/ll_scan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:clickable="true"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
                     <TextView
+                        android:id="@+id/tv_paste"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:letterSpacing="-0.01"
                         android:lineSpacingExtra="3sp"
                         android:text="붙여넣기"
+                        android:padding="4dp"
                         android:textColor="#000000"
                         android:textSize="12sp" />
 
                     <ImageView
-                        android:layout_width="16.7dp"
-                        android:layout_height="16.7dp"
-                        android:layout_marginLeft="9.7dp"
+                        android:id="@+id/ll_scan"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        android:layout_marginLeft="4dp"
+                        android:padding="4dp"
                         android:src="@drawable/plus_icon" />
                 </LinearLayout>
             </LinearLayout>
@@ -96,7 +100,7 @@
                 android:layout_height="45dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_white_round_empty"
-                android:inputType="number" />
+                android:inputType="number|numberDecimal" />
 
             <TextView
                 android:layout_width="wrap_content"

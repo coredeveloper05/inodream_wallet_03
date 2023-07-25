@@ -1,6 +1,7 @@
 package io.inodream.wallet.util
 
 import com.google.gson.Gson
+import java.text.DecimalFormat
 
 /**
  * <pre>
@@ -15,5 +16,10 @@ class StringUtils {
         return if (map.isNullOrEmpty()) {
             "{}"
         } else Gson().toJson(map)
+    }
+
+    fun getTwoDigits(double: Double): String {
+        val format = DecimalFormat("0.##")
+        return format.format(double)
     }
 }

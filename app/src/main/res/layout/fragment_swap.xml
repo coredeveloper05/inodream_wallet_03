@@ -364,7 +364,7 @@
                             android:id="@+id/currentSlippage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="2%"
+                            android:text="2.0%"
                             android:textColor="#000000"
                             android:textSize="12sp"
                             android:textStyle="bold" />

@@ -32,6 +32,7 @@ import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
+import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
 import org.greenrobot.eventbus.EventBus
@@ -276,9 +277,15 @@ class TokenViewFragment : Fragment() {
                     }
                     val totalPrice = price * bal
                     mTotalPrice += totalPrice
-                    tokenValueKo.text = String.format(getString(R.string.W_value), totalPrice)
+                    tokenValueKo.text = String.format(
+                        getString(R.string.W_value),
+                        StringUtils().getTwoDigits(totalPrice)
+                    )
                     binding.myAssetsValue.text =
-                        String.format(getString(R.string.W_value), mTotalPrice)
+                        String.format(
+                            getString(R.string.W_value),
+                            StringUtils().getTwoDigits(mTotalPrice)
+                        )
                 }
             }
         }

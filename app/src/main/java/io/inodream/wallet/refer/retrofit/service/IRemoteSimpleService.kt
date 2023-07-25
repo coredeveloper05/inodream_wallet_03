@@ -34,6 +34,9 @@ interface IRemoteSimpleService {
     @POST("http://3.26.205.235:8008/api/encodeText")
     fun encodeText(@Body map: MutableMap<String, String>): Call<JsonObject>
 
+    @POST("http://3.26.205.235:8008/api/swap")
+    fun swapChange(@Body map: MutableMap<String, String>): Call<JsonObject>
+
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
 

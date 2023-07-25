@@ -6,14 +6,17 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.JsonObject
 import io.inodream.wallet.App
 import io.inodream.wallet.R
 import io.inodream.wallet.core.adapters.TopToolBarAdapter
@@ -39,6 +42,7 @@ class SwapFragment : Fragment() {
     private lateinit var swapReceiveToken: LinearLayout
     private lateinit var swapSlippage: LinearLayout
     private lateinit var swapBottomSheet: BottomSheetDialog
+    private lateinit var slippageView: View
     private lateinit var slippageSheet: BottomSheetDialog
     private lateinit var slippapgeSb: SeekBar
 
@@ -50,6 +54,7 @@ class SwapFragment : Fragment() {
     private var outSymbol: String = ""
     private var sheetType = 1
     private var tokenMap: MutableMap<String, String> = HashMap()
+    private var lastRequestTime = 0L
 
     private var selectedSlippage = 1
     private var scopeSlippageLaArray: Array<TextView>? = null
@@ -92,7 +97,7 @@ class SwapFragment : Fragment() {
         swapBottomSheet.setContentView(swapBottomSheetView)
         updateSwapDialogView()
 
-        val slippageView = inflater.inflate(R.layout.swap_bottom_sheet_slippage, null)
+        slippageView = inflater.inflate(R.layout.swap_bottom_sheet_slippage, null)
         slippageSheet = BottomSheetDialog(requireContext())
         slippageSheet.setContentView(slippageView)
         slippapgeSb = slippageView.findViewById<View>(R.id.slipapgeSb) as SeekBar
@@ -139,12 +144,33 @@ class SwapFragment : Fragment() {
     }
 
     private fun setListener() {
+        binding.swapReload.setOnClickListener {
+            binding.etSwap01.setText("0")
+            binding.tvSwap.text = "0"
+        }
         binding.swaptxt01.setOnClickListener {
             if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
                 ToastUtils.showLong(R.string.check_error_empty_symbol)
                 return@setOnClickListener
             }
-            quoteToken()
+            if (TextUtils.isEmpty(binding.etSwap01.text.toString())
+                || binding.etSwap01.text.toString() == "."
+                || binding.etSwap01.text.toString().toDouble() == 0.0
+            ) {
+                ToastUtils.showLong(R.string.check_error_empty_amount)
+                return@setOnClickListener
+            }
+            if (inSymbol == "ETH" && binding.etSwap01.text.toString().toDouble() < 0.005) {
+                ToastUtils.showLong(R.string.check_error_amount_few)
+                return@setOnClickListener
+            }
+            val maxNum = tokenMap[inSymbol]?.toDoubleOrNull() ?: 0.0
+            val currentNum = binding.etSwap01.text.toString().toDouble()
+            if (currentNum > maxNum) {
+                ToastUtils.showLong(R.string.check_error_amount)
+                return@setOnClickListener
+            }
+            swapChange()
         }
         binding.ivChange.setOnClickListener {
             if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
@@ -176,16 +202,66 @@ class SwapFragment : Fragment() {
             sheetType = 2
             swapBottomSheet.show()
         }
-        swapSlippage.setOnClickListener { slippageSheet.show() }
+        slippageView.findViewById<View>(R.id.btn_save).setOnClickListener {
+            val num =
+                slippageView.findViewById<EditText>(R.id.et_page).text.toString().toDoubleOrNull()
+                    ?: 0.0
+            if (num in 0.05..50.0) {
+                binding.currentSlippage.text = "${num}%"
+                slippageSheet.dismiss()
+            } else {
+                ToastUtils.showLong("값은 0.05-50 사이여야 합니다.")
+            }
+        }
+        slippageView.findViewById<View>(R.id.btn_change).setOnClickListener {
+            if (slippageView.findViewById<View>(R.id.ll_et).visibility == View.VISIBLE) {
+                slippageView.findViewById<View>(R.id.ll_et).visibility = View.GONE
+                slippageView.findViewById<View>(R.id.slipapgeSb).visibility = View.VISIBLE
+                slippageView.findViewById<View>(R.id.ll_slip).visibility = View.VISIBLE
+            } else {
+                slippageView.findViewById<View>(R.id.ll_et).visibility = View.VISIBLE
+                slippageView.findViewById<View>(R.id.slipapgeSb).visibility = View.GONE
+                slippageView.findViewById<View>(R.id.ll_slip).visibility = View.GONE
+            }
+        }
+        swapSlippage.setOnClickListener {
+            val dou = doubleArrayOf(1.0, 2.0, 3.0, 4.0)
+            val current = binding.currentSlippage.text.toString().replace("%", "").toDouble()
+            if (dou.any { current == it }) {
+                slippageView.findViewById<View>(R.id.ll_et).visibility = View.GONE
+                slippageView.findViewById<View>(R.id.slipapgeSb).visibility = View.VISIBLE
+                slippageView.findViewById<View>(R.id.ll_slip).visibility = View.VISIBLE
+                setSlippageLabel(current.toInt())
+                slippapgeSb.progress = current.toInt()
+            } else {
+                slippageView.findViewById<View>(R.id.ll_et).visibility = View.VISIBLE
+                slippageView.findViewById<EditText>(R.id.et_page).setText(current.toString())
+                slippageView.findViewById<View>(R.id.slipapgeSb).visibility = View.GONE
+                slippageView.findViewById<View>(R.id.ll_slip).visibility = View.GONE
+            }
+            slippageSheet.show()
+        }
         slippapgeSb.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(p0: SeekBar?, p1: Int, p2: Boolean) {
                 setSlippageLabel(p1)
-                binding.currentSlippage.text = "${p1}%"
+                binding.currentSlippage.text = "${p1}.0%"
             }
 
             override fun onStartTrackingTouch(p0: SeekBar?) {}
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
+        binding.etSwap01.addTextChangedListener {
+            if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
+                ToastUtils.showLong(R.string.check_error_empty_symbol)
+                return@addTextChangedListener
+            } else if (!TextUtils.isEmpty(binding.etSwap01.text.toString())
+                && binding.etSwap01.text.toString() != "."
+                && System.currentTimeMillis() - lastRequestTime > 1000
+            ) {
+                lastRequestTime = System.currentTimeMillis()
+                quoteToken()
+            }
+        }
     }
 
     private fun setSymbol(symbol: String) {
@@ -241,6 +317,34 @@ class SwapFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
+                    t.printStackTrace()
+                    ToastUtils.showLong(t.message)
+                }
+            })
+    }
+
+    fun swapChange() {
+        val map: MutableMap<String, String> = HashMap()
+        map["seedEncode"] = UserManager.getInstance().walletData.seed
+        map["tokenInSymbol"] = inSymbol
+        map["tokenOutSymbol"] = outSymbol
+        map["tokenInAmount"] = binding.etSwap01.text.toString()
+        map["tokenOutAmount"] = binding.tvSwap.text.toString()
+        map["slippage"] = binding.currentSlippage.text.toString().replace("%", "")
+        RetrofitClient
+            .remoteSimpleService
+            .swapChange(map)
+            .enqueue(object : Callback<JsonObject> {
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    if (!RequestUtil().checkResponse(response)) return
+
+
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
 import io.inodream.wallet.R
@@ -74,6 +75,9 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     CameraCaptureActivity::class.java
                 ), 100
             )
+        }
+        binding.tvPaste.setOnClickListener {
+            binding.sampleEditText.setText(ClipboardUtils.getText())
         }
     }
 
