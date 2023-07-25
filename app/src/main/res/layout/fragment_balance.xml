@@ -9,15 +9,18 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
-        <include layout="@layout/account_top_toolbar" />
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/top_toolbar"
+            layout="@layout/account_top_toolbar" />
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/balance_scrollview_wrapper"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/balance_tab"
                 android:layout_width="match_parent"

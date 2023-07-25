@@ -21,6 +21,7 @@ import io.inodream.wallet.databinding.FragmentSwapBinding
 import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
+import io.inodream.wallet.util.UserManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -77,6 +78,7 @@ class SwapFragment : Fragment() {
     }
 
     private fun initView() {
+        binding.topToolbar.accountName.text = UserManager.getInstance().email
         swapSendToken = binding.swapSendToken
         swapReceiveToken = binding.swapReceiveToken
         swapSlippage = binding.swapSlippage

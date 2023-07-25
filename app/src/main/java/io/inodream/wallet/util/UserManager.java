@@ -84,6 +84,14 @@ public class UserManager {
         return "";
     }
 
+    public String getEmail() {
+        try {
+            return getData().getEmail();
+        } catch (Exception ignore) {
+        }
+        return "";
+    }
+
     public String getAddress() {
         try {
             return getData().getWallet().getAddress();

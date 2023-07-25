@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
-import io.inodream.wallet.BuildConfig
 import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivityTokenTransactHistoryDetailBinding
 import io.inodream.wallet.refer.retrofit.data.TxData
@@ -32,8 +31,9 @@ class TokenTransactHistoryDetailActivity : AppCompatActivity() {
         initView()
 
         binding.btnTx.setOnClickListener {
+            // FIXME: modify debug config
             val uri =
-                Uri.parse((if (BuildConfig.DEBUG) "https://sepolia.etherscan.io/tx/" else "https://etherscan.io/tx/") + txData?.txId)
+                Uri.parse((if (true) "https://sepolia.etherscan.io/tx/" else "https://etherscan.io/tx/") + txData?.txId)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
