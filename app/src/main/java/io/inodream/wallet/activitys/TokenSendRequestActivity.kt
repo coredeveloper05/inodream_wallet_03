@@ -105,6 +105,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
     private fun encodeText() {
         val map: MutableMap<String, String> = HashMap()
         map["text"] = binding.etPwd.text.toString()
+        binding.sendRequestButton.startAnimation()
         RetrofitClient
             .remoteSimpleService
             .encodeText(map)
@@ -113,14 +114,18 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<JsonObject>,
                     response: Response<JsonObject>
                 ) {
-                    if (!RequestUtil().checkResponse(response)) return
-                    val text = response.body()?.get("encode")?.asString
-                    if (!TextUtils.isEmpty(text)) {
-                        sendCoin(text!!)
+                    if (RequestUtil().checkResponse(response)) {
+                        val text = response.body()?.get("encode")?.asString
+                        if (!TextUtils.isEmpty(text)) {
+                            sendCoin(text!!)
+                            return
+                        }
                     }
+                    binding.sendRequestButton.revertAnimation()
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    binding.sendRequestButton.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
@@ -143,6 +148,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     call: Call<BaseResponse<Any>>,
                     response: Response<BaseResponse<Any>>
                 ) {
+                    binding.sendRequestButton.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
                     if (response.body()?.status == "1") {
                         startActivity(
@@ -152,10 +158,13 @@ class TokenSendRequestActivity : AppCompatActivity() {
                             ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                         )
                         finish()
+                    } else {
+                        ToastUtils.showLong(response.body()?.message)
                     }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<Any>>, t: Throwable) {
+                    binding.sendRequestButton.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

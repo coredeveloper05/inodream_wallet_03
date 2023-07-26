@@ -94,6 +94,14 @@ class RequestUtil {
                 response.raw().request().url().uri().path + "=" + response.raw().message()
             )
             return false
+        } else {
+            val errMsg: String
+            if (response.body() is BaseResponse<*>) {
+                if ((response.body() as BaseResponse<*>).status != "1") {
+                    errMsg = (response.body() as BaseResponse<*>).message
+                    ToastUtils.showLong(response.raw().request().url().uri().path + ":$errMsg")
+                }
+            }
         }
         return true
     }
