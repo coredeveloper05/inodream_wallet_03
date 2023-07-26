@@ -80,7 +80,7 @@ interface IRemoteSimpleService {
     fun listTX(
         @HeaderMap map: MutableMap<String, String>,
         @QueryMap body: MutableMap<String, String>
-    ): Call<BaseResponse<TxData>>
+    ): Call<BaseResponse<List<TxData.Data>>>
 
 
 }
