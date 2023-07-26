@@ -38,7 +38,7 @@ class TxAdapter : BaseQuickAdapter<TxData.Data, QuickViewHolder>() {
             "2" -> context.getString(R.string.tx_confirm)
             else -> context.getString(R.string.tx_complete)
         }
-        if (item?.from == UserManager.getInstance().address) {
+        if (item?.from.equals(UserManager.getInstance().address, true)) {
             // send
             holder.getView<View>(R.id.ll_icon)
                 .setBackgroundResource(R.drawable.circle_tab_select_minus)
@@ -51,7 +51,7 @@ class TxAdapter : BaseQuickAdapter<TxData.Data, QuickViewHolder>() {
             holder.getView<TextView>(R.id.tv_state).setTextColor(Color.parseColor("#7961ef"))
             holder.getView<TextView>(R.id.tv_state).text =
                 context.getString(R.string.tx_send) + state
-        } else if (item?.to == UserManager.getInstance().address) {
+        } else if (item?.to.equals(UserManager.getInstance().address, true)) {
             // receive
             holder.getView<View>(R.id.ll_icon)
                 .setBackgroundResource(R.drawable.circle_tab_select_plus)

@@ -54,9 +54,9 @@ class TokenTransactHistoryDetailActivity : AppCompatActivity() {
             "2" -> getString(R.string.tx_confirm)
             else -> getString(R.string.tx_complete)
         }
-        if (txData?.from == UserManager.getInstance().address) {
+        if (txData?.from.equals(UserManager.getInstance().address, true)) {
             state = getString(R.string.tx_send) + state
-        } else {
+        } else if (txData?.to.equals(UserManager.getInstance().address, true)) {
             state = getString(R.string.tx_receive) + state
         }
         binding.tvState.text = state
