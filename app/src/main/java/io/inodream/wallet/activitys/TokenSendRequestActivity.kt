@@ -1,9 +1,15 @@
 package io.inodream.wallet.activitys
 
+import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.internal.utils.ImageUtil
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
@@ -24,6 +30,13 @@ class TokenSendRequestActivity : AppCompatActivity() {
     private var privateKey: String = ""
     private var symbol: String = ""
 
+    private lateinit var failureViewDialog: AlertDialog
+
+    private enum class TokenSendFailureType {
+        TOKEN_DEFICIENCY,
+        FEE_DEFICIENCY
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,6 +48,9 @@ class TokenSendRequestActivity : AppCompatActivity() {
 
         getPrivateKey()
         setListener()
+
+        // Test call send error message dialog
+        loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
     }
 
     private fun getPrivateKey() {
@@ -59,10 +75,41 @@ class TokenSendRequestActivity : AppCompatActivity() {
             })
     }
 
+    private fun loadDialog(failureType: TokenSendFailureType) {
+        val failureView = LayoutInflater.from(this).inflate(R.layout.view_send_token_failure, null)
+
+        val failureTypeText = failureView?.findViewById<TextView>(R.id.token_send_failure_type)
+        val faulureMessage = failureView?.findViewById<TextView>(R.id.token_send_failure_message)
+
+        when(failureType) {
+            TokenSendFailureType.TOKEN_DEFICIENCY -> {
+                failureTypeText?.text = resources.getString(R.string.token_send_failure_type_01)
+                faulureMessage?.text = resources.getString(R.string.token_send_failure_type_01_message)
+            }
+            TokenSendFailureType.FEE_DEFICIENCY -> {
+                failureTypeText?.text = resources.getString(R.string.token_send_failure_type_02)
+                faulureMessage?.text = resources.getString(R.string.token_send_failure_type_02_message)
+            }
+        }
+
+        failureViewDialog = AlertDialog.Builder(this)
+            .setView(failureView)
+            .create()
+
+        failureViewDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        failureView.findViewById<TextView>(R.id.tokenSend4Tv)?.setOnClickListener {
+            failureViewDialog?.dismiss()
+        }
+
+        failureViewDialog?.show()
+    }
+
     private fun setListener() {
         binding.topToolbar.backButton.setOnClickListener {
             finish()
         }
+
         binding.sendRequestButton.setOnClickListener {
             if (checkForm()) {
                 encodeText()

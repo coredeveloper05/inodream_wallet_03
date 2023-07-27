@@ -58,14 +58,14 @@
 
     <string name="my_address">내 주소</string>
     <string name="token_receive_caution_01">-입금 진행 시 동일한 메인넷만 지원합니다.</string>
-    <string name="token_receive_caution_02">-ETH(이더리움), TRON(트론) 네트워크크만 입출금이 가능합니다.</string>
+    <string name="token_receive_caution_02">-ETH(이더리움) 네트워크만 입출금이 가능합니다.</string>
     <string name="token_receive_caution_03">-사용자가 입력을 잘못한 경우 서비스 제공자는 책임을 지지 않습니다.</string>
 
     <string name="close">닫기</string>
 
     <string name="token_send_caution_01">○○○지갑에서는</string>
-    <string name="token_send_caution_02">이더리움,</string>
-    <string name="token_send_caution_03">TRON 네트워크만을 지원</string>
+    <string name="token_send_caution_02">이더리움 네트워크</string>
+    <string name="token_send_caution_03">만을 지원</string>
     <string name="token_send_caution_04">합니다.</string>
 
     <string name="transact_password">출금 비밀번호</string>
@@ -106,4 +106,37 @@
 
     <string name="W_value">￦%1$s</string>
     <string name="W_swap_value">￦ : %1$s</string>
+
+    <string name="title_configure_title">설정</string>
+
+    <string name="account_manage">계정 관리</string>
+    <string name="set_wallet_init">지갑 초기화</string>
+    <string name="set_withdrawal_password">출금 비밀번호 초기화</string>
+    <string name="set_withdrawal_password_init_message">"출금 비밀번호를 초기화합니다.
+        비밀번호 초기화 후
+        토큰 또는 NFT 전송 요청 시
+        새로운 출금 비밀번호를
+        입력하시면 됩니다."</string>
+    <string name="init_confirm">초기화</string>
+    <string name="policy_and_term">정책 및 약관</string>
+    <string name="wallet_version">앱 버전</string>
+
+    <string name="wallet_init">지갑을\n초기화 합니다.</string>
+    <string name="wallet_init_message">지갑의 모든 정보를 삭제 후 \n처음 상태로 돌아갑니다.</string>
+    <string name="wallet_init_detail_message">"인증된 구글 계정 및 지갑 정보가 해제한 후
+        지갑 초기화 절차를 진행합니다.
+        초기화 후에도
+        동일한 구글 계정으로 다시 인증 시
+        본인이 소유한 모든 자산 정보를
+        다시 관리할 수 있다."</string>
+    <string name="wallet_init_confirm">지갑 초기화</string>
+
+    <string name="token_send_failure_type_01">보유 자산 부족</string>
+    <string name="token_send_failure_type_02">수수료 부족</string>
+
+    <string name="token_send_failure_type_01_message">"현재 보유하고 있는 자산이
+        전송하려는 토큰 총량보다
+        부족하여 전송해 실패 하였습니다."</string>
+    <string name="token_send_failure_type_02_message">"전송을 위한 수수료가
+        부족하여 전송해 실패 하였습니다."</string>
 </resources>
