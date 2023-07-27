@@ -9,7 +9,6 @@ import com.google.android.material.tabs.TabLayoutMediator
 import io.inodream.wallet.R
 import io.inodream.wallet.core.adapters.BalanceViewPagerAdapter
 import io.inodream.wallet.databinding.FragmentBalanceBinding
-import io.inodream.wallet.util.UserManager
 
 class BalanceFragment : BaseFragment() {
 
@@ -30,7 +29,7 @@ class BalanceFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.topToolbar.accountName.text = UserManager.getInstance().email
+        initToolBar(binding.topToolbar.root)
 
         val tabItemArray = arrayOf(getString(R.string.token), getString(R.string.nft))
 

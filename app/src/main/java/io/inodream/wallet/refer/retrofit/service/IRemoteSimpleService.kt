@@ -43,6 +43,9 @@ interface IRemoteSimpleService {
     @POST(RetrofitClient.AUTH_REFRESH)
     fun authRefresh(@HeaderMap map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
 
+    @POST(RetrofitClient.AUTH_LOGOUT)
+    fun logout(@HeaderMap map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
+
     @GET(RetrofitClient.GET_USER_WALLET)
     fun getUserWallet(@HeaderMap headerMap: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData.WalletData>>
 

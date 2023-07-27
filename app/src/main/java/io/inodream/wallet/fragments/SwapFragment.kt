@@ -83,7 +83,7 @@ class SwapFragment : BaseFragment() {
     }
 
     private fun initView() {
-        binding.topToolbar.accountName.text = UserManager.getInstance().email
+        initToolBar(binding.topToolbar.root)
         swapSendToken = binding.swapSendToken
         swapReceiveToken = binding.swapReceiveToken
         swapSlippage = binding.swapSlippage

@@ -148,30 +148,4 @@ class SocialLoginActivity : AppCompatActivity() {
                 }
             })
     }
-
-    private fun authRefresh() {
-        RetrofitClient
-            .remoteSimpleService
-            .authRefresh(RequestUtil().getRefreshHeader())
-            .enqueue(object : Callback<BaseResponse<GoogleAuthData>> {
-                override fun onResponse(
-                    call: Call<BaseResponse<GoogleAuthData>>,
-                    response: Response<BaseResponse<GoogleAuthData>>
-                ) {
-                    if (!RequestUtil().checkResponse(response)) return
-                    response.body()?.let { baseResponse ->
-                        baseResponse.data?.let {
-                            Log.e("auth", Gson().toJson(it))
-                            UserManager.getInstance().accToken = it.accessToken
-                            startActivity(Intent(this@SocialLoginActivity, WalletMainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
-                        }
-                    }
-                }
-
-                override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
-                    t.printStackTrace()
-                    ToastUtils.showLong(t.message)
-                }
-            })
-    }
 }

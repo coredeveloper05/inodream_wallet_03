@@ -24,6 +24,7 @@ import io.inodream.wallet.R
 import io.inodream.wallet.activitys.TokenSendSelectionActivity
 import io.inodream.wallet.activitys.TokenTransactHistoryActivity
 import io.inodream.wallet.databinding.FragmentTokenViewBinding
+import io.inodream.wallet.event.LoadSendPageEvent
 import io.inodream.wallet.event.RefreshEvent
 import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
@@ -352,6 +353,17 @@ class TokenViewFragment : BaseFragment() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun refreshToken(event: RefreshEvent?) {
         getData()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun loadSendPage(event: LoadSendPageEvent?) {
+        val intent =
+            Intent(requireContext(), TokenSendSelectionActivity::class.java).addFlags(
+                Intent.FLAG_ACTIVITY_NO_ANIMATION
+            )
+        intent.putExtra("key", mTokenInfos?.tokenInfos)
+        intent.putExtra("address", event?.address)
+        startActivity(intent)
     }
 
 }

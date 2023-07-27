@@ -18,6 +18,7 @@ object RetrofitClient {
     // auth_google
     const val AUTH_GOOGLE = "auth/google"
     const val AUTH_REFRESH = "auth/refresh"
+    const val AUTH_LOGOUT = "auth/logout"
 
     /**
      * api

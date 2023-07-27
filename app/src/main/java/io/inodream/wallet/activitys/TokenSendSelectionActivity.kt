@@ -13,6 +13,7 @@ class TokenSendSelectionActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTokenSendSelectionBinding
     private var mTokenInfos: ArrayList<TokenInfosData.TokenInfo>? = null
+    private var mToAddress: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,7 @@ class TokenSendSelectionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mTokenInfos = intent.getSerializableExtra("key") as ArrayList<TokenInfosData.TokenInfo>?
+        mToAddress = intent.getStringExtra("address") ?: ""
         initView()
         setListener()
     }
@@ -74,6 +76,7 @@ class TokenSendSelectionActivity : AppCompatActivity() {
             TokenSendRequestActivity::class.java
         ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
         intent.putExtra("key", symbol)
+        intent.putExtra("address", mToAddress)
         startActivity(intent)
         finish()
     }

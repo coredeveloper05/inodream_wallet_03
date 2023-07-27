@@ -9,7 +9,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.internal.utils.ImageUtil
 import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.JsonObject
@@ -45,12 +44,10 @@ class TokenSendRequestActivity : AppCompatActivity() {
 
         symbol = intent.getStringExtra("key") ?: ""
         binding.topToolbar.title.text = resources.getString(R.string.title_token_send)
+        binding.sampleEditText.setText(intent.getStringExtra("address") ?: "")
 
         getPrivateKey()
         setListener()
-
-        // Test call send error message dialog
-        loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
     }
 
     private fun getPrivateKey() {
@@ -96,13 +93,13 @@ class TokenSendRequestActivity : AppCompatActivity() {
             .setView(failureView)
             .create()
 
-        failureViewDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        failureViewDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         failureView.findViewById<TextView>(R.id.tokenSend4Tv)?.setOnClickListener {
-            failureViewDialog?.dismiss()
+            failureViewDialog.dismiss()
         }
 
-        failureViewDialog?.show()
+        failureViewDialog.show()
     }
 
     private fun setListener() {
@@ -205,6 +202,10 @@ class TokenSendRequestActivity : AppCompatActivity() {
                             ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                         )
                         finish()
+                    } else if (response.body()?.status == "2") {// FIXME: modify status
+                        loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
+                    } else if (response.body()?.status == "3") {
+                        loadDialog(TokenSendFailureType.TOKEN_DEFICIENCY)
                     } else {
                         ToastUtils.showLong(response.body()?.message)
                     }
