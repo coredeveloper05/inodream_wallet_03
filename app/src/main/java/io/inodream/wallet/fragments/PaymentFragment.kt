@@ -25,7 +25,5 @@ class PaymentFragment : BaseFragment() {
 
     override fun onResume() {
         super.onResume()
-
-        startActivity(Intent(requireActivity(), RetrofitSimpleActivity::class.java))
     }
 }

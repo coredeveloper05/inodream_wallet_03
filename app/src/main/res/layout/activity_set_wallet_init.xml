@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activitys.SetWalletInitActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="261dp"
+            android:layout_height="159dp"
+            android:layout_marginTop="127dp"
+            android:src="@drawable/wal_pro_com_img" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:fontFamily="@font/inter_medium"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#000000"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="0sp"
+            android:gravity="center_horizontal"
+            android:text="@string/wallet_init"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="29dp"
+            android:fontFamily="@font/inter_medium"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="#18b7ae"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="6sp"
+            android:gravity="center_horizontal"
+            android:text="@string/wallet_init_message"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_medium"
+            android:textStyle="normal"
+            android:textSize="12sp"
+            android:textColor="#8b8b8b"
+            android:letterSpacing="-0.01"
+            android:lineSpacingExtra="5sp"
+            android:gravity="center_horizontal"
+            android:text="@string/wallet_init_detail_message"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/wallProCom02Tv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textSize="13sp"
+            android:textColor="#ffffff"
+            android:letterSpacing="-0.01"
+            android:text="@string/wallet_init_confirm"
+            android:gravity="center"
+            android:background="@drawable/send2_round_next_bu_ripple"
+            android:clickable="true"
+            android:layout_marginTop="30dp"/>
+    </LinearLayout>
+</LinearLayout>
