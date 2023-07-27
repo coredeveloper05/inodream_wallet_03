@@ -46,7 +46,7 @@ object RetrofitClient {
     const val GET_BALANCE_ALL = "api/token/balanceAll"
     const val GET_BALANCE = "api/token/balance"
     const val SEND_COIN = "api/token/sendCoin"
-    const val TX_LIST = "api/token/txList"
+    const val TX_LIST = "api/token/txAll"
 
 
     // retrofit 클라이언트 빌드

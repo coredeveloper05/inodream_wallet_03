@@ -51,21 +51,20 @@ class TokenTransactHistoryActivity : AppCompatActivity() {
 
     private fun getTxList() {
         val map: MutableMap<String, String> = HashMap()
-        map["symbol"] = "FON"
         map["address"] = UserManager.getInstance().address
         RetrofitClient
             .remoteSimpleService
             .listTX(RequestUtil().getRequestHeader(), map)
-            .enqueue(object : Callback<BaseResponse<TxData>> {
+            .enqueue(object : Callback<BaseResponse<List<TxData.Data>>> {
                 override fun onResponse(
-                    call: Call<BaseResponse<TxData>>,
-                    response: Response<BaseResponse<TxData>>
+                    call: Call<BaseResponse<List<TxData.Data>>>,
+                    response: Response<BaseResponse<List<TxData.Data>>>
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
-                    adapter.submitList(response.body()?.data?.data)
+                    adapter.submitList(response.body()?.data?.reversed())
                 }
 
-                override fun onFailure(call: Call<BaseResponse<TxData>>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<List<TxData.Data>>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
