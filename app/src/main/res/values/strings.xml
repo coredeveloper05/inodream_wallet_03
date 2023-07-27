@@ -110,7 +110,7 @@
     <string name="title_configure_title">설정</string>
 
     <string name="account_manage">계정 관리</string>
-    <string name="set_wallet_init">지갑 초기화</string>
+    <string name="set_wallet_init">Google Logout</string>
     <string name="set_withdrawal_password">출금 비밀번호 초기화</string>
     <string name="set_withdrawal_password_init_message">"출금 비밀번호를 초기화합니다.
         비밀번호 초기화 후
@@ -121,15 +121,15 @@
     <string name="policy_and_term">정책 및 약관</string>
     <string name="wallet_version">앱 버전</string>
 
-    <string name="wallet_init">지갑을\n초기화 합니다.</string>
-    <string name="wallet_init_message">지갑의 모든 정보를 삭제 후 \n처음 상태로 돌아갑니다.</string>
-    <string name="wallet_init_detail_message">"인증된 구글 계정 및 지갑 정보가 해제한 후
-        지갑 초기화 절차를 진행합니다.
-        초기화 후에도
-        동일한 구글 계정으로 다시 인증 시
+    <string name="wallet_init">Google Logout</string>
+    <string name="wallet_init_message">현재 지갑에 인증된\nGoogle 정보를 로그아웃 합니다.</string>
+    <string name="wallet_init_detail_message">"인증 정보가 해제된 후
+        지갑 Google 인증 화면으로 이동합니다.\n
+        로그아웃 후에도
+        동일한 Google 계정으로 다시 인증 시
         본인이 소유한 모든 자산 정보를
         다시 관리할 수 있다."</string>
-    <string name="wallet_init_confirm">지갑 초기화</string>
+    <string name="wallet_init_confirm">Google Logout</string>
 
     <string name="token_send_failure_type_01">보유 자산 부족</string>
     <string name="token_send_failure_type_02">수수료 부족</string>
