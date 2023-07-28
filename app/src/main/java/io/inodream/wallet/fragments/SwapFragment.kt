@@ -111,14 +111,15 @@ class SwapFragment : BaseFragment() {
 
     private fun updateSwapDialogView() {
         App.getInstance().tokenInfosData?.tokenInfos?.forEach {
+            val balance = it.balance ?: ""
             when (it.symbol) {
                 "ETH" -> {
                     swapBottomSheetView.findViewById<ImageView>(R.id.iv_swap_01)?.let { iv ->
                         Glide.with(this).load(it.icon).into(iv)
                     }
                     swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_01)?.text =
-                        it.balance + "ETH"
-                    tokenMap["ETH"] = it.balance ?: ""
+                        "${balance}ETH"
+                    tokenMap["ETH"] = balance
                 }
 
                 "USDT" -> {
@@ -126,8 +127,8 @@ class SwapFragment : BaseFragment() {
                         Glide.with(this).load(it.icon).into(iv)
                     }
                     swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_02)?.text =
-                        it.balance + "USDT"
-                    tokenMap["USDT"] = it.balance ?: ""
+                        "${balance}USDT"
+                    tokenMap["USDT"] = balance
                 }
 
                 "FON" -> {
@@ -135,8 +136,8 @@ class SwapFragment : BaseFragment() {
                         Glide.with(this).load(it.icon).into(iv)
                     }
                     swapBottomSheetView.findViewById<TextView>(R.id.tv_swap_value_03)?.text =
-                        it.balance + "FON"
-                    tokenMap["FON"] = it.balance ?: ""
+                        "${balance}FON"
+                    tokenMap["FON"] = balance
                 }
             }
         }

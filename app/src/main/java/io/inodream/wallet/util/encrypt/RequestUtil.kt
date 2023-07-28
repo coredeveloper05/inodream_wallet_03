@@ -54,7 +54,6 @@ class RequestUtil {
                         call: Call<BaseResponse<GoogleAuthData>>,
                         response: Response<BaseResponse<GoogleAuthData>>
                     ) {
-                        if (!RequestUtil().checkResponse(response)) return
                         response.body()?.let { baseResponse ->
                             baseResponse.data?.let {
                                 Log.e("auth", Gson().toJson(it))
