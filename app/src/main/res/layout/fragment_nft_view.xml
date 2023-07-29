@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f9f9ff"
@@ -9,8 +9,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/nft_root_wrapper"
             android:layout_width="match_parent"
@@ -21,17 +21,15 @@
                 android:id="@+id/main_nft_list_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/main_token_spacer01"
-                >
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/nft_recycleview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    tools:listitem="@layout/view_nft_item"
-                    >
-                </androidx.recyclerview.widget.RecyclerView>
+                    tools:listitem="@layout/view_nft_item" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -39,28 +37,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="25dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/main_nft_list_wrapper"
-                >
-            </View>
+                app:layout_constraintTop_toBottomOf="@id/main_nft_list_wrapper" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/main_token_spacer01"
-                >
+                app:layout_constraintTop_toBottomOf="@id/main_token_spacer01">
+
                 <LinearLayout
                     android:id="@+id/nft_add_call"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
                     android:layout_weight="1.5"
                     android:background="@drawable/ripple_blue_20_round_empty"
+                    android:clickable="true"
                     android:gravity="center"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/main_token_spacer01"
-                    android:clickable="true"
-                    >
+                    app:layout_constraintTop_toBottomOf="@id/main_token_spacer01">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -86,16 +81,15 @@
                     android:id="@+id/nft_receive_button"
                     android:layout_width="0dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/receive_round_bu2_ripple"
-                    android:text="@string/nft_receive"
-                    android:textStyle="bold"
+                    android:clickable="true"
                     android:gravity="center"
+                    android:text="@string/nft_receive"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    />
+                    android:textStyle="bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

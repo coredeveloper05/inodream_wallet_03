@@ -1,8 +1,7 @@
 package io.inodream.wallet.activitys
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import io.inodream.wallet.R
+import androidx.appcompat.app.AppCompatActivity
 import io.inodream.wallet.databinding.ActivityNftSendResultBinding
 
 class NftSendResultActivity : AppCompatActivity() {
@@ -14,5 +13,8 @@ class NftSendResultActivity : AppCompatActivity() {
 
         binding = ActivityNftSendResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.backButton.setOnClickListener { finish() }
+        binding.tokenSend4Tv.setOnClickListener { finish() }
     }
 }

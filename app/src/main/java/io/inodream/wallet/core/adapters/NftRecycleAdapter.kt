@@ -1,18 +1,22 @@
 package io.inodream.wallet.core.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import io.inodream.wallet.R
-import io.inodream.wallet.core.data.NftItemData
+import io.inodream.wallet.refer.retrofit.data.NFTListData
 
 
-class NftRecycleAdapter(val itemList: ArrayList<NftItemData>) : RecyclerView.Adapter<NftRecycleAdapter.NftItemViewHolder>() {
+class NftRecycleAdapter(var itemList: ArrayList<NFTListData.NFTData>) :
+    RecyclerView.Adapter<NftRecycleAdapter.NftItemViewHolder>() {
 
     private lateinit var itemClickListener: OnItemClickEventListener
+    private lateinit var context: Context
 
     enum class EventType {
         VIEW,
@@ -24,15 +28,19 @@ class NftRecycleAdapter(val itemList: ArrayList<NftItemData>) : RecyclerView.Ada
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NftItemViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_nft_item, parent, false)
-
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.view_nft_item, parent, false)
+        context = parent.context
         return NftItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: NftItemViewHolder, position: Int) {
-        holder.nft_name.text = itemList[position].nftName
+        holder.nft_name.text = getShortAddress(itemList[position].address)
+        holder.nft_creator_name.text = getShortAddress(itemList[position].id)
+        Glide.with(context).load(itemList[position].metadata?.image ?: "")
+            .placeholder(R.drawable.ic_nft_symbol_01).into(holder.nft_symbol)
 
-        if(itemList.size - 1 == position) holder.item_divider.visibility = View.GONE
+        if (itemList.size - 1 == position) holder.item_divider.visibility = View.GONE
 
         holder.bind()
     }
@@ -46,20 +54,29 @@ class NftRecycleAdapter(val itemList: ArrayList<NftItemData>) : RecyclerView.Ada
     }
 
     inner class NftItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val nft_name: TextView = itemView.findViewById<TextView>(R.id.nft_name)
-        val item_divider: View = itemView.findViewById<View>(R.id.item_divider)
+        val nft_symbol: ImageView = itemView.findViewById(R.id.nft_symbol)
+        val nft_name: TextView = itemView.findViewById(R.id.nft_name)
+        val nft_creator_name: TextView = itemView.findViewById(R.id.nft_creator_name)
+        val item_divider: View = itemView.findViewById(R.id.item_divider)
 
         fun bind() {
             val pos = adapterPosition
-            if(pos!= RecyclerView.NO_POSITION) {
+            if (pos != RecyclerView.NO_POSITION) {
                 itemView.findViewById<ImageView>(R.id.nft_symbol).setOnClickListener {
-                    itemClickListener?.onItemClick(itemView, pos, EventType.VIEW)
+                    itemClickListener.onItemClick(itemView, pos, EventType.VIEW)
                 }
 
                 itemView.findViewById<ImageView>(R.id.nft_send_button).setOnClickListener {
-                    itemClickListener?.onItemClick(itemView, pos, EventType.SEND)
+                    itemClickListener.onItemClick(itemView, pos, EventType.SEND)
                 }
             }
         }
+    }
+
+    private fun getShortAddress(address: String): String {
+        if (address.length < 17) {
+            return address
+        }
+        return address.substring(0, 7) + "..." + address.substring(address.length - 10)
     }
 }

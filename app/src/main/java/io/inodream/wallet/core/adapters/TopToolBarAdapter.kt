@@ -1,6 +1,5 @@
 package io.inodream.wallet.core.adapters
 
-import android.app.Application
 import android.view.View
 import android.widget.ImageButton
 import android.widget.Toast
@@ -8,15 +7,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import io.inodream.wallet.R
 
-class TopToolBarAdapter {
-
-    constructor(view: View, context: Fragment) {
-        this.view = view
-        this.context = context
-    }
-
-    private var view: View
-    private var context: Fragment
+class TopToolBarAdapter(private var view: View, private var context: Fragment) {
 
     fun initTopToolBarEvent() {
         view.findViewById<AppCompatImageView>(R.id.account_button)?.let {

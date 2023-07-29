@@ -23,6 +23,7 @@
     <string name="term_advertise_description">프로모션 및 이벤트 소식을 제공합니다.</string>
 
     <string name="confirm">확인</string>
+    <string name="cancel">취소</string>
 
     <string name="title_term_service">서비스 이용약관</string>
     <string name="title_term_privacy_policy">개인정보 수집 및 이용동의</string>
@@ -92,8 +93,7 @@
     <string name="tx_create"> 창조하다</string>
     <string name="tx_confirm"> 확인하다</string>
 
-
-    <string name="check_error_empty_address">수신지 주소를 입력해 주세요.</string>
+    <string name="check_error_empty_address">수신 주소를 입력해 주세요.</string>
     <string name="check_error_empty_quantity">수량을 입력해 주세요.</string>
     <string name="check_error_empty_pwd">비밀번호를 입력해 주세요.</string>
     <string name="check_error_empty_symbol">토큰 선택하세요.</string>
@@ -139,4 +139,11 @@
         부족하여 전송해 실패 하였습니다."</string>
     <string name="token_send_failure_type_02_message">"전송을 위한 수수료가
         부족하여 전송해 실패 하였습니다."</string>
+
+    <string name="nft_account">지갑 : %1$s</string>
+    <string name="nft_address">NFT 주소 : %1$s</string>
+    <string name="nft_id">토큰 ID : %1$s</string>
+    <string name="nft_balance">범위를 벗어남</string>
+    <string name="nft_empty_editview">입력해 주세요</string>
+    <string name="dialog_token_bottom_price">%1$s ETH \n￦%2$s </string>
 </resources>

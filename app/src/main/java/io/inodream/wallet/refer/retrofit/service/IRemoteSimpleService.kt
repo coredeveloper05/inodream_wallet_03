@@ -6,6 +6,7 @@ import io.inodream.wallet.refer.retrofit.data.BalanceData
 import io.inodream.wallet.refer.retrofit.data.BalancesData
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
+import io.inodream.wallet.refer.retrofit.data.NFTListData
 import io.inodream.wallet.refer.retrofit.data.TokenInfoData
 import io.inodream.wallet.refer.retrofit.data.TokenInfosData
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
@@ -16,6 +17,7 @@ import retrofit2.http.GET
 import retrofit2.http.HeaderMap
 import retrofit2.http.POST
 import retrofit2.http.QueryMap
+import retrofit2.http.Url
 
 /**
  * api 기능 단위 인터페이스
@@ -36,6 +38,12 @@ interface IRemoteSimpleService {
 
     @POST("http://3.26.205.235:8008/api/swap")
     fun swapChange(@Body map: MutableMap<String, String>): Call<JsonObject>
+
+    @POST("http://3.26.205.235:8008/api/getNftList2")
+    fun getNftList(@Body map: MutableMap<String, Any>): Call<NFTListData>
+
+    @POST("http://3.26.205.235:8008/api/transferNft")
+    fun transferNft(@Body map: MutableMap<String, Any>): Call<JsonObject>
 
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
@@ -85,5 +93,6 @@ interface IRemoteSimpleService {
         @QueryMap body: MutableMap<String, String>
     ): Call<BaseResponse<List<TxData.Data>>>
 
-
+    @GET
+    fun getData(@Url url: String): Call<JsonObject>
 }

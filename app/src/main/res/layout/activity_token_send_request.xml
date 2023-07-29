@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#f9f9ff"
     tools:context=".activitys.TokenSendRequestActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,8 +73,8 @@
                             android:layout_height="wrap_content"
                             android:letterSpacing="-0.01"
                             android:lineSpacingExtra="3sp"
-                            android:text="붙여넣기"
                             android:padding="4dp"
+                            android:text="붙여넣기"
                             android:textColor="#000000"
                             android:textSize="12sp" />
 
@@ -149,135 +150,29 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@drawable/send2_round_orange"
-                    android:layout_marginTop="20dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="20dp"
-                        android:paddingTop="23dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="15sp"
-                            android:textColor="#ffffff"
-                            android:letterSpacing="-0.01"
-                            android:text="예상 가스요금"/>
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:textSize="12sp"
-                            android:textColor="#ffffff"
-                            android:text="0.002385 ETH"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingHorizontal="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:textColor="#ffffff"
-                            android:text="약 &#60; 30"/>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:textSize="12sp"
-                            android:textColor="#ffffff"
-                            android:text="최대수수료 : 0.002396 ETH"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="20dp"
-                        android:paddingHorizontal="20dp">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="bold"
-                            android:textSize="14sp"
-                            android:textColor="#ffffff"
-                            android:letterSpacing="-0.01"
-                            android:text="총 금액"/>
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:layout_weight="1"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textStyle="normal"
-                            android:textSize="18sp"
-                            android:textColor="#ffffff"
-                            android:text="8 ETH"/>
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="12sp"
-                        android:textColor="#ffffff"
-                        android:layout_gravity="right"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="7dp"
-                        android:layout_marginBottom="22dp"
-                        android:text="최대금액 : 8.002396"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:gravity="center">
 
-                <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+                    <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
                         android:id="@+id/send_request_button"
                         android:layout_width="160dp"
                         android:layout_height="50dp"
                         android:layout_gravity="center_horizontal"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="31dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="30dp"
+                        android:layout_marginBottom="31dp"
                         android:background="@drawable/receive_round_bu2"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="@string/send_request"
-                    android:textColor="@color/white"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    app:finalCornerAngle="50dp"
-                    app:initialCornerAngle="10dp"
-                    app:spinning_bar_color="#f7f7fd"
-                    app:spinning_bar_padding="8dp"
-                    app:spinning_bar_width="3dp" />
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/send_request"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        app:finalCornerAngle="50dp"
+                        app:initialCornerAngle="10dp"
+                        app:spinning_bar_color="#f7f7fd"
+                        app:spinning_bar_padding="8dp"
+                        app:spinning_bar_width="3dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
