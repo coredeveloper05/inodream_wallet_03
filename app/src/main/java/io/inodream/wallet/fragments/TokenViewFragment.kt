@@ -83,7 +83,7 @@ class TokenViewFragment : BaseFragment() {
         val qrView = LayoutInflater.from(context).inflate(R.layout.view_token_receive, null)
         qrView.findViewById<TextView>(R.id.tv_wallet_address).text =
             UserManager.getInstance().address
-        // 生成二维码
+        // generate QRCode
         qrView.findViewById<ImageView>(R.id.iv_wallet_address)
             .setImageBitmap(CodeUtils.createQRCode(UserManager.getInstance().address, 600, null))
         qrViewDialog = AlertDialog.Builder(context)
@@ -286,12 +286,12 @@ class TokenViewFragment : BaseFragment() {
                     mTotalPrice += totalPrice
                     tokenValueKo.text = String.format(
                         getString(R.string.W_value),
-                        StringUtils().getTwoDigits(totalPrice)
+                        StringUtils.getTwoDigits(totalPrice)
                     )
                     binding.myAssetsValue.text =
                         String.format(
                             getString(R.string.W_value),
-                            StringUtils().getTwoDigits(mTotalPrice)
+                            StringUtils.getTwoDigits(mTotalPrice)
                         )
                 }
             }

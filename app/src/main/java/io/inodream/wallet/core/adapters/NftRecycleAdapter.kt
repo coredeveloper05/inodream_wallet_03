@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.inodream.wallet.R
 import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.util.StringUtils
 
 
 class NftRecycleAdapter(var itemList: ArrayList<NFTListData.NFTData>) :
@@ -35,8 +36,9 @@ class NftRecycleAdapter(var itemList: ArrayList<NFTListData.NFTData>) :
     }
 
     override fun onBindViewHolder(holder: NftItemViewHolder, position: Int) {
-        holder.nft_name.text = getShortAddress(itemList[position].address)
-        holder.nft_creator_name.text = getShortAddress(itemList[position].id)
+        holder.nft_name.text =
+            StringUtils.getShortAddressAndId(itemList[position].address, itemList[position].id)
+        holder.nft_creator_name.text = StringUtils.getShortAddress(itemList[position].creator)
         Glide.with(context).load(itemList[position].metadata?.image ?: "")
             .placeholder(R.drawable.ic_nft_symbol_01).into(holder.nft_symbol)
 
@@ -71,12 +73,5 @@ class NftRecycleAdapter(var itemList: ArrayList<NFTListData.NFTData>) :
                 }
             }
         }
-    }
-
-    private fun getShortAddress(address: String): String {
-        if (address.length < 17) {
-            return address
-        }
-        return address.substring(0, 7) + "..." + address.substring(address.length - 10)
     }
 }

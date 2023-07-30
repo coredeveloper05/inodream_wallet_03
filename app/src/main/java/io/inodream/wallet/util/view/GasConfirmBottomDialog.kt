@@ -7,6 +7,7 @@ import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import io.inodream.wallet.App
 import io.inodream.wallet.R
+import io.inodream.wallet.util.StringUtils
 
 /**
  * <pre>
@@ -47,7 +48,7 @@ class GasConfirmBottomDialog(context: Context) : BottomSheetDialog(context) {
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
-                    allPrice = (price * bal).toString()
+                    allPrice = StringUtils.getSixDigits(price * bal)
                 }
             }
         }

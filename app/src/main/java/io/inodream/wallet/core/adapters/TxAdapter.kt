@@ -10,6 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.QuickViewHolder
 import io.inodream.wallet.R
 import io.inodream.wallet.refer.retrofit.data.TxData
+import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
 
 /**
@@ -43,7 +44,8 @@ class TxAdapter : BaseQuickAdapter<TxData.Data, QuickViewHolder>() {
             holder.getView<View>(R.id.ll_icon)
                 .setBackgroundResource(R.drawable.circle_tab_select_minus)
             holder.getView<ImageView>(R.id.iv_icon).setImageResource(R.drawable.minus_circle)
-            holder.getView<TextView>(R.id.tv_address).text = getShortAddress(item?.to ?: "")
+            holder.getView<TextView>(R.id.tv_address).text =
+                StringUtils.getShortAddress(item?.to ?: "")
             holder.getView<TextView>(R.id.tv_price).text = item?.value + " " + item?.symbol
             holder.getView<TextView>(R.id.tv_date).text = item?.updatedAt
             holder.getView<View>(R.id.ll_state).setBackgroundResource(R.drawable.swap_squ_minus)
@@ -56,7 +58,8 @@ class TxAdapter : BaseQuickAdapter<TxData.Data, QuickViewHolder>() {
             holder.getView<View>(R.id.ll_icon)
                 .setBackgroundResource(R.drawable.circle_tab_select_plus)
             holder.getView<ImageView>(R.id.iv_icon).setImageResource(R.drawable.plus_circle)
-            holder.getView<TextView>(R.id.tv_address).text = getShortAddress(item?.from ?: "")
+            holder.getView<TextView>(R.id.tv_address).text =
+                StringUtils.getShortAddress(item?.from ?: "")
             holder.getView<TextView>(R.id.tv_price).text = item?.value + " " + item?.symbol
             holder.getView<TextView>(R.id.tv_date).text = item?.updatedAt
             holder.getView<View>(R.id.ll_state).setBackgroundResource(R.drawable.swap_squ_orange)
@@ -65,12 +68,5 @@ class TxAdapter : BaseQuickAdapter<TxData.Data, QuickViewHolder>() {
             holder.getView<TextView>(R.id.tv_state).text =
                 context.getString(R.string.tx_receive) + state
         }
-    }
-
-    private fun getShortAddress(address: String): String {
-        if (address.length < 17) {
-            return address
-        }
-        return address.substring(0, 7) + "..." + address.substring(address.length - 10)
     }
 }

@@ -9,6 +9,7 @@ import io.inodream.wallet.databinding.ActivitySetWalletInitBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
+import io.inodream.wallet.util.NftUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
 import retrofit2.Call
@@ -34,7 +35,7 @@ class SetWalletInitActivity : AppCompatActivity() {
     private fun logout() {
         RetrofitClient
             .remoteSimpleService
-            .authRefresh(RequestUtil().getRefreshHeader())
+            .logout(RequestUtil().getRefreshHeader())
             .enqueue(object : Callback<BaseResponse<GoogleAuthData>> {
                 override fun onResponse(
                     call: Call<BaseResponse<GoogleAuthData>>,
@@ -43,6 +44,7 @@ class SetWalletInitActivity : AppCompatActivity() {
                     if (!RequestUtil().checkResponse(response)) return
                     if (response.body()?.status == "1") {
                         UserManager.getInstance().clearData()
+                        NftUtils.clearNFTData()
                         Intent(Utils.getApp(), SocialLoginActivity::class.java)
                             .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

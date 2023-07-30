@@ -18,6 +18,7 @@ import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
+import io.inodream.wallet.util.view.GasConfirmBottomDialog
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +31,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
     private var symbol: String = ""
 
     private lateinit var failureViewDialog: AlertDialog
+    private lateinit var dialog: GasConfirmBottomDialog
 
     private enum class TokenSendFailureType {
         TOKEN_DEFICIENCY,
@@ -45,6 +47,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
         symbol = intent.getStringExtra("key") ?: ""
         binding.topToolbar.title.text = resources.getString(R.string.title_token_send)
         binding.sampleEditText.setText(intent.getStringExtra("address") ?: "")
+        dialog = GasConfirmBottomDialog(this)
 
         getPrivateKey()
         setListener()
@@ -109,7 +112,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
 
         binding.sendRequestButton.setOnClickListener {
             if (checkForm()) {
-                encodeText()
+                estimateTransferGasFee()
             }
         }
         binding.llScan.setOnClickListener {
@@ -122,6 +125,11 @@ class TokenSendRequestActivity : AppCompatActivity() {
         }
         binding.tvPaste.setOnClickListener {
             binding.sampleEditText.setText(ClipboardUtils.getText())
+        }
+        dialog.listener = object : GasConfirmBottomDialog.OnConfirmListener {
+            override fun onConfirm() {
+                encodeText()
+            }
         }
     }
 
@@ -144,6 +152,39 @@ class TokenSendRequestActivity : AppCompatActivity() {
             return false
         }
         return true
+    }
+
+    private fun estimateTransferGasFee() {
+        val map: MutableMap<String, String> = HashMap()
+        map["symbol"] = symbol
+        map["to"] = binding.sampleEditText.text.toString()
+        map["value"] = binding.etBalance.text.toString()
+        map["seedEncode"] = UserManager.getInstance().walletData.seed
+        binding.sendRequestButton.startAnimation()
+        RetrofitClient
+            .remoteSimpleService
+            .estimateTransferGasFee(map)
+            .enqueue(object : Callback<JsonObject> {
+                override fun onResponse(
+                    call: Call<JsonObject>,
+                    response: Response<JsonObject>
+                ) {
+                    if (RequestUtil().checkResponse(response)) {
+                        response.body()?.let {
+                            if (it.get("status").toString() == "1") {
+                                dialog.showGas(it.get("transactionFee").asString)
+                            }
+                        }
+                    }
+                    binding.sendRequestButton.revertAnimation()
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    binding.sendRequestButton.revertAnimation()
+                    t.printStackTrace()
+                    ToastUtils.showLong(t.message)
+                }
+            })
     }
 
     private fun encodeText() {

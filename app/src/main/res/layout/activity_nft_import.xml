@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,103 +8,104 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <include
             android:id="@+id/top_toolbar"
-            layout="@layout/normal_top_toolbar"
-            />
+            layout="@layout/normal_top_toolbar" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_margin="20dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:textColor="#6a6a6a"
                 android:letterSpacing="-0.01"
                 android:lineSpacingExtra="4sp"
-                android:text="지갑에서 NFT 토큰이 보이지 않는다면 아래 정보를 입력하게 \n 불러오기를 진행하세요."/>
+                android:text="지갑에서 NFT 토큰이 보이지 않는다면 아래 정보를 입력하게 \n 불러오기를 진행하세요."
+                android:textColor="#6a6a6a"
+                android:textSize="12sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="sans-serif-smallcaps"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#000000"
                 android:letterSpacing="-0.01"
-                android:text="컨트랙트 주소"/>
+                android:text="컨트랙트 주소"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <EditText
+                android:id="@+id/et_address"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_white_round_empty"
-                android:inputType="text"/>
+                android:inputType="text" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:fontFamily="sans-serif-smallcaps"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:textColor="#000000"
                 android:letterSpacing="-0.01"
-                android:text="토큰 ID"/>
+                android:text="토큰 ID"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <EditText
+                android:id="@+id/et_id"
                 android:layout_width="fill_parent"
                 android:layout_height="45dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_white_round_empty"
-                android:inputType="text"/>
+                android:inputType="text" />
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginBottom="21dp">
+                android:layout_marginBottom="21dp"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/importCancelButton"
                     android:layout_width="152dp"
                     android:layout_height="50dp"
                     android:background="@drawable/receive_round_bu_ripple"
-                    android:text="취소"
-                    android:textStyle="bold"
+                    android:clickable="true"
                     android:gravity="center"
+                    android:text="취소"
                     android:textColor="#3cdbd3"
                     android:textSize="13sp"
-                    android:clickable="true"
-                    />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/tv_confirm"
                     android:layout_width="152dp"
                     android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/receive_round_bu2_ripple"
-                    android:text="불러오기"
-                    android:textStyle="bold"
+                    android:clickable="true"
                     android:gravity="center"
+                    android:text="불러오기"
                     android:textColor="@color/white"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:clickable="true"
-                    />
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>

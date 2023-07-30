@@ -12,6 +12,7 @@ import io.inodream.wallet.event.RefreshEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.GoogleAuthData
+import io.inodream.wallet.util.NftUtils
 import io.inodream.wallet.util.UserManager
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Call
@@ -65,6 +66,7 @@ class RequestUtil {
                         if (isRequestRefresh) {
                             isRequestRefresh = false
                             UserManager.getInstance().clearData()
+                            NftUtils.clearNFTData()
                             Utils.getApp().startActivity(
                                 Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
                                     Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -78,6 +80,7 @@ class RequestUtil {
                         t.printStackTrace()
                         ToastUtils.showLong(t.message)
                         UserManager.getInstance().clearData()
+                        NftUtils.clearNFTData()
                         Handler(Looper.getMainLooper()).post {
                             Utils.getApp().startActivity(
                                 Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(

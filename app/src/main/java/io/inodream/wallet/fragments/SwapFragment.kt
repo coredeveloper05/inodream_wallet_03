@@ -25,6 +25,7 @@ import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
+import io.inodream.wallet.util.view.GasConfirmBottomDialog
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -47,13 +48,14 @@ class SwapFragment : BaseFragment() {
 
     // swapBottomSheetView
     private lateinit var swapBottomSheetView: View
+    private lateinit var dialog: GasConfirmBottomDialog
 
     //
     private var inSymbol: String = ""
     private var outSymbol: String = ""
     private var sheetType = 1
     private var tokenMap: MutableMap<String, String> = HashMap()
-    private var lastRequestTime = 0L
+    private var conformTip: Boolean = true
 
     private var selectedSlippage = 1
     private var scopeSlippageLaArray: Array<TextView>? = null
@@ -87,6 +89,7 @@ class SwapFragment : BaseFragment() {
         swapSendToken = binding.swapSendToken
         swapReceiveToken = binding.swapReceiveToken
         swapSlippage = binding.swapSlippage
+        dialog = GasConfirmBottomDialog(requireContext())
     }
 
     private fun initDialog() {
@@ -251,14 +254,12 @@ class SwapFragment : BaseFragment() {
             override fun onStopTrackingTouch(p0: SeekBar?) {}
         })
         binding.etSwap01.addTextChangedListener {
-            if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
-                ToastUtils.showLong(R.string.check_error_empty_symbol)
-                return@addTextChangedListener
-            } else if (!TextUtils.isEmpty(binding.etSwap01.text.toString())
-                && binding.etSwap01.text.toString() != "."
-            ) {
-                lastRequestTime = System.currentTimeMillis()
-                quoteToken()
+            quoteToken()
+        }
+        dialog.listener = object : GasConfirmBottomDialog.OnConfirmListener {
+            override fun onConfirm() {
+                conformTip = false
+                swapChange()
             }
         }
     }
@@ -272,6 +273,7 @@ class SwapFragment : BaseFragment() {
             outSymbol = symbol
             binding.tvSwapToken02.text = symbol
         }
+        quoteToken()
     }
 
     fun setSlippageLabel(select: Int) {
@@ -296,6 +298,14 @@ class SwapFragment : BaseFragment() {
     }
 
     fun quoteToken() {
+        if (TextUtils.isEmpty(inSymbol) || TextUtils.isEmpty(outSymbol)) {
+            ToastUtils.showLong(R.string.check_error_empty_symbol)
+            return
+        } else if (TextUtils.isEmpty(binding.etSwap01.text.toString())
+            || binding.etSwap01.text.toString() == "."
+        ) {
+            return
+        }
         val map: MutableMap<String, String> = HashMap()
         map["tokenInSymbol"] = inSymbol
         map["tokenOutSymbol"] = outSymbol
@@ -326,13 +336,14 @@ class SwapFragment : BaseFragment() {
     }
 
     fun swapChange() {
-        val map: MutableMap<String, String> = HashMap()
+        val map: MutableMap<String, Any> = HashMap()
         map["seedEncode"] = UserManager.getInstance().walletData.seed
         map["tokenInSymbol"] = inSymbol
         map["tokenOutSymbol"] = outSymbol
         map["tokenInAmount"] = binding.etSwap01.text.toString()
         map["tokenOutAmount"] = binding.tvSwap.text.toString()
         map["slippage"] = binding.currentSlippage.text.toString().replace("%", "")
+        map["estima1teGas"] = conformTip
         binding.swaptxt01.startAnimation()
         RetrofitClient
             .remoteSimpleService
@@ -343,15 +354,26 @@ class SwapFragment : BaseFragment() {
                     response: Response<JsonObject>
                 ) {
                     binding.swaptxt01.revertAnimation()
-                    if (!RequestUtil().checkResponse(response)) return
-                    if (response.body()?.get("status").toString() == "1") {
-                        ToastUtils.showLong("swap성공하다")
-                    } else {
-                        ToastUtils.showLong("swap실패하다")
+                    if (!RequestUtil().checkResponse(response)) {
+                        if (!conformTip) conformTip = true
+                        return
                     }
+                    response.body()?.let {
+                        if (it.get("status").toString() == "1") {
+                            if (conformTip) {
+                                dialog.showGas(it.get("transactionFee").asString)
+                            } else {
+                                ToastUtils.showLong("swap성공하다")
+                            }
+                        } else {
+                            ToastUtils.showLong("swap실패하다")
+                        }
+                    }
+                    if (conformTip) conformTip = true
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    if (conformTip) conformTip = true
                     binding.swaptxt01.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)

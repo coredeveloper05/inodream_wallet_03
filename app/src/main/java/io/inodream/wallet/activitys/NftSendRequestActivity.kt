@@ -14,6 +14,7 @@ import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivityNftSendRequestBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
 import io.inodream.wallet.util.view.GasConfirmBottomDialog
@@ -42,7 +43,7 @@ class NftSendRequestActivity : AppCompatActivity() {
         binding = ActivityNftSendRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        nftData = intent.getSerializableExtra("key") as NFTListData.NFTData
+        nftData = intent.getSerializableExtra("key") as NFTListData.NFTData?
         if (nftData == null) {
             finish()
             return
@@ -55,8 +56,9 @@ class NftSendRequestActivity : AppCompatActivity() {
     private fun initView() {
         binding.topToolbar.title.text = resources.getString(R.string.title_nft_send)
         binding.tvAccount.text = getString(R.string.nft_account, UserManager.getInstance().email)
-        binding.tvAddress.text = getString(R.string.nft_address, getShortAddress(nftData?.address))
-        binding.tvId.text = getString(R.string.nft_id, getShortAddress(nftData?.id))
+        binding.tvAddress.text =
+            getString(R.string.nft_address, StringUtils.getShortAddress(nftData?.address))
+        binding.tvId.text = getString(R.string.nft_id, StringUtils.getShortAddress(nftData?.id))
         if (nftData?.standard?.contains(STANDARD_721) == true) {
             binding.llToken.visibility = View.GONE
         }
@@ -199,15 +201,5 @@ class NftSendRequestActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun getShortAddress(address: String?): String {
-        if (TextUtils.isEmpty(address)) {
-            return ""
-        }
-        if (address!!.length < 17) {
-            return address
-        }
-        return address.substring(0, 7) + "..." + address.substring(address.length - 10)
     }
 }

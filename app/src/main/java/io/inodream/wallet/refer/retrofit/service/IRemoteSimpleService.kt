@@ -37,13 +37,16 @@ interface IRemoteSimpleService {
     fun encodeText(@Body map: MutableMap<String, String>): Call<JsonObject>
 
     @POST("http://3.26.205.235:8008/api/swap")
-    fun swapChange(@Body map: MutableMap<String, String>): Call<JsonObject>
+    fun swapChange(@Body map: MutableMap<String, Any>): Call<JsonObject>
 
     @POST("http://3.26.205.235:8008/api/getNftList2")
     fun getNftList(@Body map: MutableMap<String, Any>): Call<NFTListData>
 
     @POST("http://3.26.205.235:8008/api/transferNft")
     fun transferNft(@Body map: MutableMap<String, Any>): Call<JsonObject>
+
+    @POST("http://3.26.205.235:8008/api/estimateTransferGasFee")
+    fun estimateTransferGasFee(@Body map: MutableMap<String, String>): Call<JsonObject>
 
     @POST(RetrofitClient.AUTH_GOOGLE)
     fun authGoogle(@Body map: MutableMap<String, String>): Call<BaseResponse<GoogleAuthData>>
