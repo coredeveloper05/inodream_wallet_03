@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
+import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
 import io.inodream.wallet.databinding.ActivitySetWalletInitBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
@@ -18,6 +18,8 @@ import retrofit2.Response
 
 class SetWalletInitActivity : AppCompatActivity() {
 
+    private lateinit var btn: CircularProgressButton
+
     private val binding: ActivitySetWalletInitBinding by lazy {
         ActivitySetWalletInitBinding.inflate(layoutInflater)
     }
@@ -27,12 +29,14 @@ class SetWalletInitActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        binding.wallProCom02Tv.setOnClickListener {
+        btn = binding.wallProCom02Tv
+        btn.setOnClickListener {
             logout()
         }
     }
 
     private fun logout() {
+        btn.startAnimation()
         RetrofitClient
             .remoteSimpleService
             .logout(RequestUtil().getRefreshHeader())
@@ -41,17 +45,21 @@ class SetWalletInitActivity : AppCompatActivity() {
                     call: Call<BaseResponse<GoogleAuthData>>,
                     response: Response<BaseResponse<GoogleAuthData>>
                 ) {
+                    btn.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
                     if (response.body()?.status == "1") {
                         UserManager.getInstance().clearData()
                         NftUtils.clearNFTData()
-                        Intent(Utils.getApp(), SocialLoginActivity::class.java)
-                            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(
+                            Intent(this@SetWalletInitActivity, SocialLoginActivity::class.java)
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
                     }
                 }
 
                 override fun onFailure(call: Call<BaseResponse<GoogleAuthData>>, t: Throwable) {
+                    btn.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

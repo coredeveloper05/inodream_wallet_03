@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayoutMediator
 import io.inodream.wallet.R
 import io.inodream.wallet.core.adapters.BalanceViewPagerAdapter
@@ -43,7 +44,17 @@ class BalanceFragment : BaseFragment() {
 
         viewPager.adapter = BalanceViewPagerAdapter(this, viewFragmentItemArray)
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position  ->
+        viewPager.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                if (position == 1) {
+                    view.findViewById<View>(R.id.qrCameraViewButton).visibility = View.INVISIBLE
+                } else {
+                    view.findViewById<View>(R.id.qrCameraViewButton).visibility = View.VISIBLE
+                }
+            }
+        })
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabItemArray[position]
         }.attach()
     }

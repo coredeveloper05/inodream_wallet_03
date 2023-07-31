@@ -1,12 +1,10 @@
 package io.inodream.wallet.util.encrypt
 
 import android.content.Intent
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.blankj.utilcode.util.ToastUtils
-import com.blankj.utilcode.util.Utils
 import com.google.gson.Gson
+import io.inodream.wallet.App
 import io.inodream.wallet.activitys.SocialLoginActivity
 import io.inodream.wallet.event.RefreshEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
@@ -67,10 +65,13 @@ class RequestUtil {
                             isRequestRefresh = false
                             UserManager.getInstance().clearData()
                             NftUtils.clearNFTData()
-                            Utils.getApp().startActivity(
-                                Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            App.getInstance().applicationContext.startActivity(
+                                Intent(
+                                    App.getInstance().applicationContext,
+                                    SocialLoginActivity::class.java
+                                )
+                                    .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                             )
                         }
                     }
@@ -81,13 +82,14 @@ class RequestUtil {
                         ToastUtils.showLong(t.message)
                         UserManager.getInstance().clearData()
                         NftUtils.clearNFTData()
-                        Handler(Looper.getMainLooper()).post {
-                            Utils.getApp().startActivity(
-                                Intent(Utils.getApp(), SocialLoginActivity::class.java).setFlags(
-                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        App.getInstance().applicationContext.startActivity(
+                            Intent(
+                                App.getInstance().applicationContext,
+                                SocialLoginActivity::class.java
                             )
-                        }
+                                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        )
                     }
                 })
             return false

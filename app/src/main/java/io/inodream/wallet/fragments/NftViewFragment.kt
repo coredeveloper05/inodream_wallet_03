@@ -119,11 +119,6 @@ class NftViewFragment : BaseFragment() {
     }
 
     private fun getNFTData() {
-        handler.removeCallbacksAndMessages(null)
-        nftDataList.clear()
-        nftItemAdapter.itemList.clear()
-        nftItemAdapter.notifyDataSetChanged()
-
         val map: MutableMap<String, Any> = HashMap()
         map["walletAddress"] = UserManager.getInstance().walletData.address
         map["nfts"] = NftUtils.getNftList()
@@ -137,6 +132,11 @@ class NftViewFragment : BaseFragment() {
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.userNfts?.let {
+                        handler.removeCallbacksAndMessages(null)
+                        nftDataList.clear()
+                        nftItemAdapter.itemList.clear()
+                        nftItemAdapter.notifyDataSetChanged()
+
                         out@ for (data in it) {
                             for (local in nftDataList) {
                                 if (data.id == local.id && data.address == local.address) {
@@ -182,7 +182,7 @@ class NftViewFragment : BaseFragment() {
                 response: Response<JsonObject>
             ) {
                 handler.postDelayed({ getMetaData() }, 1100L)
-                if (!RequestUtil().checkResponse(response)) return
+                if (response.code() != 200) return
                 response.body()?.let {
                     for (data in nftDataList) {
                         if (data.id == id) {

@@ -14,6 +14,7 @@
 
     <string name="term_mandatory">필수</string>
     <string name="term_optional">선택</string>
+    <string name="term_error_tip">계약서를 읽고 동의하십시오.</string>
 
     <string name="term_agreement_all">약관 전체동의</string>
     <string name="term_service">서비스 이용약관</string>

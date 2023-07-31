@@ -131,4 +131,12 @@ public class UserManager {
         } catch (Exception ignore) {
         }
     }
+
+    public void saveProtocol(String str) {
+        SPUtils.getInstance().put(getEmail(), str);
+    }
+
+    public String getProtocol() {
+        return SPUtils.getInstance().getString(getEmail());
+    }
 }

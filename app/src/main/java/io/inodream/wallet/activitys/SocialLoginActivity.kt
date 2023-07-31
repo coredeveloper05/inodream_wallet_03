@@ -101,7 +101,7 @@ class SocialLoginActivity : AppCompatActivity() {
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
-                        authGoogle(it.get("encode")?.asString?:"")
+                        authGoogle(it.get("encode")?.asString ?: "")
                     }
                 }
 
@@ -138,6 +138,7 @@ class SocialLoginActivity : AppCompatActivity() {
                                     SocialTermAgreeActivity::class.java
                                 )
                             )
+                            finish()
                         }
                     }
                 }

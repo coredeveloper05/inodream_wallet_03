@@ -33,7 +33,7 @@ class NftUtils {
             if (allData.size == 0) {
                 allData.addAll(nftData)
                 val string =
-                    SPUtils.getInstance(SP_FILE_NFT).getString(UserManager.getInstance().uid)
+                    SPUtils.getInstance(SP_FILE_NFT).getString(UserManager.getInstance().email)
                 if (!TextUtils.isEmpty(string)) {
                     val list = Gson().fromJson<ArrayList<NFTListData.NFTData>>(
                         string, object : TypeToken<ArrayList<NFTListData.NFTData>>() {}.type
@@ -48,7 +48,7 @@ class NftUtils {
             if (TextUtils.isEmpty(address) || TextUtils.isEmpty(id)) return
             val data = NFTListData.NFTData(address, id)
             allData.add(data)
-            val string = SPUtils.getInstance(SP_FILE_NFT).getString(UserManager.getInstance().uid)
+            val string = SPUtils.getInstance(SP_FILE_NFT).getString(UserManager.getInstance().email)
             val list: ArrayList<NFTListData.NFTData> = if (TextUtils.isEmpty(string)) {
                 ArrayList()
             } else {
@@ -58,7 +58,8 @@ class NftUtils {
                 )
             }
             list.add(data)
-            SPUtils.getInstance(SP_FILE_NFT).put(UserManager.getInstance().uid, Gson().toJson(list))
+            SPUtils.getInstance(SP_FILE_NFT)
+                .put(UserManager.getInstance().email, Gson().toJson(list))
         }
 
         fun clearNFTData() {

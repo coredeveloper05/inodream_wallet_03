@@ -1,11 +1,14 @@
 package io.inodream.wallet.activitys
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.CheckBox
+import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.ToastUtils
 import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivitySocialTermAgreeBinding
+import io.inodream.wallet.util.UserManager
 
 class SocialTermAgreeActivity : AppCompatActivity() {
 
@@ -40,16 +43,36 @@ class SocialTermAgreeActivity : AppCompatActivity() {
             binding.checkTermAgreementAll.performClick()
         }
         binding.checkTermAgreementAll.setOnClickListener {
-            if((it as CheckBox).isChecked) {
+            if ((it as CheckBox).isChecked) {
                 binding.checkTermService.isChecked = true
                 binding.checkTermPrivacyPolicy.isChecked = true
                 binding.checkTermLocationPolicy.isChecked = true
                 binding.checkTermAdvertiseAlarmPolicy.isChecked = true
+            } else if (!it.isChecked) {
+                binding.checkTermService.isChecked = false
+                binding.checkTermPrivacyPolicy.isChecked = false
+                binding.checkTermLocationPolicy.isChecked = false
+                binding.checkTermAdvertiseAlarmPolicy.isChecked = false
             }
         }
-
         binding.termConfirm.setOnClickListener {
-            startActivity(Intent(this, WalletMainActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            if (!binding.checkTermService.isChecked || !binding.checkTermPrivacyPolicy.isChecked) {
+                ToastUtils.showLong(R.string.term_error_tip)
+            } else {
+                val sb: StringBuilder = StringBuilder()
+                sb.append(if (binding.checkTermService.isChecked) "1," else "")
+                sb.append(if (binding.checkTermPrivacyPolicy.isChecked) "2," else "")
+                sb.append(if (binding.checkTermLocationPolicy.isChecked) "3," else "")
+                sb.append(if (binding.checkTermAdvertiseAlarmPolicy.isChecked) "4," else "")
+                UserManager.getInstance()
+                    .saveProtocol(sb.toString().substring(0, sb.toString().length - 1))
+                startActivity(Intent(this, WalletMainActivity::class.java))
+                finish()
+            }
+        }
+        if (!TextUtils.isEmpty(UserManager.getInstance().protocol)) {
+            startActivity(Intent(this, WalletMainActivity::class.java))
+            finish()
         }
     }
 }
