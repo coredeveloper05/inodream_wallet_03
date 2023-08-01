@@ -49,6 +49,7 @@
     <string name="add_symbol">+</string>
     <string name="token_transact_history">토큰 거래 이력</string>
     <string name="nft_receive">NFT 받기</string>
+    <string name="nft_refresh">NFT 플러시</string>
 
     <string name="balance_my_assets">나의 자산</string>
 

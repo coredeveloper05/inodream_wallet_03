@@ -51,11 +51,6 @@ class NftViewFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        getNFTData()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -88,6 +83,8 @@ class NftViewFragment : BaseFragment() {
         binding.nftRecycleview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        binding.tvRefresh.setOnClickListener { getNFTData() }
+
         binding.nftAddCall.setOnClickListener {
             startActivity(
                 Intent(
@@ -116,6 +113,8 @@ class NftViewFragment : BaseFragment() {
         binding.nftReceiveButton.setOnClickListener {
             qrViewDialog.show()
         }
+
+        getNFTData()
     }
 
     private fun getNFTData() {
@@ -148,9 +147,6 @@ class NftViewFragment : BaseFragment() {
                             }
                         }
                         getMetaData()
-                        handler.postDelayed(Runnable {
-                            getNFTData()
-                        }, 30 * 1000)
                     }
                 }
 

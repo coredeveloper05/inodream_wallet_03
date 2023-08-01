@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.ToastUtils
 import com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import io.inodream.wallet.databinding.ActivitySetWalletInitBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
@@ -50,6 +52,14 @@ class SetWalletInitActivity : AppCompatActivity() {
                     if (response.body()?.status == "1") {
                         UserManager.getInstance().clearData()
                         NftUtils.clearNFTData()
+                        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                            .requestId()
+                            .requestProfile()
+                            .requestIdToken("437260015304-vm1cnjps4l7gn7nevdaj0530kmem2cro.apps.googleusercontent.com")
+                            .requestEmail()
+                            .build()
+                        GoogleSignIn.getClient(this@SetWalletInitActivity, gso).signOut()
+                        GoogleSignIn.getClient(this@SetWalletInitActivity, gso).revokeAccess()
                         startActivity(
                             Intent(this@SetWalletInitActivity, SocialLoginActivity::class.java)
                                 .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
