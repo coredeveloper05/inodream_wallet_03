@@ -119,7 +119,17 @@
         토큰 또는 NFT 전송 요청 시
         새로운 출금 비밀번호를
         입력하시면 됩니다."</string>
-    <string name="init_confirm">초기화</string>
+    <string name="set_withdrawal_password_init_message3">인증번호를 아래에 입력하세요.</string>
+    <string name="set_withdrawal_password_init_message4">"인증코드 요청 시
+        현재 로그인 된 구글 메일로
+        임의로 생성된 인증번호를 전송합니다.
+        메일이 수신에 문제가 있는 경우
+        `fonwalletsender@gmail.com`
+        로 문의 주세요."</string>
+    <string name="request_credential_error_message">%1$d 초 후 다시 요청해주세요.</string>
+    <string name="input_credential_data">인증번호 입력</string>
+    <string name="init_confirm">초기화 요청</string>
+    <string name="request_credential_data">인증코드 요청</string>
     <string name="policy_and_term">정책 및 약관</string>
     <string name="wallet_version">앱 버전</string>
 
