@@ -18,6 +18,8 @@ import retrofit2.Response
 class SendTransactPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySendTransactPasswordBinding
+    private var verifyToken: String? = null
+    private var verifyCode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,8 @@ class SendTransactPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.topToolbar.title.text = resources.getString(R.string.title_token_send)
+        verifyToken = intent.getStringExtra("token")
+        verifyCode = intent.getStringExtra("code")
 
         setListener()
     }
@@ -73,7 +77,10 @@ class SendTransactPasswordActivity : AppCompatActivity() {
                     if (!RequestUtil().checkResponse(response)) return
                     val text = response.body()?.get("encode")?.asString
                     if (!TextUtils.isEmpty(text)) {
-                        setPwd(text!!)
+                        if (!TextUtils.isEmpty(verifyToken) && !TextUtils.isEmpty(verifyCode))
+                            resetPwd(text!!)
+                        else
+                            setPwd(text!!)
                     }
                 }
 
@@ -104,6 +111,34 @@ class SendTransactPasswordActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
+                    t.printStackTrace()
+                    ToastUtils.showLong(t.message)
+                }
+            })
+    }
+
+    private fun resetPwd(text: String) {
+        val map: MutableMap<String, String> = HashMap()
+        map["password"] = text
+        map["verifyToken"] = verifyToken!!
+        map["verifyCode"] = verifyCode!!
+        RetrofitClient
+            .remoteSimpleService
+            .resetWithDrawPw(RequestUtil().getRequestHeader(), map)
+            .enqueue(object : Callback<BaseResponse<Boolean>> {
+                override fun onResponse(
+                    call: Call<BaseResponse<Boolean>>,
+                    response: Response<BaseResponse<Boolean>>
+                ) {
+                    if (!RequestUtil().checkResponse(response)) return
+                    if (response.body()?.data == true) {
+                        ToastUtils.showLong(R.string.success_set_pwd)
+                        UserManager.getInstance().setPwd(true)
+                        finish()
+                    }
+                }
+
+                override fun onFailure(call: Call<BaseResponse<Boolean>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

@@ -96,6 +96,24 @@ interface IRemoteSimpleService {
         @QueryMap body: MutableMap<String, String>
     ): Call<BaseResponse<List<TxData.Data>>>
 
+    @POST(RetrofitClient.AUTH_SIGN_START)
+    fun signStart(
+        @HeaderMap map: MutableMap<String, String>,
+        @Body body: MutableMap<String, String>
+    ): Call<BaseResponse<String>>
+
+    @POST(RetrofitClient.AUTH_SIGN_VERIFY)
+    fun signVerify(
+        @HeaderMap map: MutableMap<String, String>,
+        @Body body: MutableMap<String, String>
+    ): Call<BaseResponse<Any>>
+
+    @POST(RetrofitClient.AUTH_RESET_WITH_DRAW_PW)
+    fun resetWithDrawPw(
+        @HeaderMap map: MutableMap<String, String>,
+        @Body body: MutableMap<String, String>
+    ): Call<BaseResponse<Boolean>>
+
     @GET
     fun getData(@Url url: String): Call<JsonObject>
 }
