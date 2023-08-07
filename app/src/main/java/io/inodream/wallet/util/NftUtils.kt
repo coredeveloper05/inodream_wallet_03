@@ -31,7 +31,8 @@ class NftUtils {
 
         fun getNftList(): ArrayList<NFTListData.NFTData> {
             if (allData.size == 0) {
-                allData.addAll(nftData)
+                // production environment cancel config
+//                allData.addAll(nftData)
                 val string =
                     SPUtils.getInstance(SP_FILE_NFT).getString(UserManager.getInstance().email)
                 if (!TextUtils.isEmpty(string)) {
