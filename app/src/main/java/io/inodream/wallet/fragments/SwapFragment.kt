@@ -22,6 +22,7 @@ import io.inodream.wallet.core.adapters.TopToolBarAdapter
 import io.inodream.wallet.databinding.FragmentSwapBinding
 import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
+import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.TokenQuoteData
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
@@ -315,19 +316,21 @@ class SwapFragment : BaseFragment() {
         RetrofitClient
             .remoteSimpleService
             .quoteToken(map)
-            .enqueue(object : Callback<TokenQuoteData> {
+            .enqueue(object : Callback<BaseResponse<TokenQuoteData>> {
                 override fun onResponse(
-                    call: Call<TokenQuoteData>,
-                    response: Response<TokenQuoteData>
+                    call: Call<BaseResponse<TokenQuoteData>>,
+                    response: Response<BaseResponse<TokenQuoteData>>
                 ) {
                     binding.swaptxt01.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
-                        binding.tvSwap.text = it.tokenOutAmount
+                        it.data?.let { data ->
+                            binding.tvSwap.text = data.tokenOutAmount
+                        }
                     }
                 }
 
-                override fun onFailure(call: Call<TokenQuoteData>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<TokenQuoteData>>, t: Throwable) {
                     binding.swaptxt01.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
@@ -348,31 +351,29 @@ class SwapFragment : BaseFragment() {
         RetrofitClient
             .remoteSimpleService
             .swapChange(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     binding.swaptxt01.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) {
                         if (!conformTip) conformTip = true
                         return
                     }
-                    response.body()?.let {
-                        if (it.get("status").toString() == "1") {
+                    response.body()?.let { res ->
+                        res.data?.let {
                             if (conformTip) {
                                 dialog.showGas(it.get("transactionFee").asString)
                             } else {
                                 ToastUtils.showLong("swap성공하다")
                             }
-                        } else {
-                            ToastUtils.showLong("swap실패하다")
                         }
                     }
                     if (conformTip) conformTip = true
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     if (conformTip) conformTip = true
                     binding.swaptxt01.revertAnimation()
                     t.printStackTrace()

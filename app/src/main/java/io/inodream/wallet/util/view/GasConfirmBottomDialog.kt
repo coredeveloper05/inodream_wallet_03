@@ -35,8 +35,9 @@ class GasConfirmBottomDialog(context: Context) : BottomSheetDialog(context) {
         }
     }
 
-    fun showGas(amount: String) {
-        var allPrice: String = ""
+    fun showGas(amount: String?) {
+        if (amount == null) return
+        var allPrice = ""
         App.getInstance().tokenInfosData.tokenInfos?.forEach { token ->
             when (token.symbol) {
                 "ETH" -> {

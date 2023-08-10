@@ -9,11 +9,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import io.inodream.wallet.R
-import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.refer.retrofit.data.NFTData
 import io.inodream.wallet.util.StringUtils
 
 
-class NftRecycleAdapter(var itemList: ArrayList<NFTListData.NFTData>) :
+class NftRecycleAdapter(var itemList: ArrayList<NFTData>) :
     RecyclerView.Adapter<NftRecycleAdapter.NftItemViewHolder>() {
 
     private lateinit var itemClickListener: OnItemClickEventListener

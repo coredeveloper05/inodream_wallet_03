@@ -59,16 +59,16 @@ class TokenSendRequestActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .decodeSeed(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
-                    privateKey = response.body()?.get("privateKeyEncode")?.asString ?: ""
+                    privateKey = response.body()?.data?.get("privateKeyEncode")?.asString ?: ""
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
@@ -81,14 +81,17 @@ class TokenSendRequestActivity : AppCompatActivity() {
         val failureTypeText = failureView?.findViewById<TextView>(R.id.token_send_failure_type)
         val faulureMessage = failureView?.findViewById<TextView>(R.id.token_send_failure_message)
 
-        when(failureType) {
+        when (failureType) {
             TokenSendFailureType.TOKEN_DEFICIENCY -> {
                 failureTypeText?.text = resources.getString(R.string.token_send_failure_type_01)
-                faulureMessage?.text = resources.getString(R.string.token_send_failure_type_01_message)
+                faulureMessage?.text =
+                    resources.getString(R.string.token_send_failure_type_01_message)
             }
+
             TokenSendFailureType.FEE_DEFICIENCY -> {
                 failureTypeText?.text = resources.getString(R.string.token_send_failure_type_02)
-                faulureMessage?.text = resources.getString(R.string.token_send_failure_type_02_message)
+                faulureMessage?.text =
+                    resources.getString(R.string.token_send_failure_type_02_message)
             }
         }
 
@@ -164,22 +167,20 @@ class TokenSendRequestActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .estimateTransferGasFee(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     if (RequestUtil().checkResponse(response)) {
                         response.body()?.let {
-                            if (it.get("status").toString() == "1") {
-                                dialog.showGas(it.get("transactionFee").asString)
-                            }
+                            dialog.showGas(it.data?.get("transactionFee")?.asString)
                         }
                     }
                     binding.sendRequestButton.revertAnimation()
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     binding.sendRequestButton.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
@@ -194,13 +195,13 @@ class TokenSendRequestActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .encodeText(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     if (RequestUtil().checkResponse(response)) {
-                        val text = response.body()?.get("encode")?.asString
+                        val text = response.body()?.data?.get("encode")?.asString
                         if (!TextUtils.isEmpty(text)) {
                             sendCoin(text!!)
                             return
@@ -209,7 +210,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                     binding.sendRequestButton.revertAnimation()
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     binding.sendRequestButton.revertAnimation()
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
@@ -235,7 +236,7 @@ class TokenSendRequestActivity : AppCompatActivity() {
                 ) {
                     binding.sendRequestButton.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
-                    if (response.body()?.status == "1") {
+                    if (response.body()?.status == 1) {
                         startActivity(
                             Intent(
                                 this@TokenSendRequestActivity,
@@ -243,9 +244,9 @@ class TokenSendRequestActivity : AppCompatActivity() {
                             ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                         )
                         finish()
-                    } else if (response.body()?.status == "2") {// FIXME: modify status
+                    } else if (response.body()?.status == 2) {// FIXME: modify status
                         loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
-                    } else if (response.body()?.status == "3") {
+                    } else if (response.body()?.status == 3) {
                         loadDialog(TokenSendFailureType.TOKEN_DEFICIENCY)
                     } else {
                         ToastUtils.showLong(response.body()?.message)
