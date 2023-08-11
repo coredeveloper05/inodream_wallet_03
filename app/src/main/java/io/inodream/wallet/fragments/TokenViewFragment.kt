@@ -26,6 +26,7 @@ import io.inodream.wallet.activitys.TokenTransactHistoryActivity
 import io.inodream.wallet.databinding.FragmentTokenViewBinding
 import io.inodream.wallet.event.LoadSendPageEvent
 import io.inodream.wallet.event.RefreshEvent
+import io.inodream.wallet.event.UpdateAssetsEvent
 import io.inodream.wallet.event.UpdateTokenEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BalanceData
@@ -288,11 +289,13 @@ class TokenViewFragment : BaseFragment() {
                         getString(R.string.W_value),
                         StringUtils.getTwoDigits(totalPrice)
                     )
-                    binding.myAssetsValue.text =
-                        String.format(
-                            getString(R.string.W_value),
-                            StringUtils.getTwoDigits(mTotalPrice)
-                        )
+                    val digits = String.format(
+                        getString(R.string.W_value),
+                        StringUtils.getTwoDigits(mTotalPrice)
+                    )
+                    binding.myAssetsValue.text = digits
+                    App.getInstance().value = digits
+                    EventBus.getDefault().post(UpdateAssetsEvent())
                 }
             }
         }

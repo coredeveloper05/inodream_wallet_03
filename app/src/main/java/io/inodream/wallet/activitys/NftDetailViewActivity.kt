@@ -9,13 +9,13 @@ import com.blankj.utilcode.util.ScreenUtils
 import com.bumptech.glide.Glide
 import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivityNftDetailViewBinding
-import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.refer.retrofit.data.NFTData
 import io.inodream.wallet.util.StringUtils
 
 class NftDetailViewActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNftDetailViewBinding
-    private lateinit var nftData: NFTListData.NFTData
+    private lateinit var nftData: NFTData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,7 @@ class NftDetailViewActivity : AppCompatActivity() {
         binding = ActivityNftDetailViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val data = intent.getSerializableExtra("key") as NFTListData.NFTData?
+        val data = intent.getSerializableExtra("key") as NFTData?
         if (data == null) {
             finish()
             return

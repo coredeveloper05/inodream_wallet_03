@@ -20,14 +20,19 @@ import io.inodream.wallet.R
 import io.inodream.wallet.activitys.SendTransactPasswordActivity
 import io.inodream.wallet.activitys.SetWalletInitActivity
 import io.inodream.wallet.databinding.FragmentSettingBinding
+import io.inodream.wallet.event.UpdateAssetsEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
+import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,14 +60,16 @@ class SettingFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        EventBus.getDefault().register(this)
         binding.actSetWalletInitTv.setOnClickListener {
             startActivity(Intent(requireContext(), SetWalletInitActivity::class.java))
         }
-
         binding.actSetSecurityTv.setOnClickListener {
             loadDialog()
         }
+        binding.tvAccount.text = UserManager.getInstance().email
+        binding.tvAddress.text = StringUtils.getShortAddress(UserManager.getInstance().address)
+        binding.tvPrice.text = App.getInstance().value
     }
 
     private fun loadDialog() {
@@ -241,6 +248,16 @@ class SettingFragment : BaseFragment() {
                     }
                 })
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateValue(event: UpdateAssetsEvent) {
+        binding.tvPrice.text = App.getInstance().value
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        EventBus.getDefault().unregister(this)
     }
 }
 

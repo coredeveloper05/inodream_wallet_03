@@ -69,13 +69,13 @@ class SendTransactPasswordActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .encodeText(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
-                    val text = response.body()?.get("encode")?.asString
+                    val text = response.body()?.data?.get("encode")?.asString
                     if (!TextUtils.isEmpty(text)) {
                         if (!TextUtils.isEmpty(verifyToken) && !TextUtils.isEmpty(verifyCode))
                             resetPwd(text!!)
@@ -84,7 +84,7 @@ class SendTransactPasswordActivity : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

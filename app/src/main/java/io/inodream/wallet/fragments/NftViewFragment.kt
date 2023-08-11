@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.blankj.utilcode.util.ClipboardUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -21,12 +22,14 @@ import com.king.zxing.util.CodeUtils
 import io.inodream.wallet.R
 import io.inodream.wallet.activitys.NftDetailViewActivity
 import io.inodream.wallet.activitys.NftImportActivity
+import io.inodream.wallet.activitys.NftSendListActivity
 import io.inodream.wallet.activitys.NftSendRequestActivity
 import io.inodream.wallet.activitys.STANDARD_721
 import io.inodream.wallet.core.adapters.NftRecycleAdapter
 import io.inodream.wallet.databinding.FragmentNftViewBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
-import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.refer.retrofit.data.BaseResponse
+import io.inodream.wallet.refer.retrofit.data.NFTData
 import io.inodream.wallet.util.NftUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
@@ -39,7 +42,7 @@ class NftViewFragment : BaseFragment() {
     private var _binding: FragmentNftViewBinding? = null
     private val binding get() = _binding!!
     private lateinit var nftItemAdapter: NftRecycleAdapter
-    private val nftDataList: ArrayList<NFTListData.NFTData> = ArrayList()
+    private val nftDataList: ArrayList<NFTData> = ArrayList()
     private val handler: Handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(
@@ -83,6 +86,14 @@ class NftViewFragment : BaseFragment() {
         binding.nftRecycleview.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        binding.tvHistory.setOnClickListener {
+            startActivity(
+                Intent(
+                    context,
+                    NftSendListActivity::class.java
+                )
+            )
+        }
         binding.tvRefresh.setOnClickListener { getNFTData() }
 
         binding.nftAddCall.setOnClickListener {
@@ -109,7 +120,8 @@ class NftViewFragment : BaseFragment() {
         qrView.findViewById<TextView>(R.id.close_button)?.setOnClickListener {
             qrViewDialog.dismiss()
         }
-
+        qrView.findViewById<View>(R.id.copy)
+            ?.setOnClickListener { ClipboardUtils.copyText(UserManager.getInstance().address) }
         binding.nftReceiveButton.setOnClickListener {
             qrViewDialog.show()
         }
@@ -124,13 +136,13 @@ class NftViewFragment : BaseFragment() {
         RetrofitClient
             .remoteSimpleService
             .getNftList(map)
-            .enqueue(object : Callback<NFTListData> {
+            .enqueue(object : Callback<BaseResponse<List<NFTData>>> {
                 override fun onResponse(
-                    call: Call<NFTListData>,
-                    response: Response<NFTListData>
+                    call: Call<BaseResponse<List<NFTData>>>,
+                    response: Response<BaseResponse<List<NFTData>>>
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
-                    response.body()?.userNfts?.let {
+                    response.body()?.data?.let {
                         handler.removeCallbacksAndMessages(null)
                         nftDataList.clear()
                         nftItemAdapter.itemList.clear()
@@ -150,7 +162,7 @@ class NftViewFragment : BaseFragment() {
                     }
                 }
 
-                override fun onFailure(call: Call<NFTListData>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<List<NFTData>>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }
@@ -183,7 +195,7 @@ class NftViewFragment : BaseFragment() {
                     for (data in nftDataList) {
                         if (data.id == id) {
                             data.metadata =
-                                Gson().fromJson(it, NFTListData.NFTData.MetaData::class.java)
+                                Gson().fromJson(it, NFTData.MetaData::class.java)
                             nftItemAdapter.itemList.add(data)
                         }
                     }

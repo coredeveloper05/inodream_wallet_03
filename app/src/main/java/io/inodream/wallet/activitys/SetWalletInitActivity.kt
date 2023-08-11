@@ -49,7 +49,7 @@ class SetWalletInitActivity : AppCompatActivity() {
                 ) {
                     btn.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
-                    if (response.body()?.status == "1") {
+                    if (response.body()?.status == 1) {
                         UserManager.getInstance().clearData()
                         NftUtils.clearNFTData()
                         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

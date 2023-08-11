@@ -94,18 +94,20 @@ class SocialLoginActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .auth(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     if (!RequestUtil().checkResponse(response)) return
                     response.body()?.let {
-                        authGoogle(it.get("encode")?.asString ?: "")
+                        it.data?.let { data ->
+                            authGoogle(data.get("encode")?.asString ?: "")
+                        }
                     }
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     t.printStackTrace()
                     ToastUtils.showLong(t.message)
                 }

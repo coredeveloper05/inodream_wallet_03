@@ -38,6 +38,7 @@
         <activity
             android:name=".activitys.NftImportActivity"
             android:exported="false"
+            android:configChanges="orientation|keyboardHidden|navigation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.TokenTransactHistoryDetailActivity"
@@ -93,6 +94,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activitys.CameraCaptureActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activitys.NftSendListActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

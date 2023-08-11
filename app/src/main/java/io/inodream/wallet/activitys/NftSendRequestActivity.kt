@@ -13,7 +13,8 @@ import com.google.gson.JsonObject
 import io.inodream.wallet.R
 import io.inodream.wallet.databinding.ActivityNftSendRequestBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
-import io.inodream.wallet.refer.retrofit.data.NFTListData
+import io.inodream.wallet.refer.retrofit.data.BaseResponse
+import io.inodream.wallet.refer.retrofit.data.NFTData
 import io.inodream.wallet.util.StringUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
@@ -36,14 +37,14 @@ class NftSendRequestActivity : AppCompatActivity() {
     private lateinit var btn: CircularProgressButton
     private lateinit var dialog: GasConfirmBottomDialog
     private var conformTip: Boolean = true
-    private var nftData: NFTListData.NFTData? = null
+    private var nftData: NFTData? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNftSendRequestBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        nftData = intent.getSerializableExtra("key") as NFTListData.NFTData?
+        nftData = intent.getSerializableExtra("key") as NFTData?
         if (nftData == null) {
             finish()
             return
@@ -145,18 +146,18 @@ class NftSendRequestActivity : AppCompatActivity() {
         RetrofitClient
             .remoteSimpleService
             .transferNft(map)
-            .enqueue(object : Callback<JsonObject> {
+            .enqueue(object : Callback<BaseResponse<JsonObject>> {
                 override fun onResponse(
-                    call: Call<JsonObject>,
-                    response: Response<JsonObject>
+                    call: Call<BaseResponse<JsonObject>>,
+                    response: Response<BaseResponse<JsonObject>>
                 ) {
                     btn.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) {
                         if (!conformTip) conformTip = true
                         return
                     }
-                    response.body()?.let {
-                        if (it.get("status").toString() == "1") {
+                    response.body()?.let { res ->
+                        res.data?.let {
                             if (conformTip) {
                                 dialog.showGas(it.get("transactionFee").asString)
                             } else {
@@ -174,7 +175,7 @@ class NftSendRequestActivity : AppCompatActivity() {
                     if (conformTip) conformTip = true
                 }
 
-                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                override fun onFailure(call: Call<BaseResponse<JsonObject>>, t: Throwable) {
                     if (conformTip) conformTip = true
                     btn.revertAnimation()
                     t.printStackTrace()
