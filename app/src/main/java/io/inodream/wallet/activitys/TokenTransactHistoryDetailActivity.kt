@@ -31,7 +31,7 @@ class TokenTransactHistoryDetailActivity : AppCompatActivity() {
         initView()
 
         binding.btnTx.setOnClickListener {
-            val uri = Uri.parse("https://goerli.etherscan.io/" + txData?.txId)
+            val uri = Uri.parse("https://goerli.etherscan.io/tx/" + txData?.txId)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
