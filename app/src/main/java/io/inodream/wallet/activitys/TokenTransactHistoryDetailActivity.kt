@@ -31,9 +31,7 @@ class TokenTransactHistoryDetailActivity : AppCompatActivity() {
         initView()
 
         binding.btnTx.setOnClickListener {
-            // FIXME: modify debug config
-            val uri =
-                Uri.parse((if (true) "https://sepolia.etherscan.io/tx/" else "https://etherscan.io/tx/") + txData?.txId)
+            val uri = Uri.parse("https://goerli.etherscan.io/" + txData?.txId)
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
