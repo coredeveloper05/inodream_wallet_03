@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/receive_round_gray">
@@ -9,38 +9,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical"
-                android:paddingHorizontal="10dp">
+                android:paddingHorizontal="10dp"
+                android:layout_weight="1"
+                >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:orientation="vertical"
                     android:layout_marginRight="20dp"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="30dp"
+                        android:textStyle="bold"
                         android:fontFamily="sans-serif-smallcaps"
-                        android:letterSpacing="-0.01"
-                        android:text="@string/set_withdrawal_password"
-                        android:textColor="#000000"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textColor="#000000"
+                        android:letterSpacing="-0.01"
+                        android:text="@string/set_withdrawal_password"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -57,9 +60,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:textAlignment="center"
                             android:layout_weight="1"
                             android:text="@string/set_withdrawal_password_init_message4"
-                            android:textAlignment="center"
                             android:textColor="#8e8e8e"
                             android:textSize="12sp" />
                     </LinearLayout>
@@ -69,10 +72,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginVertical="10dp"
-                        android:background="@drawable/send2_round_next_bu_ripple">
+                        android:background="@drawable/send2_round_next_bu_ripple"
+                        >
 
                         <TextView
                             android:id="@+id/requestCredentialText"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
                             android:clickable="true"
@@ -80,26 +88,22 @@
                             android:letterSpacing="-0.01"
                             android:text="@string/request_credential_data"
                             android:textColor="#ffffff"
-                            android:textSize="13sp"
-                            app:layout_constraintHorizontal_bias="0.5"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toRightOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
+                            android:textSize="13sp" />
                         <TextView
                             android:id="@+id/requestValidatorTime"
+                            app:layout_constraintStart_toEndOf="@id/requestCredentialText"
+                            android:gravity="center"
+                            android:height="50dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:height="50dp"
-                            android:fontFamily="@font/inter_semi_bold"
-                            android:gravity="center"
                             android:text="50초"
-                            android:textColor="#FF0040"
                             android:textSize="20sp"
-                            android:visibility="invisible"
-                            app:layout_constraintStart_toEndOf="@id/requestCredentialText"
-                            tools:ignore="MissingConstraints"></TextView>
+                            android:textColor="#FF0040"
+                            android:fontFamily="@font/inter_semi_bold"
+                            tools:ignore="MissingConstraints"
+                            android:visibility="invisible">
+                        </TextView>
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <TextView
@@ -119,8 +123,8 @@
                         android:layout_height="45dp"
                         android:layout_marginTop="16dp"
                         android:background="@drawable/shape_white_round_empty"
-                        android:hint="@string/input_credential_data"
-                        android:inputType="number|numberDecimal" />
+                        android:inputType="number|numberDecimal"
+                        android:hint="@string/input_credential_data"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,12 +133,12 @@
                     android:layout_height="50dp"
                     android:layout_margin="20dp"
                     android:background="@drawable/receive_round_or_ripple"
-                    android:gravity="center">
-
+                    android:gravity="center"
+                    >
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/bx_message_error" />
+                        android:src="@drawable/bx_message_error"/>
 
                     <TextView
                         android:layout_width="wrap_content"
