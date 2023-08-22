@@ -236,20 +236,28 @@ class TokenSendRequestActivity : AppCompatActivity() {
                 ) {
                     binding.sendRequestButton.revertAnimation()
                     if (!RequestUtil().checkResponse(response)) return
-                    if (response.body()?.status == 1) {
-                        startActivity(
-                            Intent(
-                                this@TokenSendRequestActivity,
-                                TokenSendResultActivity::class.java
-                            ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-                        )
-                        finish()
-                    } else if (response.body()?.status == 2) {// FIXME: modify status
-                        loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
-                    } else if (response.body()?.status == 3) {
-                        loadDialog(TokenSendFailureType.TOKEN_DEFICIENCY)
-                    } else {
-                        ToastUtils.showLong(response.body()?.message)
+                    when (response.body()?.status) {
+                        1 -> {
+                            startActivity(
+                                Intent(
+                                    this@TokenSendRequestActivity,
+                                    TokenSendResultActivity::class.java
+                                ).addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                            )
+                            finish()
+                        }
+
+                        2 -> {// FIXME: modify status
+                            loadDialog(TokenSendFailureType.FEE_DEFICIENCY)
+                        }
+
+                        3 -> {
+                            loadDialog(TokenSendFailureType.TOKEN_DEFICIENCY)
+                        }
+
+                        else -> {
+                            ToastUtils.showLong(response.body()?.message)
+                        }
                     }
                 }
 

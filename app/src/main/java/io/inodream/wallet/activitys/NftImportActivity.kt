@@ -9,6 +9,7 @@ import io.inodream.wallet.databinding.ActivityNftImportBinding
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.util.NftUtils
+import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +50,7 @@ class NftImportActivity : AppCompatActivity() {
         val map: MutableMap<String, Any> = HashMap()
         map["nftAddress"] = address
         map["nftId"] = id
+        map["walletAddress"] = UserManager.getInstance().address
         RetrofitClient
             .remoteSimpleService
             .validateNft(map)

@@ -38,11 +38,12 @@ class SocialLoginActivity : AppCompatActivity() {
 
         if (!TextUtils.isEmpty(UserManager.getInstance().accToken)) {
             startActivity(Intent(this, SocialTermAgreeActivity::class.java))
-//            authRefresh()
-        } else
+            finish()
+        } else {
             binding.socialLoginButton.setOnClickListener {
                 login()
             }
+        }
     }
 
     fun login() {
