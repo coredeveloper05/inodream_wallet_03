@@ -27,12 +27,16 @@ import io.inodream.wallet.activitys.NftSendRequestActivity
 import io.inodream.wallet.activitys.STANDARD_721
 import io.inodream.wallet.core.adapters.NftRecycleAdapter
 import io.inodream.wallet.databinding.FragmentNftViewBinding
+import io.inodream.wallet.event.UpdateNftEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
 import io.inodream.wallet.refer.retrofit.data.BaseResponse
 import io.inodream.wallet.refer.retrofit.data.NFTData
 import io.inodream.wallet.util.NftUtils
 import io.inodream.wallet.util.UserManager
 import io.inodream.wallet.util.encrypt.RequestUtil
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -56,7 +60,7 @@ class NftViewFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        EventBus.getDefault().register(this)
         nftItemAdapter = NftRecycleAdapter(ArrayList())
         //Key
         nftItemAdapter.setItemClickListener(object : NftRecycleAdapter.OnItemClickEventListener {
@@ -209,5 +213,15 @@ class NftViewFragment : BaseFragment() {
                 ToastUtils.showLong(t.message)
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun updateNft(event: UpdateNftEvent) {
+        getNFTData()
     }
 }
