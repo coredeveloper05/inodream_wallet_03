@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:layout_marginVertical="14dp"
+    >
+
+    <TextView
+        android:id="@+id/unlock_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:text="2023년 6월 02일 08:00"
+        />
+    <View
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        />
+    <TextView
+        android:id="@+id/unlock_token_rate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:text="76.1%"
+        />
+    <View
+        android:layout_width="2dp"
+        android:layout_height="10dp"
+        android:background="#d9d9d9"
+        android:layout_marginHorizontal="15dp"
+        />
+    <TextView
+        android:id="@+id/unlock_token_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#000000"
+        android:textSize="13sp"
+        android:text="35.2489 FON"
+        />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

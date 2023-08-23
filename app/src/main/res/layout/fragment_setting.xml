@@ -220,6 +220,43 @@
             </LinearLayout>
             -->
 
+            <LinearLayout
+                android:id="@+id/actEventLockTv"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/suitcase" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/inter_medium"
+                    android:letterSpacing="-0.01"
+                    android:text="@string/lockup_event_my"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+
+                <ImageView
+                    android:id="@+id/imgBt05"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:clickable="false"
+                    android:src="@drawable/right_arrow_v" />
+            </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -262,42 +299,6 @@
                     android:src="@drawable/right_arrow_v" />
             </LinearLayout>
             -->
-            <LinearLayout
-                android:id="@+id/actServiceTermTv"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:background="?attr/selectableItemBackground"
-                android:gravity="center_vertical">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/suitcase" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:letterSpacing="-0.01"
-                    android:text="@string/policy_and_term"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/imgBt05"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:clickable="false"
-                    android:src="@drawable/right_arrow_v" />
-            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/actAppInformationTv"

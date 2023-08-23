@@ -36,6 +36,7 @@
     <string name="title_nft_import">NFT 불러오기</string>
     <string name="title_nft_detail">NFT 상세보기</string>
     <string name="title_nft_send">NFT 보내기</string>
+    <string name="title_token_lockup">토큰 락업</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -159,4 +160,13 @@
     <string name="nft_balance">범위를 벗어남</string>
     <string name="nft_empty_editview">입력해 주세요</string>
     <string name="dialog_token_bottom_price">%1$s ETH \n￦%2$s </string>
+
+    <string name="lockup_support_network">토큰 락업 기능은 %1$s 네트워크만 지원합니다.</string>
+
+    <string name="lockup_event_my">락업 이벤트 정보</string>
+    <string name="token_symbol_name_fon">FON</string>
+    <string name="total_received_token">총 받은 토큰</string>
+    <string name="total_locked_token">총 잠김 토큰</string>
+    <string name="total_unlocked_token">총 해제 토큰</string>
+    <string name="unlock_schedule">잠금해제 일정</string>
 </resources>

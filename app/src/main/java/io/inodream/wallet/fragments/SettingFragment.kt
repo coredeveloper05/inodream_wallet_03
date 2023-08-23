@@ -19,6 +19,7 @@ import io.inodream.wallet.App
 import io.inodream.wallet.R
 import io.inodream.wallet.activitys.SendTransactPasswordActivity
 import io.inodream.wallet.activitys.SetWalletInitActivity
+import io.inodream.wallet.activitys.TokenLockActivity
 import io.inodream.wallet.databinding.FragmentSettingBinding
 import io.inodream.wallet.event.UpdateAssetsEvent
 import io.inodream.wallet.refer.retrofit.RetrofitClient
@@ -63,6 +64,9 @@ class SettingFragment : BaseFragment() {
         EventBus.getDefault().register(this)
         binding.actSetWalletInitTv.setOnClickListener {
             startActivity(Intent(requireContext(), SetWalletInitActivity::class.java))
+        }
+        binding.actEventLockTv.setOnClickListener {
+            startActivity(Intent(requireContext(), TokenLockActivity::class.java))
         }
         binding.actSetSecurityTv.setOnClickListener {
             loadDialog()
