@@ -95,7 +95,7 @@
     <string name="tx_send">보내기</string>
     <string name="tx_complete"> 완료</string>
     <string name="tx_progress"> 진행중</string>
-    <string name="tx_create"> 완료</string>
+    <string name="tx_create"> 창조하다</string>
     <string name="tx_confirm"> 확인하다</string>
 
     <string name="check_error_empty_address">수신 주소를 입력해 주세요.</string>
