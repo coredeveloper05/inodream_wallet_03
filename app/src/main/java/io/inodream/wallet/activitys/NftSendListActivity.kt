@@ -36,7 +36,7 @@ class NftSendListActivity : AppCompatActivity() {
         binding = ActivityTokenTransactHistoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.topToolbar.title.text = resources.getString(R.string.title_token_transact_history)
+        binding.topToolbar.title.text = resources.getString(R.string.title_nft_token_transact_history)
 
         binding.topToolbar.backButton.setOnClickListener {
             super.onBackPressed()

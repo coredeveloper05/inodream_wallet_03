@@ -33,6 +33,7 @@
     <string name="title_token_receive">토큰 받기</string>
     <string name="title_token_send">토큰 보내기</string>
     <string name="title_token_transact_history">토큰 거래 이력</string>
+    <string name="title_nft_token_transact_history">NFT 토큰 거래 이력</string>
     <string name="title_nft_import">NFT 불러오기</string>
     <string name="title_nft_detail">NFT 상세보기</string>
     <string name="title_nft_send">NFT 보내기</string>
@@ -94,7 +95,7 @@
     <string name="tx_send">보내기</string>
     <string name="tx_complete"> 완료</string>
     <string name="tx_progress"> 진행중</string>
-    <string name="tx_create"> 창조하다</string>
+    <string name="tx_create"> 완료</string>
     <string name="tx_confirm"> 확인하다</string>
 
     <string name="check_error_empty_address">수신 주소를 입력해 주세요.</string>
@@ -161,7 +162,7 @@
     <string name="nft_empty_editview">입력해 주세요</string>
     <string name="dialog_token_bottom_price">%1$s ETH \n￦%2$s </string>
 
-    <string name="lockup_support_network">토큰 락업 기능은 %1$s 네트워크만 지원합니다.</string>
+    <string name="lockup_support_network">토큰 락업 기능은 이더리움 네트워크만 지원합니다.</string>
 
     <string name="lockup_event_my">락업 이벤트 정보</string>
     <string name="token_symbol_name_fon">FON</string>
